@@ -12,7 +12,7 @@ import Link from "next/link";
 
 const BannerPage = () => {
   return (
-    <Row style={{ height: "100vh" }}>
+    <Row style={{ minHeight: "100vh" }}>
       <Col
         xs={24}
         sm={24}
@@ -22,7 +22,7 @@ const BannerPage = () => {
           display: "flex",
           justifyContent: "center",
           alignSelf: "center",
-          padding: "0 4%",
+          padding: "0% 4%",
         }}
       >
         <div>
@@ -42,10 +42,9 @@ const BannerPage = () => {
               style={{
                 color: "#313416",
                 fontSize: "22px",
-                fontWeight: "400",
+                fontWeight: "500",
               }}
             >
-              {" "}
               Homemade Flavors at Your Doorstep.
             </span>
           </h2>
