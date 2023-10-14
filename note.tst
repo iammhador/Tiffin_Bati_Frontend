@@ -13,19 +13,19 @@ PARAGRAPH : #445069
 ----------------------------------------------------------------<<
 
 Login Page 
-Register Page
-Dashboard
+<<== COMPLETED ==>>
 
-Navbar -< Semi Complete
 
----------------------------------------------------------------->>
+<<== ON GOING  ==>>
 
-THE MEAL WE ARE PROVIDE -> Complete 
-Header -> Complete
-About US  -> Complete
-Available Service -> Complete
-Client Review -> Working
-Testimonials -> Complete
-Contact US -> Complete
-FREQUENTLY ASKED QUESTIONS -> Complete
-Footer -> Complete
+
+<<== HAVE TO COMPLETE ==>>
+# Photo System Add
+# Login Page
+# Register Page
+# Private Route
+# Dashboard Layout Page
+# Super Admin => @1 Super admin can add new admin
+                 @2 Super admin can update his information
+
+

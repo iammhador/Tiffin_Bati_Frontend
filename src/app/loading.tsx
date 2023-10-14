@@ -1,15 +1,18 @@
 "use client";
-
 import { Row } from "antd";
 import { Hourglass } from "react-loader-spinner";
 
-const loading = () => {
+const Loading = () => {
   return (
     <Row
       justify="center"
       align="middle"
       style={{
-        height: "100vh",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <Hourglass
@@ -25,4 +28,4 @@ const loading = () => {
   );
 };
 
-export default loading;
+export default Loading;
