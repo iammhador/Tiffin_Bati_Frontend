@@ -4,6 +4,7 @@ import React from "react";
 import { Button, Layout, Menu } from "antd";
 import Image from "next/image";
 import logo from "../../app/assets/logo.png";
+import Link from "next/link";
 
 const { Header } = Layout;
 
@@ -17,23 +18,27 @@ const HeaderPage = () => {
     {
       key: "1",
       label: (
-        <Button
-          type="text"
-          style={{ fontSize: "16px", fontWeight: "500", color: "#545EE1" }}
-        >
-          Register
-        </Button>
+        <Link href="/register">
+          <Button
+            type="text"
+            style={{ fontSize: "16px", fontWeight: "500", color: "#545EE1" }}
+          >
+            Register
+          </Button>
+        </Link>
       ),
     },
     {
       key: "2",
       label: (
-        <Button
-          type="text"
-          style={{ fontSize: "16px", fontWeight: "500", color: "#545EE1" }}
-        >
-          Login
-        </Button>
+        <Link href="/login">
+          <Button
+            type="text"
+            style={{ fontSize: "16px", fontWeight: "500", color: "#545EE1" }}
+          >
+            Login
+          </Button>
+        </Link>
       ),
     },
     {
@@ -57,10 +62,18 @@ const HeaderPage = () => {
           backgroundColor: "#F5F4F9",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <Image src={logo} alt="Tiffin Bati Logo" width={50} height={50} />
-          <h2 style={{ color: "#545EE1" }}>TIFFIN BATI</h2>
-        </div>
+        <Link href="/">
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Image src={logo} alt="Tiffin Bati Logo" width={50} height={50} />
+            <h2
+              style={{
+                color: "#545EE1",
+              }}
+            >
+              TIFFIN BATI
+            </h2>
+          </div>
+        </Link>
         <Menu
           style={{
             marginLeft: "auto",

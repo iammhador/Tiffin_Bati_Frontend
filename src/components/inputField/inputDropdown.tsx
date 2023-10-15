@@ -7,6 +7,7 @@ type InputDropdown = {
   message?: string;
   size?: string;
   placeholder?: string;
+  defaultValue?: string;
 };
 
 const InputDropdown = ({
@@ -15,6 +16,7 @@ const InputDropdown = ({
   required,
   message,
   placeholder,
+  defaultValue,
 }: InputDropdown) => {
   const options = [
     { label: "male", value: "male" },
@@ -38,6 +40,7 @@ const InputDropdown = ({
           style={{ width: "100%" }}
           options={options}
           placeholder={placeholder}
+          defaultValue={defaultValue}
         />
       </Form.Item>
     </div>

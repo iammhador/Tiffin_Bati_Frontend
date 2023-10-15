@@ -1,25 +1,3 @@
-// const FooterPage = () => {
-//   return (
-//     <div>
-//       <p
-//         style={{
-//           fontSize: "18px",
-//           fontWeight: "500",
-//           color: "#545EE1",
-//           backgroundColor: "#F5F4F9",
-//           textAlign: "center",
-//           padding: "15px 0",
-//           margin: "0",
-//         }}
-//       >
-//         Copyright © 2023 - All right reserved by Tiffin Bati.
-//       </p>
-//     </div>
-//   );
-// };
-
-// export default FooterPage;
-
 "use client";
 import { Layout, Row, Col, Space } from "antd";
 import {
@@ -33,7 +11,7 @@ import Link from "next/link";
 
 const { Footer } = Layout;
 
-const AntDesignFooter = () => {
+const FooterPage = () => {
   return (
     <Footer style={{ backgroundColor: "#F5F4F9", color: "#445069" }}>
       <Row justify="space-between" gutter={[16, 0]}>
@@ -200,4 +178,4 @@ const AntDesignFooter = () => {
   );
 };
 
-export default AntDesignFooter;
+export default FooterPage;

@@ -8,6 +8,7 @@ type InputItemType = {
   size?: string;
   type: string;
   placeholder?: string;
+  defaultValue?: string;
 };
 
 const InputPassword = ({
@@ -17,6 +18,7 @@ const InputPassword = ({
   message,
   type,
   placeholder,
+  defaultValue
 }: InputItemType): React.ReactElement<any, any> => {
   return (
     <div style={{ margin: "0 4px" }}>
@@ -30,7 +32,7 @@ const InputPassword = ({
           },
         ]}
       >
-        <Input.Password size="large" type={type} placeholder={placeholder} />
+        <Input.Password size="large" type={type} placeholder={placeholder} defaultValue={defaultValue}/>
       </Form.Item>
     </div>
   );

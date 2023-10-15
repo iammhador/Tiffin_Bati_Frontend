@@ -21,6 +21,9 @@ const InputDatePicker = ({ handleDateChange }: InputDatePickerProps) => {
         ]}
       >
         <DatePicker
+          // defaultValue={
+          //   defaultValue ? defaultValue : dayjs("2023/10/10", dateFormat)
+          // }
           defaultValue={dayjs("2023/10/10", dateFormat)}
           format={dateFormat}
           size="large"

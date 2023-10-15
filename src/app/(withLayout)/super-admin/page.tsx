@@ -1,27 +1,62 @@
 "use client";
 
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Form, Row, message } from "antd";
 import Image from "next/image";
-import registerImage from "../../app/assets/register.png";
+import registerImage from "../../assets/banner.png";
 import InputItem from "@/components/inputField/inputItem";
 import InputPassword from "@/components/inputField/inputPassword";
 import InputDropdown from "@/components/inputField/inputDropdown";
 import InputDatePicker from "@/components/inputField/inputDatePicker";
 import InputUpload from "@/components/inputField/inputUpload";
-import Link from "next/link";
 import axios from "axios";
 import type { UploadChangeParam } from "antd/es/upload";
-import { useRouter } from "next/navigation";
-import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
+import type { UploadFile, UploadProps } from "antd/es/upload/interface";
+import { getFromLocalStorage } from "@/app/utils/local-storage";
+import { decodedToken } from "@/app/utils/jwt";
+import Loading from "@/app/loading";
+import {
+  useQuery,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 
-const RegisterPage = () => {
+type TokenInfo = {
+  userId: string;
+  name: string;
+  role: string;
+  iat: number;
+  exp: number;
+};
+
+const SuperAdminManagePage = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [useId, setUserId] = useState<string>("");
 
-  const router = useRouter();
+  const authToken = getFromLocalStorage("accessToken");
+
+  useEffect(() => {
+    if (authToken) {
+      const tokenInfo = decodedToken(authToken as string) as TokenInfo;
+      const { userId: id } = tokenInfo;
+      setUserId(id);
+    }
+  }, [authToken]);
+
+  const { isLoading, error, data, isFetching } = useQuery({
+    queryKey: ["repoData"],
+    queryFn: () =>
+      axios
+        .get(`http://localhost:5000/api/v1/super-admin/${useId}`)
+        .then((res) => res.data),
+    refetchInterval: 10000,
+  });
+
+  if (isLoading) return <Loading />;
+
+  if (error) return "An error has occurred: " + error;
 
   const handleDateChange = (date: dayjs.ConfigType, dateString: string) => {
     const formattedDate = dayjs(dateString).format("YYYY-MM-DD");
@@ -50,12 +85,11 @@ const RegisterPage = () => {
     values.dateOfBirth = selectedDate;
     values.profileImage = imageUrl;
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/v1/users",
+      const response = await axios.patch(
+        `http://localhost:5000/api/v1/super-admin/${useId}`,
         values
       );
-      response && router.push("/login");
-      message.success("User registered successfully.");
+      message.success("Super Admin Information Updated Successfully.");
     } catch (error) {
       console.error("Error occurred:", error);
     }
@@ -66,9 +100,9 @@ const RegisterPage = () => {
       <Row>
         <Col
           xs={{ span: 24, order: 2 }}
-          sm={{ span: 12, order: 1 }}
-          md={{ span: 12, order: 1 }}
-          lg={{ span: 12, order: 1 }}
+          sm={{ span: 12, order: 2 }}
+          md={{ span: 12, order: 2 }}
+          lg={{ span: 12, order: 2 }}
           style={{
             justifySelf: "center",
             alignSelf: "center",
@@ -84,9 +118,9 @@ const RegisterPage = () => {
         </Col>
         <Col
           xs={{ span: 24, order: 1 }}
-          sm={{ span: 12, order: 2 }}
-          md={{ span: 12, order: 2 }}
-          lg={{ span: 12, order: 2 }}
+          sm={{ span: 12, order: 1 }}
+          md={{ span: 12, order: 1 }}
+          lg={{ span: 12, order: 1 }}
           style={{
             justifySelf: "center",
             alignSelf: "center",
@@ -105,14 +139,8 @@ const RegisterPage = () => {
                 color: "#545EE1",
               }}
             >
-              REGISTER
+              UPDATE SUPER ADMIN INFORMATION
             </h2>
-            <p>
-              Already have an account?{" "}
-              <Link href="/login" style={{ color: "#F76F01" }}>
-                Login
-              </Link>
-            </p>
           </div>
 
           <Form layout="vertical" onFinish={onFinish}>
@@ -126,27 +154,27 @@ const RegisterPage = () => {
                 <InputItem
                   label="username"
                   name="username"
-                  required={true}
                   message="Please input your username"
                   type="text"
-                  placeholder="iammhador"
+                  placeholder={data?.data?.username}
+                  defaultValue={data?.data?.username}
                 />
                 <InputPassword
                   label="password"
                   name="password"
-                  required={true}
                   message="Please input your password"
                   type="password"
-                  placeholder="********"
+                  placeholder={data?.data?.password}
+                  defaultValue={data?.data?.password}
                 />
-                <InputDatePicker handleDateChange={handleDateChange} />
+                {/* <InputDatePicker handleDateChange={handleDateChange} /> */}
                 <InputItem
                   label="address"
                   name="address"
-                  required={true}
                   message="Please input your address"
                   type="text"
-                  placeholder="dhaka, bangladesh"
+                  placeholder={data?.data?.address}
+                  defaultValue={data?.data?.address}
                 />
               </Col>
               <Col
@@ -158,26 +186,26 @@ const RegisterPage = () => {
                 <InputItem
                   label="email"
                   name="email"
-                  required={true}
                   message="Please input your email"
                   type="text"
-                  placeholder="iammhador@gmail.com"
+                  placeholder={data?.data?.email}
+                  defaultValue={data?.data?.email}
                 />
                 <InputItem
                   label="contact no"
                   name="contactNo"
-                  required={true}
                   message="Please input your contact number"
                   type="text"
-                  placeholder="01512345678"
+                  placeholder={data?.data?.contactNo}
+                  defaultValue={data?.data?.contactNo}
                 />
 
                 <InputDropdown
                   label="gender"
-                  placeholder="male"
                   name="gender"
-                  required={true}
                   message="Please select your gender"
+                  placeholder={data?.data?.gender}
+                  defaultValue={data?.data?.gender}
                 />
 
                 <InputUpload
@@ -185,7 +213,6 @@ const RegisterPage = () => {
                   imageUrl={imageUrl}
                   name="profileImage"
                   handleChange={handleChange}
-                  loading={loading}
                 />
               </Col>
             </Row>
@@ -206,4 +233,12 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+const queryClient = new QueryClient();
+
+const AccountManagePageQueryClient = () => (
+  <QueryClientProvider client={queryClient}>
+    <SuperAdminManagePage />
+  </QueryClientProvider>
+);
+
+export default AccountManagePageQueryClient;

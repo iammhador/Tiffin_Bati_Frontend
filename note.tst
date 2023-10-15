@@ -17,16 +17,18 @@ PARAGRAPH : #445069
 # Register Page
 # Photo System Add
 # Login Page
+# Dashboard Layout Page
+# Private Route
+# Super Admin => @1 Super admin can add new admin
 
 <<== ON GOING  ==>>
 
+                 @2 Super admin can update his information
 
 <<== HAVE TO COMPLETE ==>>
 
 
-# Private Route
-# Dashboard Layout Page
-# Super Admin => @1 Super admin can add new admin
-                 @2 Super admin can update his information
+
+
 
 

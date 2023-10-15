@@ -4,22 +4,20 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { Button, Col, Form, Row, message } from "antd";
 import Image from "next/image";
-import registerImage from "../../app/assets/register.png";
+import adminImage from "../../../assets/admin.png";
 import InputItem from "@/components/inputField/inputItem";
 import InputPassword from "@/components/inputField/inputPassword";
 import InputDropdown from "@/components/inputField/inputDropdown";
 import InputDatePicker from "@/components/inputField/inputDatePicker";
 import InputUpload from "@/components/inputField/inputUpload";
-import Link from "next/link";
 import axios from "axios";
 import type { UploadChangeParam } from "antd/es/upload";
 import { useRouter } from "next/navigation";
-import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
+import type { UploadFile, UploadProps } from "antd/es/upload/interface";
 
-const RegisterPage = () => {
+const ManageAdminPage = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -51,7 +49,7 @@ const RegisterPage = () => {
     values.profileImage = imageUrl;
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/users",
+        "http://localhost:5000/api/v1/admin",
         values
       );
       response && router.push("/login");
@@ -75,11 +73,7 @@ const RegisterPage = () => {
           }}
         >
           <div>
-            <Image
-              src={registerImage}
-              alt="Register Image"
-              layout="responsive"
-            />
+            <Image src={adminImage} alt="Register Image" layout="responsive" />
           </div>
         </Col>
         <Col
@@ -105,14 +99,8 @@ const RegisterPage = () => {
                 color: "#545EE1",
               }}
             >
-              REGISTER
+              CREATE A NEW ADMIN
             </h2>
-            <p>
-              Already have an account?{" "}
-              <Link href="/login" style={{ color: "#F76F01" }}>
-                Login
-              </Link>
-            </p>
           </div>
 
           <Form layout="vertical" onFinish={onFinish}>
@@ -185,7 +173,6 @@ const RegisterPage = () => {
                   imageUrl={imageUrl}
                   name="profileImage"
                   handleChange={handleChange}
-                  loading={loading}
                 />
               </Col>
             </Row>
@@ -206,4 +193,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default ManageAdminPage;

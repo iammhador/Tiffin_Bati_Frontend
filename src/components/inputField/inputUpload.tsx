@@ -8,7 +8,7 @@ import type { RcFile } from "antd/es/upload/interface";
 type InputUpload = {
   label: string;
   name: string;
-  loading: boolean;
+  loading?: boolean;
   handleChange: (info: any) => void;
   imageUrl: string | null;
   required?: boolean;
@@ -35,16 +35,8 @@ const InputUpload = ({
   required,
   message,
   imageUrl,
-  loading,
   handleChange,
 }: InputUpload) => {
-  const uploadButton = (
-    <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>user photo</div>
-    </div>
-  );
-
   return (
     <div style={{ margin: "0 4px" }}>
       <Form.Item

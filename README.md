@@ -113,17 +113,23 @@ Welcome to the Service Booking and Management Website assignment! In this projec
 - Users must log in to access their accounts.
 - Users can create and manage their profiles, including personal information and preferences.
 - Users should be able to view and edit their profiles easily.
+
 - Users can browse available services.
 - Implement a search feature allowing users to search services by name, location, and category.
 - Users should be able to filter services by price range and other relevant criteria.
+
 - Users can select services and choose available dates and times for booking(if applicable) .
+- Develop a user dashboard displaying booking history and statuses.
+- Users should have the option to cancel bookings if necessary.
+
 - Implement a smooth and user-friendly booking process with confirmation.
 - Users should be able to track the status of their bookings.
+
 - Users can leave reviews and ratings for services they have booked.
 - Reviews and ratings should be displayed on service listings.
 - Create a notifications center where users receive booking confirmations, reminders, and updates ( optional - readonly )
-- Develop a user dashboard displaying booking history and statuses.
-- Users should have the option to cancel bookings if necessary.
+
+
 - Design user-friendly feedback forms for users to submit comments and suggestions.
 
 ### Admin Functional Requirements

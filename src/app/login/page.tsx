@@ -7,8 +7,27 @@ import InputItem from "@/components/inputField/inputItem";
 import InputPassword from "@/components/inputField/inputPassword";
 import Link from "next/link";
 import axios from "axios";
+import {
+  getFromLocalStorage,
+  removeFromLocalStorage,
+  setToLocalStorage,
+} from "../utils/local-storage";
+import { decodedToken } from "../utils/jwt";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+type TokenInfo = {
+  userId: string;
+  name: string;
+  role: string;
+  iat: number;
+  exp: number;
+};
 
 const LoginPage = () => {
+  const [role, setRole] = useState<string>("");
+  const router = useRouter();
+
   const onFinish = async (values: any) => {
     try {
       const response = await axios.post(
@@ -17,8 +36,23 @@ const LoginPage = () => {
       );
 
       if (response.data.data.accessToken) {
-        localStorage.setItem("accessToken", response?.data?.data?.accessToken);
+        removeFromLocalStorage("accessToken");
+
+        setToLocalStorage(
+          "accessToken",
+          response?.data?.data?.accessToken as string
+        );
       }
+
+      const authToken = getFromLocalStorage("accessToken");
+
+      if (authToken) {
+        const tokenInfo = decodedToken(authToken as string) as TokenInfo;
+        const { role } = tokenInfo;
+        setRole(role);
+        router.push(role);
+      }
+
       response && message.success("User logged In Successfully.");
     } catch (error) {
       console.error("Error occurred:", error);
@@ -46,7 +80,7 @@ const LoginPage = () => {
           >
             <h2
               style={{
-                fontSize: "32px",
+                fontSize: "22px",
                 fontWeight: "600",
                 color: "#545EE1",
               }}
