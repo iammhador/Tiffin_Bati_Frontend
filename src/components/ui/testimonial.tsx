@@ -1,9 +1,9 @@
 "use client";
 
 import { Row, Col } from "antd";
-import sadmanSadik from "../../app/assets/sadman-sadik.png";
-import anisulIslam from "../../app/assets/anisul-islam.jpg";
-import jubaeTalukder from "../../app/assets/jubae-talukder.png";
+import sadmanSadik from "../../app/assets/testimonials/sadman-sadik.png";
+import anisulIslam from "../../app/assets/testimonials/anisul-islam.jpg";
+import jubaeTalukder from "../../app/assets/testimonials/jubae-talukder.png";
 
 import Image from "next/image";
 

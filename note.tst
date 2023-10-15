@@ -12,17 +12,18 @@ PARAGRAPH : #445069
 
 ----------------------------------------------------------------<<
 
-Login Page 
-<<== COMPLETED ==>>
 
+<<== COMPLETED ==>>
+# Register Page
+# Photo System Add
+# Login Page
 
 <<== ON GOING  ==>>
 
 
 <<== HAVE TO COMPLETE ==>>
-# Photo System Add
-# Login Page
-# Register Page
+
+
 # Private Route
 # Dashboard Layout Page
 # Super Admin => @1 Super admin can add new admin

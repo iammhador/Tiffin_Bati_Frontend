@@ -3,12 +3,12 @@
 import React from "react";
 import { Row, Col, Card } from "antd";
 import Image from "next/image";
-import variety from "../../app/assets/variety.png";
-import affordability from "../../app/assets/affordability.png";
-import convenient from "../../app/assets/convenient.png";
-import nutrition from "../../app/assets/nutrition.png";
-import homeMade from "../../app/assets/home-made.png";
-import delivery from "../../app/assets/delivery-man.png";
+import variety from "../../app/assets/aboutUs/variety.png";
+import affordability from "../../app/assets/aboutUs/affordability.png";
+import convenient from "../../app/assets/aboutUs/convenient.png";
+import nutrition from "../../app/assets/aboutUs/nutrition.png";
+import homeMade from "../../app/assets/aboutUs/home-made.png";
+import delivery from "../../app/assets/aboutUs/delivery-man.png";
 
 function AboutUsPage() {
   const serviceInfo: {

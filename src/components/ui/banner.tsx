@@ -105,7 +105,7 @@ const BannerPage = () => {
           alignSelf: "center",
         }}
       >
-        <Image src={banner} width={450} height={450} alt="Tiffin Bati Banner" />
+        <Image src={banner} layout="responsive" alt="Tiffin Bati Banner" />
       </Col>
     </Row>
   );

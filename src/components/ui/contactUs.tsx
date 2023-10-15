@@ -56,12 +56,7 @@ const ContactUsPage = () => {
               If you have any queries let us know!
             </p>
           </div>
-          <Image
-            src={contactUs}
-            width={250}
-            height={250}
-            alt="Contact US Image"
-          />
+          <Image src={contactUs} alt="Contact US Image" layout="responsive" />
         </Col>
         <Col xs={24} md={12}>
           <Form onFinish={handleSubmit} layout="vertical" noValidate>
