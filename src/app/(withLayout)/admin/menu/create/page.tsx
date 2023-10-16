@@ -5,7 +5,6 @@ import Image from "next/image";
 import menuImage from "../../../../assets/input/menu.png";
 import InputItem from "@/components/inputField/inputItem";
 import type { UploadChangeParam } from "antd/es/upload";
-import { useRouter } from "next/navigation";
 import type { UploadFile, UploadProps } from "antd/es/upload/interface";
 import axios from "axios";
 import { getFromLocalStorage } from "@/app/utils/local-storage";

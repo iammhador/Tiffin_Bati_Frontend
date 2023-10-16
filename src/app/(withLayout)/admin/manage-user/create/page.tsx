@@ -10,18 +10,13 @@ import InputPassword from "@/components/inputField/inputPassword";
 import InputDropdown from "@/components/inputField/inputDropdown";
 import InputDatePicker from "@/components/inputField/inputDatePicker";
 import InputUpload from "@/components/inputField/inputUpload";
-import Link from "next/link";
 import axios from "axios";
 import type { UploadChangeParam } from "antd/es/upload";
-import { useRouter } from "next/navigation";
 import type { UploadFile, UploadProps } from "antd/es/upload/interface";
-import HeaderPage from "@/components/ui/header";
 
 const CreateUserPage = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-
-  const router = useRouter();
 
   const handleDateChange = (date: dayjs.ConfigType, dateString: string) => {
     const formattedDate = dayjs(dateString).format("YYYY-MM-DD");

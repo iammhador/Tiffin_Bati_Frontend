@@ -29,7 +29,6 @@ const SeeAllMenuAndOperation = () => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
-  const [initialData, setInitialData] = useState<DataType | null>(null);
 
   //@ Fetch All Menu =>
   const {
@@ -53,8 +52,10 @@ const SeeAllMenuAndOperation = () => {
       const response = await axios.delete(
         `http://localhost:5000/api/v1/menu/${menu.key}`
       );
+      if (response) {
+        message.success("Menu deleted successfully", response.data);
+      }
       refetch();
-      message.success("Menu deleted successfully", response.data);
     } catch (error) {
       message.error("Error deleting menu" + error);
     }
@@ -219,13 +220,13 @@ const SeeAllMenuAndOperation = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Link href={`/admin/menu/edit?&${record.key}`}>Edit</Link>
+          <Link href={`/admin/menu/edit/${record.key}`}>Edit</Link>
           <a
             onClick={() => {
               Modal.confirm({
                 title: "Confirm",
                 icon: <ExclamationCircleOutlined />,
-                content: `Are you sure you want to delete ${record.name}?`,
+                content: `Are you sure you want to delete " ${record.name} " ?`,
                 okText: "Delete",
                 cancelText: "Cancel",
                 onOk: () => handleDelete(record),

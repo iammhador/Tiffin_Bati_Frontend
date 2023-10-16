@@ -1,13 +1,10 @@
 "use client";
 
-import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { Button, Col, Form, Row, message } from "antd";
 import Image from "next/image";
-import updateImage from "../../assets/input/update.png";
+import menuImage from "../../../../../assets/input/menu.png";
 import InputItem from "@/components/inputField/inputItem";
-import InputPassword from "@/components/inputField/inputPassword";
-import InputDropdown from "@/components/inputField/inputDropdown";
 import InputUpload from "@/components/inputField/inputUpload";
 import axios from "axios";
 import type { UploadChangeParam } from "antd/es/upload";
@@ -20,11 +17,15 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import InputDatePicker from "@/components/inputField/inputDatePicker";
 import { TokenInfo } from "@/app/constants/global";
 
-const AdminManagePage = () => {
-  const [selectedDate, setSelectedDate] = useState("");
+type IDProps = {
+  params: {
+    id: string;
+  };
+};
+const AdminCreatedMenuEditPage = ({ params }: IDProps) => {
+  const { id } = params;
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [useId, setUserId] = useState<string>("");
 
@@ -42,7 +43,7 @@ const AdminManagePage = () => {
     queryKey: ["repoData"],
     queryFn: () =>
       axios
-        .get(`http://localhost:5000/api/v1/admin/${useId}`)
+        .get(`http://localhost:5000/api/v1/menu/${id}`)
         .then((res) => res.data),
     refetchInterval: 10000,
   });
@@ -52,11 +53,6 @@ const AdminManagePage = () => {
   if (error) {
     return message.error("An error has occurred: " + error);
   }
-
-  const handleDateChange = (date: dayjs.ConfigType, dateString: string) => {
-    const formattedDate = dayjs(dateString).format("YYYY-MM-DD");
-    setSelectedDate(formattedDate);
-  };
 
   const handleChange: UploadProps["onChange"] = async (
     info: UploadChangeParam<UploadFile>
@@ -77,22 +73,22 @@ const AdminManagePage = () => {
   };
 
   const onFinish = async (values: any) => {
-    console.log(values);
-    values.dateOfBirth = selectedDate ? selectedDate : data?.data?.dateOfBirth;
-    values.profileImage = imageUrl ? imageUrl : data?.data?.profileImage;
+    values.image = imageUrl ? imageUrl : data?.data?.image;
+    values.adminId = useId ? useId : data?.data?.adminId;
+
     try {
       const response = await axios.patch(
-        `http://localhost:5000/api/v1/admin/${useId}`,
+        `http://localhost:5000/api/v1/menu/${id}`,
         values
       );
-      message.success("Admin Information Updated Successfully.");
+      message.success("Menu Updated Successfully.");
     } catch (error) {
       console.error("Error occurred:", error);
     }
   };
 
   return (
-    <div style={{ margin: "0% 4%", height: "100vh" }}>
+    <div style={{ margin: "0% 4%" }}>
       <Row>
         <Col
           xs={{ span: 24, order: 2 }}
@@ -105,7 +101,7 @@ const AdminManagePage = () => {
           }}
         >
           <div>
-            <Image src={updateImage} alt="Register Image" layout="responsive" />
+            <Image src={menuImage} alt="Register Image" layout="responsive" />
           </div>
         </Col>
         <Col
@@ -139,71 +135,28 @@ const AdminManagePage = () => {
             <Row>
               <Col
                 xs={{ span: 24, order: 1 }}
-                sm={{ span: 12, order: 1 }}
-                md={{ span: 12, order: 1 }}
-                lg={{ span: 12, order: 1 }}
+                sm={{ span: 24, order: 1 }}
+                md={{ span: 24, order: 1 }}
+                lg={{ span: 24, order: 1 }}
               >
                 <InputItem
-                  label="username"
-                  name="username"
-                  message="Please input your username"
+                  label="title"
+                  name="title"
+                  message="Please input your menu title"
                   type="text"
-                  placeholder={data?.data?.username}
-                  defaultValue={data?.data?.username}
-                />
-                <InputPassword
-                  label="password"
-                  name="password"
-                  message="Please input your password"
-                  type="password"
-                  placeholder={data?.data?.password}
-                  defaultValue={data?.data?.password}
-                />
-                <InputDatePicker handleDateChange={handleDateChange} />
-                <InputItem
-                  label="address"
-                  name="address"
-                  message="Please input your address"
-                  type="text"
-                  placeholder={data?.data?.address}
-                  defaultValue={data?.data?.address}
-                />
-              </Col>
-              <Col
-                xs={{ span: 24, order: 2 }}
-                sm={{ span: 12, order: 2 }}
-                md={{ span: 12, order: 2 }}
-                lg={{ span: 12, order: 2 }}
-              >
-                <InputItem
-                  label="email"
-                  name="email"
-                  message="Please input your email"
-                  type="text"
-                  placeholder={data?.data?.email}
-                  defaultValue={data?.data?.email}
+                  placeholder={data?.data?.title}
                 />
                 <InputItem
-                  label="contact no"
-                  name="contactNo"
-                  message="Please input your contact number"
+                  label="category"
+                  name="category"
+                  message="Please input your menu category"
                   type="text"
-                  placeholder={data?.data?.contactNo}
-                  defaultValue={data?.data?.contactNo}
+                  placeholder={data?.data?.category}
                 />
-
-                <InputDropdown
-                  label="gender"
-                  name="gender"
-                  message="Please select your gender"
-                  placeholder={data?.data?.gender}
-                  defaultValue={data?.data?.gender}
-                />
-
                 <InputUpload
                   label="photo"
                   imageUrl={imageUrl}
-                  name="profileImage"
+                  name="image"
                   handleChange={handleChange}
                 />
               </Col>
@@ -227,10 +180,10 @@ const AdminManagePage = () => {
 
 const queryClient = new QueryClient();
 
-const AccountManagePageQueryClient = () => (
+const MenuPageQueryClient = ({ params }: any) => (
   <QueryClientProvider client={queryClient}>
-    <AdminManagePage />
+    <AdminCreatedMenuEditPage params={params} />
   </QueryClientProvider>
 );
 
-export default AccountManagePageQueryClient;
+export default MenuPageQueryClient;

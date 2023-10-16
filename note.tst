@@ -43,16 +43,17 @@ PARAGRAPH : #445069
 
 # Super admin can change admin role to user
 # Admin Page => 
-                @2 Create, Delete, Edit User information
-                @3 Delete,  Menu
-                @4  Delete, Edit Price
-                @5  Delete, Edit Faq
-                @6  Delete, Edit Feedback
-                @7  Delete, Edit Blog
+                @2  Edit User information
+      
+                @4  Edit Price
+                @5  Edit Faq
+                @6  Edit Feedback
+                @7  Edit Blog
                 @8 Edit Subscription
-                @9 Edit, Delete, Upcoming New Food
-                @10 Delete, Upcoming Today Food
+                @9 Edit Upcoming New Food
+                @10 Edit Upcoming Today Food
            
            
 
            @reset all form check
+           @menu pagination and filter

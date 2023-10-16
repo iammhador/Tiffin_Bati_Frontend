@@ -65,21 +65,6 @@ export const SidebarItems = (role: string) => {
       ],
     },
     {
-      label: "Today meal",
-      icon: <TableOutlined />,
-      key: `admin-today-meal`,
-      children: [
-        {
-          label: <Link href={`/${role}/today-meal/see-all`}>See All</Link>,
-          key: `/${role}/today-meal/see-all`,
-        },
-        {
-          label: <Link href={`/${role}/today-meal/create`}>Create</Link>,
-          key: `/${role}/today-meal/create`,
-        },
-      ],
-    },
-    {
       label: "Upcoming Menu",
       icon: <SendOutlined />,
       key: `/${role}/upcoming-menu`,
@@ -91,6 +76,21 @@ export const SidebarItems = (role: string) => {
         {
           label: <Link href={`/${role}/upcoming-menu/create`}>Create</Link>,
           key: `/${role}/upcoming-menu/create`,
+        },
+      ],
+    },
+    {
+      label: "Today meal",
+      icon: <TableOutlined />,
+      key: `admin-today-meal`,
+      children: [
+        {
+          label: <Link href={`/${role}/today-meal/see-all`}>See All</Link>,
+          key: `/${role}/today-meal/see-all`,
+        },
+        {
+          label: <Link href={`/${role}/today-meal/create`}>Create</Link>,
+          key: `/${role}/today-meal/create`,
         },
       ],
     },
@@ -115,9 +115,9 @@ export const SidebarItems = (role: string) => {
       key: `/${role}/subscription`,
     },
     {
-      label: <Link href={`/${role}/see-feedback`}>See Feedback</Link>,
+      label: <Link href={`/${role}/feedback`}>Feedback</Link>,
       icon: <CompressOutlined />,
-      key: `/${role}/see-feedback`,
+      key: `/${role}/feedback`,
     },
     {
       label: "FAQ",

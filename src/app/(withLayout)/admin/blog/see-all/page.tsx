@@ -21,17 +21,17 @@ interface DataType {
 
 type DataIndex = keyof DataType;
 
-const SeeFAQAndOperation = () => {
-  //@ Fetch All FAQ =>
+const SeeBlogAndOperation = () => {
+  //@ Fetch All Blog =>
   const {
     isLoading,
     error,
-    data: faqData,
+    data: blogData,
     refetch,
   } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
-      axios.get("http://localhost:5000/api/v1/faq").then((res) => res.data),
+      axios.get("http://localhost:5000/api/v1/blog").then((res) => res.data),
   });
 
   if (isLoading) return <Loading />;
@@ -42,10 +42,10 @@ const SeeFAQAndOperation = () => {
   const handleDelete = async (record: DataType) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/v1/faq/${record?.id}`
+        `http://localhost:5000/api/v1/blog/${record?.id}`
       );
       if (response) {
-        message.success("FAQ Deleted!");
+        message.success("Blog Deleted!");
       }
       refetch();
     } catch (error) {
@@ -53,7 +53,7 @@ const SeeFAQAndOperation = () => {
     }
   };
 
-  const getPriceId = (record: any, index: number) => {
+  const getBlogId = (record: any, index: number) => {
     if (record.id) {
       return record.id.toString();
     } else {
@@ -73,10 +73,10 @@ const SeeFAQAndOperation = () => {
     }
   };
 
-  const dataSource = faqData.data.map((record: any, index: number) => {
+  const dataSource = blogData.data.map((record: any, index: number) => {
     return {
       ...record,
-      key: getPriceId(record, index),
+      key: getBlogId(record, index),
       createdAt: getCreatedAt(record, index),
     };
   });
@@ -145,7 +145,7 @@ const SeeFAQAndOperation = () => {
           margin: "3% 0",
         }}
       >
-        FAQ LIST
+        BLOG LIST
       </h3>
       <Table columns={columns} dataSource={dataSource} pagination={false} />
     </div>
@@ -154,10 +154,10 @@ const SeeFAQAndOperation = () => {
 
 const queryClient = new QueryClient();
 
-const SeeAllFAQWithQueryClient = () => (
+const SeeAllBlogWithQueryClient = () => (
   <QueryClientProvider client={queryClient}>
-    <SeeFAQAndOperation />
+    <SeeBlogAndOperation />
   </QueryClientProvider>
 );
 
-export default SeeAllFAQWithQueryClient;
+export default SeeAllBlogWithQueryClient;
