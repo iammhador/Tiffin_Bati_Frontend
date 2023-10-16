@@ -1,10 +1,8 @@
 import type { MenuProps } from "antd";
 import {
   MergeCellsOutlined,
-  ProfileOutlined,
   TableOutlined,
-  ScheduleOutlined,
-  ThunderboltOutlined,
+  UserOutlined,
   MenuOutlined,
   BorderlessTableOutlined,
   BlockOutlined,
@@ -37,24 +35,79 @@ export const SidebarItems = (role: string) => {
   const adminSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
     {
-      label: <Link href={`/${role}/menu`}>Create Menu</Link>,
+      label: "Manage User",
+      key: "admin-manage-user",
+      icon: <UserOutlined />,
+      children: [
+        {
+          label: <Link href={`/${role}/manage-user/see-all`}>See All</Link>,
+          key: `/${role}/manage-user/see-all`,
+        },
+        {
+          label: <Link href={`/${role}/manage-user/create`}>Create</Link>,
+          key: `/${role}/manage-user/create`,
+        },
+      ],
+    },
+    {
+      label: "Menu",
+      key: "admin-menu",
       icon: <MenuOutlined />,
-      key: `/${role}/menu`,
+      children: [
+        {
+          label: <Link href={`/${role}/menu/see-all`}>See All</Link>,
+          key: `/${role}/menu/see-all`,
+        },
+        {
+          label: <Link href={`/${role}/menu/create`}>Create</Link>,
+          key: `/${role}/menu/create`,
+        },
+      ],
     },
     {
-      label: <Link href={`/${role}/today-mean`}>Today meal</Link>,
+      label: "Today meal",
       icon: <TableOutlined />,
-      key: `/${role}/today-meal`,
+      key: `admin-today-meal`,
+      children: [
+        {
+          label: <Link href={`/${role}/today-meal/see-all`}>See All</Link>,
+          key: `/${role}/today-meal/see-all`,
+        },
+        {
+          label: <Link href={`/${role}/today-meal/create`}>Create</Link>,
+          key: `/${role}/today-meal/create`,
+        },
+      ],
     },
     {
-      label: <Link href={`/${role}/upcoming-food`}>Upcoming Food</Link>,
+      label: "Upcoming Menu",
       icon: <SendOutlined />,
-      key: `/${role}/upcoming-food`,
+      key: `/${role}/upcoming-menu`,
+      children: [
+        {
+          label: <Link href={`/${role}/upcoming-menu/see-all`}>See All</Link>,
+          key: `/${role}/upcoming-menu/see-all`,
+        },
+        {
+          label: <Link href={`/${role}/upcoming-menu/create`}>Create</Link>,
+          key: `/${role}/upcoming-menu/create`,
+        },
+      ],
     },
     {
-      label: <Link href={`/${role}/price-and-plan`}>price & Plan</Link>,
+      label: "price & Plan",
       icon: <TableOutlined />,
       key: `/${role}/price-and-plan`,
+      children: [
+        {
+          label: <Link href={`/${role}/price-and-plan/see-all`}>See All</Link>,
+          key: `/${role}/price-and-plan/see-all`,
+        },
+        {
+          label: <Link href={`/${role}/price-and-plan/create`}>Create</Link>,
+          key: `/${role}/price-and-plan/create`,
+        },
+      ],
     },
     {
       label: <Link href={`/${role}/subscription`}>Subscription</Link>,
@@ -67,14 +120,34 @@ export const SidebarItems = (role: string) => {
       key: `/${role}/see-feedback`,
     },
     {
-      label: <Link href={`/${role}/faq`}>FAQ</Link>,
+      label: "FAQ",
       icon: <BlockOutlined />,
       key: `/${role}/faq`,
+      children: [
+        {
+          label: <Link href={`/${role}/faq/see-all`}>See All</Link>,
+          key: `/${role}/faq/see-all`,
+        },
+        {
+          label: <Link href={`/${role}/faq/create`}>Create</Link>,
+          key: `/${role}/faq/create`,
+        },
+      ],
     },
     {
-      label: <Link href={`/${role}/blog`}>Blog</Link>,
+      label: "Blog",
       icon: <RobotOutlined />,
       key: `/${role}/blog`,
+      children: [
+        {
+          label: <Link href={`/${role}/blog/see-all`}>See All</Link>,
+          key: `/${role}/blog/see-all`,
+        },
+        {
+          label: <Link href={`/${role}/blog/create`}>Create</Link>,
+          key: `/${role}/blog/create`,
+        },
+      ],
     },
   ];
 
@@ -91,9 +164,19 @@ export const SidebarItems = (role: string) => {
       key: `/${role}/subscription`,
     },
     {
-      label: <Link href={`/${role}/feedback`}>Feedback</Link>,
+      label: "Feedback",
       icon: <CompressOutlined />,
       key: `/${role}/feedback`,
+      children: [
+        {
+          label: <Link href={`/${role}/feedback/see-all`}>See All</Link>,
+          key: `/${role}/feedback/see-all`,
+        },
+        {
+          label: <Link href={`/${role}/feedback/create`}>Create</Link>,
+          key: `/${role}/feedback/create`,
+        },
+      ],
     },
   ];
 

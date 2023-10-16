@@ -8,6 +8,7 @@ type InputDropdown = {
   size?: string;
   placeholder?: string;
   defaultValue?: string;
+  inputOptions?: { label: string; value: string }[];
 };
 
 const InputDropdown = ({
@@ -17,6 +18,7 @@ const InputDropdown = ({
   message,
   placeholder,
   defaultValue,
+  inputOptions,
 }: InputDropdown) => {
   const options = [
     { label: "male", value: "male" },
@@ -38,7 +40,7 @@ const InputDropdown = ({
         <Select
           size="large"
           style={{ width: "100%" }}
-          options={options}
+          options={inputOptions ? inputOptions : options}
           placeholder={placeholder}
           defaultValue={defaultValue}
         />

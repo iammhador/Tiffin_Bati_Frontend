@@ -2,20 +2,13 @@
 
 import { Button, Col, Form, Row, message } from "antd";
 import Image from "next/image";
-import LoginImage from "../../app/assets/login.png";
+import blogImage from "../../../../assets/input/blog.png";
 import InputItem from "@/components/inputField/inputItem";
-import InputPassword from "@/components/inputField/inputPassword";
-import Link from "next/link";
 import axios from "axios";
-import {
-  getFromLocalStorage,
-  removeFromLocalStorage,
-  setToLocalStorage,
-} from "../utils/local-storage";
-import { decodedToken } from "../utils/jwt";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import HeaderPage from "@/components/ui/header";
+import { getFromLocalStorage } from "@/app/utils/local-storage";
+import { decodedToken } from "@/app/utils/jwt";
+import { useEffect, useState } from "react";
+import InputTextArea from "@/components/inputField/inputTextAre";
 
 type TokenInfo = {
   userId: string;
@@ -25,36 +18,31 @@ type TokenInfo = {
   exp: number;
 };
 
-const LoginPage = () => {
-  const [role, setRole] = useState<string>("");
-  const router = useRouter();
+const AdminCreateBlogPage = () => {
+  const [adminId, setAdminId] = useState<string>("");
+  const [form] = Form.useForm();
+  const authToken = getFromLocalStorage("accessToken");
+
+  useEffect(() => {
+    if (authToken) {
+      const tokenInfo = decodedToken(authToken as string) as TokenInfo;
+      const { userId } = tokenInfo;
+      setAdminId(userId);
+    }
+  }, [authToken]);
 
   const onFinish = async (values: any) => {
+    values.adminId = adminId;
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/auth/login",
+        "http://localhost:5000/api/v1/blog",
         values
       );
 
-      if (response.data.data.accessToken) {
-        removeFromLocalStorage("accessToken");
-
-        setToLocalStorage(
-          "accessToken",
-          response?.data?.data?.accessToken as string
-        );
+      if (response) {
+        message.success("Blog Created!");
+        form.resetFields();
       }
-
-      const authToken = getFromLocalStorage("accessToken");
-
-      if (authToken) {
-        const tokenInfo = decodedToken(authToken as string) as TokenInfo;
-        const { role } = tokenInfo;
-        setRole(role);
-        router.push(role);
-      }
-
-      response && message.success("User Logged In Successfully.");
     } catch (error) {
       return message.error("An error has occurred: " + error);
     }
@@ -62,7 +50,6 @@ const LoginPage = () => {
 
   return (
     <div>
-      <HeaderPage />
       <div style={{ margin: "0% 4%" }}>
         <Row justify="center" align="middle">
           <Col
@@ -88,17 +75,11 @@ const LoginPage = () => {
                   color: "#545EE1",
                 }}
               >
-                LOGIN
+                CREATE A NEW BLOG
               </h2>
-              <p>
-                Do not have an account?{" "}
-                <Link href="/register" style={{ color: "#F76F01" }}>
-                  Register
-                </Link>
-              </p>
             </div>
 
-            <Form layout="vertical" onFinish={onFinish}>
+            <Form layout="vertical" onFinish={onFinish} form={form}>
               <Row>
                 <Col
                   xs={{ span: 24, order: 1 }}
@@ -107,21 +88,20 @@ const LoginPage = () => {
                   lg={{ span: 24, order: 1 }}
                 >
                   <InputItem
-                    label="username"
-                    name="username"
+                    label="title"
+                    name="title"
                     required={true}
-                    message="Please input your username"
+                    message="Please input your menu title"
                     type="text"
-                    placeholder="iammhador"
+                    placeholder="The Ultimate Guide to Healthy Eating: Nourish Your Body and Mind"
                   />
-
-                  <InputPassword
-                    label="password"
-                    name="password"
+                  <InputTextArea
+                    label="description"
+                    name="description"
                     required={true}
-                    message="Please input your password"
-                    type="password"
-                    placeholder="********"
+                    message="Please input your menu description"
+                    type="text"
+                    placeholder="Learn the importance of a balanced diet and how making mindful food choices can positively impact your overall well-being. Explore a variety of delicious and nutritious recipes, and discover the key components of a healthy eating plan that can help you achieve your wellness goals."
                   />
                 </Col>
               </Row>
@@ -148,11 +128,7 @@ const LoginPage = () => {
             }}
           >
             <div>
-              <Image
-                src={LoginImage}
-                alt="Register Image"
-                layout="responsive"
-              />
+              <Image src={blogImage} alt="Register Image" layout="responsive" />
             </div>
           </Col>
         </Row>
@@ -161,4 +137,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default AdminCreateBlogPage;

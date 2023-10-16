@@ -12,14 +12,11 @@ import InputDatePicker from "@/components/inputField/inputDatePicker";
 import InputUpload from "@/components/inputField/inputUpload";
 import axios from "axios";
 import type { UploadChangeParam } from "antd/es/upload";
-import { useRouter } from "next/navigation";
 import type { UploadFile, UploadProps } from "antd/es/upload/interface";
 
 const ManageAdminPage = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-
-  const router = useRouter();
 
   const handleDateChange = (date: dayjs.ConfigType, dateString: string) => {
     const formattedDate = dayjs(dateString).format("YYYY-MM-DD");
@@ -46,21 +43,21 @@ const ManageAdminPage = () => {
 
   const onFinish = async (values: any) => {
     values.dateOfBirth = selectedDate;
-    values.profileImage = imageUrl;
+    values.profileImage = imageUrl ? imageUrl : null;
     try {
       const response = await axios.post(
         "http://localhost:5000/api/v1/admin",
         values
       );
-      response && router.push("/login");
-      message.success("User registered successfully.");
+
+      message.success("New Admin Created Successfully.");
     } catch (error) {
       console.error("Error occurred:", error);
     }
   };
 
   return (
-    <div style={{ margin: "0% 4%" }}>
+    <div style={{ margin: "0% 4%", height: "100vh" }}>
       <Row>
         <Col
           xs={{ span: 24, order: 2 }}
@@ -127,7 +124,10 @@ const ManageAdminPage = () => {
                   type="password"
                   placeholder="********"
                 />
-                <InputDatePicker handleDateChange={handleDateChange} />
+                <InputDatePicker
+                  handleDateChange={handleDateChange}
+                  required={true}
+                />
                 <InputItem
                   label="address"
                   name="address"

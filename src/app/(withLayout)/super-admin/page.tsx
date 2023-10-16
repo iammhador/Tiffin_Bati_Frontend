@@ -4,11 +4,10 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { Button, Col, Form, Row, message } from "antd";
 import Image from "next/image";
-import registerImage from "../../assets/banner.png";
+import updateImage from "../../assets/input/update.png";
 import InputItem from "@/components/inputField/inputItem";
 import InputPassword from "@/components/inputField/inputPassword";
 import InputDropdown from "@/components/inputField/inputDropdown";
-import InputDatePicker from "@/components/inputField/inputDatePicker";
 import InputUpload from "@/components/inputField/inputUpload";
 import axios from "axios";
 import type { UploadChangeParam } from "antd/es/upload";
@@ -21,6 +20,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+import InputDatePicker from "@/components/inputField/inputDatePicker";
 
 type TokenInfo = {
   userId: string;
@@ -45,7 +45,7 @@ const SuperAdminManagePage = () => {
     }
   }, [authToken]);
 
-  const { isLoading, error, data, isFetching } = useQuery({
+  const { isLoading, error, data } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
       axios
@@ -56,7 +56,9 @@ const SuperAdminManagePage = () => {
 
   if (isLoading) return <Loading />;
 
-  if (error) return "An error has occurred: " + error;
+  if (error) {
+    return message.error("An error has occurred: " + error);
+  }
 
   const handleDateChange = (date: dayjs.ConfigType, dateString: string) => {
     const formattedDate = dayjs(dateString).format("YYYY-MM-DD");
@@ -82,8 +84,8 @@ const SuperAdminManagePage = () => {
   };
 
   const onFinish = async (values: any) => {
-    values.dateOfBirth = selectedDate;
-    values.profileImage = imageUrl;
+    values.dateOfBirth = selectedDate ? selectedDate : data?.data?.dateOfBirth;
+    values.profileImage = imageUrl ? imageUrl : data?.data?.profileImage;
     try {
       const response = await axios.patch(
         `http://localhost:5000/api/v1/super-admin/${useId}`,
@@ -96,7 +98,7 @@ const SuperAdminManagePage = () => {
   };
 
   return (
-    <div style={{ margin: "0% 4%" }}>
+    <div style={{ margin: "0% 4%", height: "100vh" }}>
       <Row>
         <Col
           xs={{ span: 24, order: 2 }}
@@ -109,11 +111,7 @@ const SuperAdminManagePage = () => {
           }}
         >
           <div>
-            <Image
-              src={registerImage}
-              alt="Register Image"
-              layout="responsive"
-            />
+            <Image src={updateImage} alt="Register Image" layout="responsive" />
           </div>
         </Col>
         <Col
@@ -167,7 +165,7 @@ const SuperAdminManagePage = () => {
                   placeholder={data?.data?.password}
                   defaultValue={data?.data?.password}
                 />
-                {/* <InputDatePicker handleDateChange={handleDateChange} /> */}
+                <InputDatePicker handleDateChange={handleDateChange} />
                 <InputItem
                   label="address"
                   name="address"

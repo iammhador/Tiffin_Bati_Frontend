@@ -17,12 +17,14 @@
     "next": "13.5.4",
     "react": "^18",
     "react-dom": "^18",
+    "react-highlight-words": "^0.20.0",
     "react-loader-spinner": "^5.4.5"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-highlight-words": "^0.16.5",
     "eslint": "^8",
     "eslint-config-next": "13.5.4",
     "typescript": "^5"

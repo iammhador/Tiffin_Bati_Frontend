@@ -86,10 +86,8 @@ Welcome to the Service Booking and Management Website assignment! In this projec
 
 - Develop a feature that allows super admins to add new admin users.
 - Provide options for managing admin roles.
-    
-    ### Profile Management
-    
-    - Create a profile management system for super admins to update their personal information.
+  ### Profile Management
+  - Create a profile management system for super admins to update their personal information.
 
 ### Homepage Contents
 
@@ -129,7 +127,6 @@ Welcome to the Service Booking and Management Website assignment! In this projec
 - Reviews and ratings should be displayed on service listings.
 - Create a notifications center where users receive booking confirmations, reminders, and updates ( optional - readonly )
 
-
 - Design user-friendly feedback forms for users to submit comments and suggestions.
 
 ### Admin Functional Requirements
@@ -156,7 +153,7 @@ Welcome to the Service Booking and Management Website assignment! In this projec
 - Integrate a pagination system, filtering capabilities, and sorting functionality into your backend API to enhance the user experience, simplify navigation, and enable convenient access to pertinent data.
 - Prioritize proper error handling throughout your codebase.
 - Maintain coding best practices to ensure code quality and readability.
-- To prevent deployment issues on the backend, avoid using a logger & image upload( for multer only)  unless it is explicitly required for debugging or monitoring purposes.
+- To prevent deployment issues on the backend, avoid using a logger & image upload( for multer only) unless it is explicitly required for debugging or monitoring purposes.
 - Marks for enhancing the user experience of your project. Focus on enhancing usability, accessibility, and overall user satisfaction.
 
 ### Examples of Services

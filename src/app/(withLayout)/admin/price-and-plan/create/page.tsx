@@ -2,20 +2,14 @@
 
 import { Button, Col, Form, Row, message } from "antd";
 import Image from "next/image";
-import LoginImage from "../../app/assets/login.png";
+import priceAndPlanImage from "../../../../assets/input/price.png";
 import InputItem from "@/components/inputField/inputItem";
-import InputPassword from "@/components/inputField/inputPassword";
-import Link from "next/link";
 import axios from "axios";
-import {
-  getFromLocalStorage,
-  removeFromLocalStorage,
-  setToLocalStorage,
-} from "../utils/local-storage";
-import { decodedToken } from "../utils/jwt";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import HeaderPage from "@/components/ui/header";
+import { getFromLocalStorage } from "@/app/utils/local-storage";
+import { decodedToken } from "@/app/utils/jwt";
+import { useEffect, useState } from "react";
+import InputTextArea from "@/components/inputField/inputTextAre";
+import InputDropdown from "@/components/inputField/inputDropdown";
 
 type TokenInfo = {
   userId: string;
@@ -25,36 +19,36 @@ type TokenInfo = {
   exp: number;
 };
 
-const LoginPage = () => {
-  const [role, setRole] = useState<string>("");
-  const router = useRouter();
+const options = [
+  { label: "Monthly", value: "Monthly" },
+  { label: "Yearly", value: "Yearly" },
+];
+
+const AdminCreatePriceAndPlanPage = () => {
+  const [adminId, setAdminId] = useState<string>("");
+  const [form] = Form.useForm();
+  const authToken = getFromLocalStorage("accessToken");
+
+  useEffect(() => {
+    if (authToken) {
+      const tokenInfo = decodedToken(authToken as string) as TokenInfo;
+      const { userId } = tokenInfo;
+      setAdminId(userId);
+    }
+  }, [authToken]);
 
   const onFinish = async (values: any) => {
+    values.adminId = adminId;
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/auth/login",
+        "http://localhost:5000/api/v1/price-and-plan",
         values
       );
 
-      if (response.data.data.accessToken) {
-        removeFromLocalStorage("accessToken");
-
-        setToLocalStorage(
-          "accessToken",
-          response?.data?.data?.accessToken as string
-        );
+      if (response) {
+        message.success("Price And Plan Added!!");
+        form.resetFields();
       }
-
-      const authToken = getFromLocalStorage("accessToken");
-
-      if (authToken) {
-        const tokenInfo = decodedToken(authToken as string) as TokenInfo;
-        const { role } = tokenInfo;
-        setRole(role);
-        router.push(role);
-      }
-
-      response && message.success("User Logged In Successfully.");
     } catch (error) {
       return message.error("An error has occurred: " + error);
     }
@@ -62,7 +56,6 @@ const LoginPage = () => {
 
   return (
     <div>
-      <HeaderPage />
       <div style={{ margin: "0% 4%" }}>
         <Row justify="center" align="middle">
           <Col
@@ -88,17 +81,11 @@ const LoginPage = () => {
                   color: "#545EE1",
                 }}
               >
-                LOGIN
+                PRICE & PLAN
               </h2>
-              <p>
-                Do not have an account?{" "}
-                <Link href="/register" style={{ color: "#F76F01" }}>
-                  Register
-                </Link>
-              </p>
             </div>
 
-            <Form layout="vertical" onFinish={onFinish}>
+            <Form layout="vertical" onFinish={onFinish} form={form}>
               <Row>
                 <Col
                   xs={{ span: 24, order: 1 }}
@@ -106,22 +93,29 @@ const LoginPage = () => {
                   md={{ span: 24, order: 1 }}
                   lg={{ span: 24, order: 1 }}
                 >
-                  <InputItem
-                    label="username"
-                    name="username"
+                  <InputDropdown
+                    label="Subscription"
+                    placeholder="Monthly"
+                    name="subscription"
                     required={true}
-                    message="Please input your username"
-                    type="text"
-                    placeholder="iammhador"
+                    message="Please select subscription"
+                    inputOptions={options}
                   />
-
-                  <InputPassword
-                    label="password"
-                    name="password"
+                  <InputItem
+                    label="Content"
+                    name="content"
                     required={true}
-                    message="Please input your password"
-                    type="password"
-                    placeholder="********"
+                    message="Please input your lunch or dinner or both"
+                    type="text"
+                    placeholder="Lunch & Dinner"
+                  />
+                  <InputItem
+                    label="Price"
+                    name="price"
+                    required={true}
+                    message="Please input price"
+                    type="text"
+                    placeholder="5700"
                   />
                 </Col>
               </Row>
@@ -149,7 +143,7 @@ const LoginPage = () => {
           >
             <div>
               <Image
-                src={LoginImage}
+                src={priceAndPlanImage}
                 alt="Register Image"
                 layout="responsive"
               />
@@ -161,4 +155,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default AdminCreatePriceAndPlanPage;

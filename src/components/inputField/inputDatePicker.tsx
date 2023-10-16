@@ -3,9 +3,13 @@ import dayjs from "dayjs";
 
 type InputDatePickerProps = {
   handleDateChange: (date: dayjs.ConfigType, dateString: string) => void;
+  required?: boolean;
 };
 
-const InputDatePicker = ({ handleDateChange }: InputDatePickerProps) => {
+const InputDatePicker = ({
+  handleDateChange,
+  required,
+}: InputDatePickerProps) => {
   const dateFormat = "YYYY/MM/DD";
 
   return (
@@ -15,15 +19,12 @@ const InputDatePicker = ({ handleDateChange }: InputDatePickerProps) => {
         name="dateOfBirth"
         rules={[
           {
-            required: true,
+            required: required,
             message: "date of birth is required",
           },
         ]}
       >
         <DatePicker
-          // defaultValue={
-          //   defaultValue ? defaultValue : dayjs("2023/10/10", dateFormat)
-          // }
           defaultValue={dayjs("2023/10/10", dateFormat)}
           format={dateFormat}
           size="large"

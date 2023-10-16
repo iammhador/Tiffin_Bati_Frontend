@@ -2,20 +2,15 @@
 
 import { Button, Col, Form, Row, message } from "antd";
 import Image from "next/image";
-import LoginImage from "../../app/assets/login.png";
+import upComingFoodImage from "../../../../assets/input/upcoming-food.png";
 import InputItem from "@/components/inputField/inputItem";
-import InputPassword from "@/components/inputField/inputPassword";
-import Link from "next/link";
+import type { UploadChangeParam } from "antd/es/upload";
+import type { UploadFile, UploadProps } from "antd/es/upload/interface";
 import axios from "axios";
-import {
-  getFromLocalStorage,
-  removeFromLocalStorage,
-  setToLocalStorage,
-} from "../utils/local-storage";
-import { decodedToken } from "../utils/jwt";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import HeaderPage from "@/components/ui/header";
+import { getFromLocalStorage } from "@/app/utils/local-storage";
+import { decodedToken } from "@/app/utils/jwt";
+import { useEffect, useState } from "react";
+import InputUpload from "@/components/inputField/inputUpload";
 
 type TokenInfo = {
   userId: string;
@@ -25,36 +20,48 @@ type TokenInfo = {
   exp: number;
 };
 
-const LoginPage = () => {
-  const [role, setRole] = useState<string>("");
-  const router = useRouter();
+const AdminCreateUpComingFoodPage = () => {
+  const [adminId, setAdminId] = useState<string>("");
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
-  const onFinish = async (values: any) => {
+  const authToken = getFromLocalStorage("accessToken");
+
+  useEffect(() => {
+    if (authToken) {
+      const tokenInfo = decodedToken(authToken as string) as TokenInfo;
+      const { userId } = tokenInfo;
+      setAdminId(userId);
+    }
+  }, [authToken]);
+
+  const handleChange: UploadProps["onChange"] = async (
+    info: UploadChangeParam<UploadFile>
+  ) => {
+    const image = info.file.originFileObj;
+    const formData = new FormData();
+    formData.append("image", image as Blob);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/auth/login",
+        "https://api.imgbb.com/1/upload?key=2d792faf2ced232b9cfa03671f9fcfc0",
+        formData
+      );
+
+      setImageUrl(response.data.data.display_url);
+    } catch (error) {
+      console.error("Error uploading image to ImageBB:", error);
+    }
+  };
+
+  const onFinish = async (values: any) => {
+    values.adminId = adminId;
+    values.image = imageUrl;
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/v1/new-food",
         values
       );
 
-      if (response.data.data.accessToken) {
-        removeFromLocalStorage("accessToken");
-
-        setToLocalStorage(
-          "accessToken",
-          response?.data?.data?.accessToken as string
-        );
-      }
-
-      const authToken = getFromLocalStorage("accessToken");
-
-      if (authToken) {
-        const tokenInfo = decodedToken(authToken as string) as TokenInfo;
-        const { role } = tokenInfo;
-        setRole(role);
-        router.push(role);
-      }
-
-      response && message.success("User Logged In Successfully.");
+      response && message.success("Up Coming Menu Added!");
     } catch (error) {
       return message.error("An error has occurred: " + error);
     }
@@ -62,7 +69,6 @@ const LoginPage = () => {
 
   return (
     <div>
-      <HeaderPage />
       <div style={{ margin: "0% 4%" }}>
         <Row justify="center" align="middle">
           <Col
@@ -88,14 +94,8 @@ const LoginPage = () => {
                   color: "#545EE1",
                 }}
               >
-                LOGIN
+                Up-Coming Menu
               </h2>
-              <p>
-                Do not have an account?{" "}
-                <Link href="/register" style={{ color: "#F76F01" }}>
-                  Register
-                </Link>
-              </p>
             </div>
 
             <Form layout="vertical" onFinish={onFinish}>
@@ -107,21 +107,27 @@ const LoginPage = () => {
                   lg={{ span: 24, order: 1 }}
                 >
                   <InputItem
-                    label="username"
-                    name="username"
+                    label="title"
+                    name="title"
                     required={true}
-                    message="Please input your username"
+                    message="Please input your menu title"
                     type="text"
-                    placeholder="iammhador"
+                    placeholder="Ala Shak"
+                  />
+                  <InputItem
+                    label="category"
+                    name="category"
+                    required={true}
+                    message="Please input your menu category"
+                    type="text"
+                    placeholder="Vegetables"
                   />
 
-                  <InputPassword
-                    label="password"
-                    name="password"
-                    required={true}
-                    message="Please input your password"
-                    type="password"
-                    placeholder="********"
+                  <InputUpload
+                    label="photo"
+                    imageUrl={imageUrl}
+                    name="image"
+                    handleChange={handleChange}
                   />
                 </Col>
               </Row>
@@ -149,7 +155,7 @@ const LoginPage = () => {
           >
             <div>
               <Image
-                src={LoginImage}
+                src={upComingFoodImage}
                 alt="Register Image"
                 layout="responsive"
               />
@@ -161,4 +167,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default AdminCreateUpComingFoodPage;

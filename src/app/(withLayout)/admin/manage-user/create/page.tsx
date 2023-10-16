@@ -1,64 +1,27 @@
 "use client";
 
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Col, Form, Row, message } from "antd";
 import Image from "next/image";
-import updateImage from "../../assets/input/update.png";
+import userImage from "../../../../assets/input/user.png";
 import InputItem from "@/components/inputField/inputItem";
 import InputPassword from "@/components/inputField/inputPassword";
 import InputDropdown from "@/components/inputField/inputDropdown";
+import InputDatePicker from "@/components/inputField/inputDatePicker";
 import InputUpload from "@/components/inputField/inputUpload";
+import Link from "next/link";
 import axios from "axios";
 import type { UploadChangeParam } from "antd/es/upload";
+import { useRouter } from "next/navigation";
 import type { UploadFile, UploadProps } from "antd/es/upload/interface";
-import { getFromLocalStorage } from "@/app/utils/local-storage";
-import { decodedToken } from "@/app/utils/jwt";
-import Loading from "@/app/loading";
-import {
-  useQuery,
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
-import InputDatePicker from "@/components/inputField/inputDatePicker";
+import HeaderPage from "@/components/ui/header";
 
-type TokenInfo = {
-  userId: string;
-  name: string;
-  role: string;
-  iat: number;
-  exp: number;
-};
-
-const AdminManagePage = () => {
+const CreateUserPage = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [useId, setUserId] = useState<string>("");
 
-  const authToken = getFromLocalStorage("accessToken");
-
-  useEffect(() => {
-    if (authToken) {
-      const tokenInfo = decodedToken(authToken as string) as TokenInfo;
-      const { userId: id } = tokenInfo;
-      setUserId(id);
-    }
-  }, [authToken]);
-
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["repoData"],
-    queryFn: () =>
-      axios
-        .get(`http://localhost:5000/api/v1/admin/${useId}`)
-        .then((res) => res.data),
-    refetchInterval: 10000,
-  });
-
-  if (isLoading) return <Loading />;
-
-  if (error) {
-    return message.error("An error has occurred: " + error);
-  }
+  const router = useRouter();
 
   const handleDateChange = (date: dayjs.ConfigType, dateString: string) => {
     const formattedDate = dayjs(dateString).format("YYYY-MM-DD");
@@ -84,41 +47,41 @@ const AdminManagePage = () => {
   };
 
   const onFinish = async (values: any) => {
-    values.dateOfBirth = selectedDate ? selectedDate : data?.data?.dateOfBirth;
-    values.profileImage = imageUrl ? imageUrl : data?.data?.profileImage;
+    values.dateOfBirth = selectedDate;
+    values.profileImage = imageUrl;
     try {
-      const response = await axios.patch(
-        `http://localhost:5000/api/v1/admin/${useId}`,
+      const response = await axios.post(
+        "http://localhost:5000/api/v1/users",
         values
       );
-      message.success("Admin Information Updated Successfully.");
+      message.success("New User Created Successfully.");
     } catch (error) {
       console.error("Error occurred:", error);
     }
   };
 
   return (
-    <div style={{ margin: "0% 4%", height: "100vh" }}>
+    <div style={{ margin: "0% 4%" }}>
       <Row>
         <Col
           xs={{ span: 24, order: 2 }}
-          sm={{ span: 12, order: 2 }}
-          md={{ span: 12, order: 2 }}
-          lg={{ span: 12, order: 2 }}
+          sm={{ span: 12, order: 1 }}
+          md={{ span: 12, order: 1 }}
+          lg={{ span: 12, order: 1 }}
           style={{
             justifySelf: "center",
             alignSelf: "center",
           }}
         >
           <div>
-            <Image src={updateImage} alt="Register Image" layout="responsive" />
+            <Image src={userImage} alt="Register Image" layout="responsive" />
           </div>
         </Col>
         <Col
           xs={{ span: 24, order: 1 }}
-          sm={{ span: 12, order: 1 }}
-          md={{ span: 12, order: 1 }}
-          lg={{ span: 12, order: 1 }}
+          sm={{ span: 12, order: 2 }}
+          md={{ span: 12, order: 2 }}
+          lg={{ span: 12, order: 2 }}
           style={{
             justifySelf: "center",
             alignSelf: "center",
@@ -137,7 +100,7 @@ const AdminManagePage = () => {
                 color: "#545EE1",
               }}
             >
-              UPDATE ADMIN INFORMATION
+              Create A New User
             </h2>
           </div>
 
@@ -152,27 +115,30 @@ const AdminManagePage = () => {
                 <InputItem
                   label="username"
                   name="username"
+                  required={true}
                   message="Please input your username"
                   type="text"
-                  placeholder={data?.data?.username}
-                  defaultValue={data?.data?.username}
+                  placeholder="iammhador"
                 />
                 <InputPassword
                   label="password"
                   name="password"
+                  required={true}
                   message="Please input your password"
                   type="password"
-                  placeholder={data?.data?.password}
-                  defaultValue={data?.data?.password}
+                  placeholder="********"
                 />
-                <InputDatePicker handleDateChange={handleDateChange} />
+                <InputDatePicker
+                  handleDateChange={handleDateChange}
+                  required={true}
+                />
                 <InputItem
                   label="address"
                   name="address"
+                  required={true}
                   message="Please input your address"
                   type="text"
-                  placeholder={data?.data?.address}
-                  defaultValue={data?.data?.address}
+                  placeholder="dhaka, bangladesh"
                 />
               </Col>
               <Col
@@ -184,26 +150,26 @@ const AdminManagePage = () => {
                 <InputItem
                   label="email"
                   name="email"
+                  required={true}
                   message="Please input your email"
                   type="text"
-                  placeholder={data?.data?.email}
-                  defaultValue={data?.data?.email}
+                  placeholder="iammhador@gmail.com"
                 />
                 <InputItem
                   label="contact no"
                   name="contactNo"
+                  required={true}
                   message="Please input your contact number"
                   type="text"
-                  placeholder={data?.data?.contactNo}
-                  defaultValue={data?.data?.contactNo}
+                  placeholder="01512345678"
                 />
 
                 <InputDropdown
                   label="gender"
+                  placeholder="male"
                   name="gender"
+                  required={true}
                   message="Please select your gender"
-                  placeholder={data?.data?.gender}
-                  defaultValue={data?.data?.gender}
                 />
 
                 <InputUpload
@@ -231,12 +197,4 @@ const AdminManagePage = () => {
   );
 };
 
-const queryClient = new QueryClient();
-
-const AccountManagePageQueryClient = () => (
-  <QueryClientProvider client={queryClient}>
-    <AdminManagePage />
-  </QueryClientProvider>
-);
-
-export default AccountManagePageQueryClient;
+export default CreateUserPage;
