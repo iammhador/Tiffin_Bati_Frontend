@@ -101,7 +101,7 @@ const AdminCreateBlogEditPage = ({ params }: IDProps) => {
             </h2>
           </div>
 
-          <Form layout="vertical" onFinish={onFinish}>
+          <Form layout="vertical" onFinish={onFinish} >
             <Row>
               <Col
                 xs={{ span: 24, order: 1 }}

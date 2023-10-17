@@ -169,24 +169,14 @@ export const SidebarItems = (role: string) => {
       key: `/${role}/today-meal`,
     },
     {
+      label: <Link href={`/${role}/feedback`}>Feedback</Link>,
+      icon: <TableOutlined />,
+      key: `/${role}/feedback`,
+    },
+    {
       label: <Link href={`/${role}/subscription`}>Subscription</Link>,
       icon: <BorderlessTableOutlined />,
       key: `/${role}/subscription`,
-    },
-    {
-      label: "Feedback",
-      icon: <CompressOutlined />,
-      key: `/${role}/feedback`,
-      children: [
-        {
-          label: <Link href={`/${role}/feedback/see-all`}>See All</Link>,
-          key: `/${role}/feedback/see-all`,
-        },
-        {
-          label: <Link href={`/${role}/feedback/create`}>Create</Link>,
-          key: `/${role}/feedback/create`,
-        },
-      ],
     },
   ];
 

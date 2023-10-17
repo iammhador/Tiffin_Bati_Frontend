@@ -23,7 +23,7 @@ const HeaderPage = () => {
   const handleLogOut = () => {
     removeFromLocalStorage("accessToken");
     message.success("User logged out!!");
-    router.push("/login");
+    router.push("/");
   };
 
   const authToken = getFromLocalStorage("accessToken");
@@ -38,6 +38,24 @@ const HeaderPage = () => {
 
   const menuItems = authToken
     ? [
+        {
+          key: "5",
+          label: (
+            <Link href="menu">
+              <Button
+                type="text"
+                style={{
+                  fontSize: "16px",
+                  fontWeight: "500",
+                  color: "#545EE1",
+                  textTransform: "capitalize",
+                }}
+              >
+                Menu
+              </Button>
+            </Link>
+          ),
+        },
         {
           key: "4",
           label: (
@@ -70,6 +88,24 @@ const HeaderPage = () => {
         },
       ]
     : [
+        {
+          key: "6",
+          label: (
+            <Link href="menu">
+              <Button
+                type="text"
+                style={{
+                  fontSize: "16px",
+                  fontWeight: "500",
+                  color: "#545EE1",
+                  textTransform: "capitalize",
+                }}
+              >
+                Menu
+              </Button>
+            </Link>
+          ),
+        },
         {
           key: "1",
           label: (

@@ -29,8 +29,8 @@ PARAGRAPH : #445069
 <<== HAVE TO COMPLETE ==>>
 
 
-
 ----------------------------- October 16  -----------------------------------<<
+
 
 <<== COMPLETED ==>>
 # Logout Button Logic
@@ -40,10 +40,8 @@ PARAGRAPH : #445069
         
 
 <<== HAVE TO COMPLETE ==>>
-
-
 # Admin Page => 
-                @6  Edit Feedback
+          
                 @8 Edit Subscription
                 
 # Have To  Fixed =>                
@@ -51,29 +49,41 @@ PARAGRAPH : #445069
            @menu pagination and filter
 
 
+----------------------------- October 17  -----------------------------------<<
 
+
+<<== COMPLETED ==>>
+@ Check email is valid or not.
+@ post feedback
+@ Manage profile => Edit profile.
+@ Feedback all functionality.
+
+<<== ON GOING  ==>>
+        
+<<== HAVE TO COMPLETE ==>>
+@ Menu search and pagination.
+@ Subscription option.
+@ Subscription history and status
+@ Subscription cancel option.
 
 
 ----------------------------- October 17  -----------------------------------<<
 
 <<== COMPLETED ==>>
-@ Check email is valid or not.
 
 <<== ON GOING  ==>>
         
 
 <<== HAVE TO COMPLETE ==>>
+# PUBLIC ROUTE => @ Menu search and pagination.
 
-@ Manage profile => Edit profile.
-@ Menu search and pagination.
-@ Subscription option.
-@ Subscription history and status
-@ Subscription cancel option.
-@ Food review
-@ Food review show
+# USER PAGE =>  @ Subscription option.
+                @ Subscription history and status
+                @ Subscription cancel option.
 
-
-
+# ADMIN PAGE =>  @ Edit Subscription
+@reset all form check
+        
 
 ----------------------------- EXTRA CODE  -----------------------------------<<
 

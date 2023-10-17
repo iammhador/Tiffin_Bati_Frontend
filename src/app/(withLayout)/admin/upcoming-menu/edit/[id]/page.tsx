@@ -28,6 +28,7 @@ type IDProps = {
     id: string;
   };
 };
+
 const AdminCreatedUpcomingFoodEditPage = ({ params }: IDProps) => {
   const { id } = params;
   const [imageUrl, setImageUrl] = useState<string | null>(null);
