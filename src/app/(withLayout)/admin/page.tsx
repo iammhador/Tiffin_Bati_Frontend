@@ -179,7 +179,7 @@ const AdminManagePage = () => {
                   label="email"
                   name="email"
                   message="Please input your email"
-                  type="text"
+                  type="email"
                   placeholder={data?.data?.email}
                   defaultValue={data?.data?.email}
                 />

@@ -52,7 +52,7 @@ const SeeAllTodayMealAndOperation = () => {
       }
       refetch();
     } catch (error) {
-      message.error("Error deleting user" + error);
+      message.error("Error deleting today food" + error);
     }
   };
 

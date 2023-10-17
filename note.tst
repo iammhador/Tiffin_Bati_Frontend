@@ -41,19 +41,82 @@ PARAGRAPH : #445069
 
 <<== HAVE TO COMPLETE ==>>
 
-# Super admin can change admin role to user
-# Admin Page => 
-                @2  Edit User information
-      
-                @4  Edit Price
-                @5  Edit Faq
-                @6  Edit Feedback
-                @7  Edit Blog
-                @8 Edit Subscription
-                @9 Edit Upcoming New Food
-                @10 Edit Upcoming Today Food
-           
-           
 
+# Admin Page => 
+                @6  Edit Feedback
+                @8 Edit Subscription
+                
+# Have To  Fixed =>                
            @reset all form check
            @menu pagination and filter
+
+
+
+
+
+----------------------------- October 17  -----------------------------------<<
+
+<<== COMPLETED ==>>
+@ Check email is valid or not.
+
+<<== ON GOING  ==>>
+        
+
+<<== HAVE TO COMPLETE ==>>
+
+@ Manage profile => Edit profile.
+@ Menu search and pagination.
+@ Subscription option.
+@ Subscription history and status
+@ Subscription cancel option.
+@ Food review
+@ Food review show
+
+
+
+
+----------------------------- EXTRA CODE  -----------------------------------<<
+
+==> Specific Router Added Code ===
+import { useRouter } from "next/router";
+import DashboardLayout from "../path/to/DashboardLayout";
+
+const YourPageComponent = () => {
+  const router = useRouter();
+  const userLoggedIn = getFromLocalStorage("accessToken");
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const [userRole, setUserRole] = useState<string>("");
+  const tokenDecode = decodedToken(userLoggedIn as string) as TokenData; // Use type assertion
+  const { role } = tokenDecode;
+  setUserRole(role);
+
+  useEffect(() => {
+    if (!userLoggedIn) {
+      router.push("/login");
+    } else {
+      if (userRole === "user") {
+        if (
+          router.pathname.includes("/admin") ||
+          router.pathname.includes("/super_admin")
+        ) {
+          router.push("/unauthorized"); // Redirect to an unauthorized page
+        }
+      } else if (userRole === "admin" || userRole === "super_admin") {
+        if (!router.pathname.includes("/user")) {
+          router.push("/unauthorized"); // Redirect to an unauthorized page
+        }
+      } else {
+        router.push("/unauthorized"); // Redirect to an unauthorized page for unknown roles
+      }
+    }
+    setLoading(true);
+  }, [router, isLoading, userLoggedIn, userRole]);
+
+  if (!isLoading) {
+    return <Loading />;
+  }
+
+  return <DashboardLayout>{/* Your page content */}</DashboardLayout>;
+};
+
+export default YourPageComponent;

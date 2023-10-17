@@ -7,13 +7,13 @@ import { Layout } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loading from "../loading";
-import FooterPage from "@/components/ui/footer";
 import { getFromLocalStorage } from "../utils/local-storage";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const userLoggedIn = getFromLocalStorage("accessToken");
   const [isLoading, setLoading] = useState<boolean>(false);
+
   useEffect(() => {
     if (!userLoggedIn) {
       router.push("/login");

@@ -52,7 +52,7 @@ const SeePriceAndPlanAndOperation = () => {
       }
       refetch();
     } catch (error) {
-      message.error("Error deleting user" + error);
+      message.error("Error deleting price and plan" + error);
     }
   };
 

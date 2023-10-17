@@ -15,23 +15,23 @@ import Link from "next/link";
 
 interface DataType {
   id: string;
-  title: string;
+  username: string;
   createdAt: string;
 }
 
 type DataIndex = keyof DataType;
 
-const SeeBlogAndOperation = () => {
-  //@ Fetch All Blog =>
+const SeeAllUsersAndOperation = () => {
+  //@ Fetch All Admins =>
   const {
     isLoading,
     error,
-    data: blogData,
+    data: adminData,
     refetch,
   } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
-      axios.get("http://localhost:5000/api/v1/blog").then((res) => res.data),
+      axios.get("http://localhost:5000/api/v1/admin").then((res) => res.data),
   });
 
   if (isLoading) return <Loading />;
@@ -39,21 +39,21 @@ const SeeBlogAndOperation = () => {
     return message.error("An error has occurred: " + error);
   }
 
-  const handleDelete = async (record: DataType) => {
+  const handleDelete = async (user: DataType) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/v1/blog/${record?.id}`
+        `http://localhost:5000/api/v1/admin/${user.id}`
       );
       if (response) {
-        message.success("Blog Deleted!");
+        message.success(`${adminData?.data?.username}`, response.data);
       }
       refetch();
     } catch (error) {
-      message.error("Error deleting blog" + error);
+      message.error("Error deleting admin" + error);
     }
   };
 
-  const getBlogId = (record: any, index: number) => {
+  const getAdminId = (record: any, index: number) => {
     if (record.id) {
       return record.id.toString();
     } else {
@@ -61,38 +61,55 @@ const SeeBlogAndOperation = () => {
     }
   };
 
-  const getCreatedAt = (record: any, index: number) => {
-    if (record.createdAt) {
-      const date = dayjs(record.createdAt);
-      const monthName = date.format("MMMM");
-      return `${monthName} ${date.format("DD")}, ${date.format(
-        "YYYY"
-      )} ${date.format("h:mm A")}`;
+  const getUsername = (record: any, index: number) => {
+    if (record.username) {
+      return record.username;
     } else {
       return "";
     }
   };
 
-  const dataSource = blogData.data.map((record: any, index: number) => {
+  const getCreatedAt = (record: any, index: number) => {
+    if (record.createdAt) {
+      return dayjs(record.createdAt).format("YYYY-MM-DD");
+    } else {
+      return "";
+    }
+  };
+
+  const dataSource = adminData.data.map((record: any, index: number) => {
     return {
       ...record,
-      key: getBlogId(record, index),
+      key: getAdminId(record, index),
+      username: getUsername(record, index),
       createdAt: getCreatedAt(record, index),
     };
   });
 
   const columns: ColumnsType<DataType> = [
     {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
       width: "25%",
     },
     {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-      width: "40%",
+      title: "Username",
+      dataIndex: "username",
+      key: "username",
+      width: "15%",
+    },
+    {
+      title: "ContactNo",
+      dataIndex: "contactNo",
+      key: "contactNo",
+      width: "15%",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
+      width: "15%",
     },
     {
       title: "CreatedAt",
@@ -115,13 +132,13 @@ const SeeBlogAndOperation = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Link href={`/admin/blog/edit/${record.id}`}>Edit</Link>
+          <Link href={`/super-admin/manage-admin/edit/${record.id}`}>Edit</Link>
           <a
             onClick={() => {
               Modal.confirm({
                 title: "Confirm",
                 icon: <ExclamationCircleOutlined />,
-                content: `Are you sure you want to delete " ${record.title} " ?`,
+                content: `Are you sure you want to delete " ${record.username} " ?`,
                 okText: "Delete",
                 cancelText: "Cancel",
                 onOk: () => handleDelete(record),
@@ -145,7 +162,7 @@ const SeeBlogAndOperation = () => {
           margin: "3% 0",
         }}
       >
-        BLOG LIST
+        ALL ADMINS
       </h3>
       <Table columns={columns} dataSource={dataSource} pagination={false} />
     </div>
@@ -154,10 +171,10 @@ const SeeBlogAndOperation = () => {
 
 const queryClient = new QueryClient();
 
-const SeeAllBlogWithQueryClient = () => (
+const SeeAllUsersWithQueryClient = () => (
   <QueryClientProvider client={queryClient}>
-    <SeeBlogAndOperation />
+    <SeeAllUsersAndOperation />
   </QueryClientProvider>
 );
 
-export default SeeAllBlogWithQueryClient;
+export default SeeAllUsersWithQueryClient;

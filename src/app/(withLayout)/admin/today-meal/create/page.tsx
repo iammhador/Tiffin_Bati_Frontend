@@ -29,6 +29,7 @@ const options = [
 const AdminCreateTodayMealPage = () => {
   const [adminId, setAdminId] = useState<string>("");
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [form] = Form.useForm();
 
   const authToken = getFromLocalStorage("accessToken");
 
@@ -67,7 +68,10 @@ const AdminCreateTodayMealPage = () => {
         values
       );
 
-      response && message.success("Today Meal Created!");
+      if (response) {
+        message.success("Today Meal Created!");
+        form.resetFields();
+      }
     } catch (error) {
       return message.error("An error has occurred: " + error);
     }
@@ -104,7 +108,7 @@ const AdminCreateTodayMealPage = () => {
               </h2>
             </div>
 
-            <Form layout="vertical" onFinish={onFinish}>
+            <Form layout="vertical" onFinish={onFinish} form={form}>
               <Row>
                 <Col
                   xs={{ span: 24, order: 1 }}

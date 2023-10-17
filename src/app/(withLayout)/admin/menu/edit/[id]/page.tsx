@@ -68,7 +68,7 @@ const AdminCreatedMenuEditPage = ({ params }: IDProps) => {
 
       setImageUrl(response.data.data.display_url);
     } catch (error) {
-      console.error("Error uploading image to ImageBB:", error);
+      message.error("Error uploading image to ImageBB:" + error);
     }
   };
 
@@ -83,7 +83,7 @@ const AdminCreatedMenuEditPage = ({ params }: IDProps) => {
       );
       message.success("Menu Updated Successfully.");
     } catch (error) {
-      console.error("Error occurred:", error);
+      message.error("Error occurred:" + error);
     }
   };
 
@@ -125,9 +125,18 @@ const AdminCreatedMenuEditPage = ({ params }: IDProps) => {
                 fontSize: "22px",
                 fontWeight: "600",
                 color: "#545EE1",
+                textTransform: "uppercase",
               }}
             >
-              UPDATE ADMIN INFORMATION
+              UPDATE{" "}
+              <span
+                style={{
+                  color: "#F76F01",
+                }}
+              >
+                {data?.data?.title}
+              </span>{" "}
+              INFORMATION
             </h2>
           </div>
 

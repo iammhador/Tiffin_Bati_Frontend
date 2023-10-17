@@ -1,27 +1,46 @@
 "use client";
 
-import dayjs from "dayjs";
 import { useState } from "react";
 import { Button, Col, Form, Row, message } from "antd";
 import Image from "next/image";
-import userImage from "../../../../assets/input/user.png";
+import userImage from "../../../../../assets/input/user.png";
 import InputItem from "@/components/inputField/inputItem";
-import InputPassword from "@/components/inputField/inputPassword";
-import InputDropdown from "@/components/inputField/inputDropdown";
-import InputDatePicker from "@/components/inputField/inputDatePicker";
 import InputUpload from "@/components/inputField/inputUpload";
 import axios from "axios";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { UploadFile, UploadProps } from "antd/es/upload/interface";
+import Loading from "@/app/loading";
+import {
+  useQuery,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import InputDropdown from "@/components/inputField/inputDropdown";
 
-const CreateUserPage = () => {
-  const [selectedDate, setSelectedDate] = useState("");
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-
-  const handleDateChange = (date: dayjs.ConfigType, dateString: string) => {
-    const formattedDate = dayjs(dateString).format("YYYY-MM-DD");
-    setSelectedDate(formattedDate);
+type IDProps = {
+  params: {
+    id: string;
   };
+};
+
+const AdminCreateManageUserEditPage = ({ params }: IDProps) => {
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const { id } = params;
+
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["repoData"],
+    queryFn: () =>
+      axios
+        .get(`http://localhost:5000/api/v1/users/${id}`)
+        .then((res) => res.data),
+    refetchInterval: 10000,
+  });
+
+  if (isLoading) return <Loading />;
+
+  if (error) {
+    return message.error("An error has occurred: " + error);
+  }
 
   const handleChange: UploadProps["onChange"] = async (
     info: UploadChangeParam<UploadFile>
@@ -37,21 +56,23 @@ const CreateUserPage = () => {
 
       setImageUrl(response.data.data.display_url);
     } catch (error) {
-      console.error("Error uploading image to ImageBB:", error);
+      message.error("Error uploading image to ImageBB:" + error);
     }
   };
 
   const onFinish = async (values: any) => {
-    values.dateOfBirth = selectedDate;
-    values.profileImage = imageUrl;
+    values.image = imageUrl ? imageUrl : data?.data?.image;
+
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/v1/users",
+      const response = await axios.patch(
+        `http://localhost:5000/api/v1/users/${id}`,
         values
       );
-      message.success("New User Created Successfully.");
+      message.success(
+        `${data?.data?.username} information Updated Successfully.`
+      );
     } catch (error) {
-      console.error("Error occurred:", error);
+      message.error("Error occurred:" + error);
     }
   };
 
@@ -60,9 +81,9 @@ const CreateUserPage = () => {
       <Row>
         <Col
           xs={{ span: 24, order: 2 }}
-          sm={{ span: 12, order: 1 }}
-          md={{ span: 12, order: 1 }}
-          lg={{ span: 12, order: 1 }}
+          sm={{ span: 12, order: 2 }}
+          md={{ span: 12, order: 2 }}
+          lg={{ span: 12, order: 2 }}
           style={{
             justifySelf: "center",
             alignSelf: "center",
@@ -74,9 +95,9 @@ const CreateUserPage = () => {
         </Col>
         <Col
           xs={{ span: 24, order: 1 }}
-          sm={{ span: 12, order: 2 }}
-          md={{ span: 12, order: 2 }}
-          lg={{ span: 12, order: 2 }}
+          sm={{ span: 12, order: 1 }}
+          md={{ span: 12, order: 1 }}
+          lg={{ span: 12, order: 1 }}
           style={{
             justifySelf: "center",
             alignSelf: "center",
@@ -93,9 +114,18 @@ const CreateUserPage = () => {
                 fontSize: "22px",
                 fontWeight: "600",
                 color: "#545EE1",
+                textTransform: "uppercase",
               }}
             >
-              Create A New User
+              UPDATE{" "}
+              <span
+                style={{
+                  color: "#F76F01",
+                }}
+              >
+                {data?.data?.username}
+              </span>{" "}
+              INFORMATION
             </h2>
           </div>
 
@@ -103,68 +133,41 @@ const CreateUserPage = () => {
             <Row>
               <Col
                 xs={{ span: 24, order: 1 }}
-                sm={{ span: 12, order: 1 }}
-                md={{ span: 12, order: 1 }}
-                lg={{ span: 12, order: 1 }}
-              >
-                <InputItem
-                  label="username"
-                  name="username"
-                  required={true}
-                  message="Please input your username"
-                  type="text"
-                  placeholder="iammhador"
-                />
-                <InputPassword
-                  label="password"
-                  name="password"
-                  required={true}
-                  message="Please input your password"
-                  type="password"
-                  placeholder="********"
-                />
-                <InputDatePicker
-                  handleDateChange={handleDateChange}
-                  required={true}
-                />
-                <InputItem
-                  label="address"
-                  name="address"
-                  required={true}
-                  message="Please input your address"
-                  type="text"
-                  placeholder="dhaka, bangladesh"
-                />
-              </Col>
-              <Col
-                xs={{ span: 24, order: 2 }}
-                sm={{ span: 12, order: 2 }}
-                md={{ span: 12, order: 2 }}
-                lg={{ span: 12, order: 2 }}
+                sm={{ span: 24, order: 1 }}
+                md={{ span: 24, order: 1 }}
+                lg={{ span: 24, order: 1 }}
               >
                 <InputItem
                   label="email"
                   name="email"
-                  required={true}
                   message="Please input your email"
                   type="email"
-                  placeholder="iammhador@gmail.com"
+                  placeholder={data?.data?.email}
+                  defaultValue={data?.data?.email}
+                />
+
+                <InputItem
+                  label="address"
+                  name="address"
+                  message="Please input your address"
+                  type="text"
+                  placeholder={data?.data?.address}
+                  defaultValue={data?.data?.address}
                 />
                 <InputItem
                   label="contact no"
                   name="contactNo"
-                  required={true}
                   message="Please input your contact number"
                   type="text"
-                  placeholder="01512345678"
+                  placeholder={data?.data?.contactNo}
+                  defaultValue={data?.data?.contactNo}
                 />
 
                 <InputDropdown
                   label="gender"
-                  placeholder="male"
                   name="gender"
-                  required={true}
-                  message="Please select your gender"
+                  placeholder={data?.data?.gender}
+                  defaultValue={data?.data?.gender}
                 />
 
                 <InputUpload
@@ -192,4 +195,12 @@ const CreateUserPage = () => {
   );
 };
 
-export default CreateUserPage;
+const queryClient = new QueryClient();
+
+const ManageUserQueryClient = ({ params }: any) => (
+  <QueryClientProvider client={queryClient}>
+    <AdminCreateManageUserEditPage params={params} />
+  </QueryClientProvider>
+);
+
+export default ManageUserQueryClient;

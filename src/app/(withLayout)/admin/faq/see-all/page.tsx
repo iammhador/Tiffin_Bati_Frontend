@@ -49,7 +49,7 @@ const SeeFAQAndOperation = () => {
       }
       refetch();
     } catch (error) {
-      message.error("Error deleting user" + error);
+      message.error("Error deleting faq" + error);
     }
   };
 
@@ -115,7 +115,7 @@ const SeeFAQAndOperation = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Link href={`/admin/price-and-plan/edit/${record.id}`}>Edit</Link>
+          <Link href={`/admin/faq/edit/${record.id}`}>Edit</Link>
           <a
             onClick={() => {
               Modal.confirm({

@@ -25,7 +25,7 @@ const InputDatePicker = ({
         ]}
       >
         <DatePicker
-          defaultValue={dayjs("2023/10/10", dateFormat)}
+          defaultValue={dayjs()}
           format={dateFormat}
           size="large"
           style={{ width: "100%" }}

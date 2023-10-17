@@ -112,7 +112,7 @@ const AdminCreateUpComingFoodPage = () => {
                     required={true}
                     message="Please input your menu title"
                     type="text"
-                    placeholder="Ala Shak"
+                    placeholder="Potol Bajhi"
                   />
                   <InputItem
                     label="category"

@@ -112,7 +112,7 @@ Welcome to the Service Booking and Management Website assignment! In this projec
 - Users can create and manage their profiles, including personal information and preferences.
 - Users should be able to view and edit their profiles easily.
 
-- Users can browse available services.
+- Users can browse available services. //#have to think
 - Implement a search feature allowing users to search services by name, location, and category.
 - Users should be able to filter services by price range and other relevant criteria.
 

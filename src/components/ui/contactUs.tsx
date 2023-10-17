@@ -63,7 +63,7 @@ const ContactUsPage = () => {
             <Form.Item label="Full name" name="fullName">
               <Input placeholder="Jhankar Mahbub" />
             </Form.Item>
-            <Form.Item label="Email" name="email">
+            <Form.Item label="Email" name="email" >
               <Input placeholder="khan4019@gmail.com" type="email" />
             </Form.Item>
             <Form.Item label="Message" name="message">

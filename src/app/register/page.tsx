@@ -165,7 +165,7 @@ const RegisterPage = () => {
                     name="email"
                     required={true}
                     message="Please input your email"
-                    type="text"
+                    type="email"
                     placeholder="iammhador@gmail.com"
                   />
                   <InputItem

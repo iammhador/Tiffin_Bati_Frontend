@@ -24,6 +24,7 @@ const InputTextArea = ({
   name,
   required,
   message,
+  defaultValue,
 }: InputTextAreaProps) => (
   <>
     <Form.Item
@@ -41,6 +42,7 @@ const InputTextArea = ({
         placeholder={placeholder}
         maxLength={maxLength ? maxLength : 500}
         size="large"
+        defaultValue={defaultValue ? defaultValue : ""}
       />
     </Form.Item>
   </>

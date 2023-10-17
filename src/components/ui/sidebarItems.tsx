@@ -26,9 +26,19 @@ export const SidebarItems = (role: string) => {
   const superAdminSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
     {
-      label: <Link href={`/${role}/manage-admin`}>Manage Admin</Link>,
+      label: "Manage Admin",
       icon: <MergeCellsOutlined />,
       key: `/${role}/manage-admin`,
+      children: [
+        {
+          label: <Link href={`/${role}/manage-admin/create`}>Create</Link>,
+          key: `/${role}/manage-admin/create`,
+        },
+        {
+          label: <Link href={`/${role}/manage-admin/see-all`}>See All</Link>,
+          key: `/${role}/manage-admin/see-all`,
+        },
+      ],
     },
   ];
 

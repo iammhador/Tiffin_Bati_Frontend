@@ -1,3 +1,5 @@
+"use client";
+
 import AboutUsPage from "@/components/ui/aboutUs";
 import AvailableService from "@/components/ui/availableService";
 import BannerPage from "@/components/ui/banner";

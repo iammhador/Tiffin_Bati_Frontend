@@ -134,6 +134,7 @@ const SeeAllUsersAndOperation = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
+          <Link href={`/admin/manage-user/edit/${record.id}`}>Edit</Link>
           <a
             onClick={() => {
               Modal.confirm({

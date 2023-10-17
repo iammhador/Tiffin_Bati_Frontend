@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { Button, Col, Form, Row, message } from "antd";
 import Image from "next/image";
-import adminImage from "../../../assets/admin.png";
+import adminImage from "../../../../assets/admin.png";
 import InputItem from "@/components/inputField/inputItem";
 import InputPassword from "@/components/inputField/inputPassword";
 import InputDropdown from "@/components/inputField/inputDropdown";
@@ -148,7 +148,7 @@ const ManageAdminPage = () => {
                   name="email"
                   required={true}
                   message="Please input your email"
-                  type="text"
+                  type="email"
                   placeholder="iammhador@gmail.com"
                 />
                 <InputItem

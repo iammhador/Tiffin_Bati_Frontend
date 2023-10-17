@@ -21,9 +21,9 @@ const InputDropdown = ({
   inputOptions,
 }: InputDropdown) => {
   const options = [
-    { label: "male", value: "male" },
-    { label: "female", value: "female" },
-    { label: "others", value: "others" },
+    { label: "Male", value: "male" },
+    { label: "Female", value: "female" },
+    { label: "Others", value: "others" },
   ];
   return (
     <div style={{ margin: "0 4px" }}>

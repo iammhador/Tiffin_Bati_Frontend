@@ -52,7 +52,7 @@ const SeeAllUpcomingMenuAndOperation = () => {
       }
       refetch();
     } catch (error) {
-      message.error("Error deleting user" + error);
+      message.error("Error deleting new food" + error);
     }
   };
 

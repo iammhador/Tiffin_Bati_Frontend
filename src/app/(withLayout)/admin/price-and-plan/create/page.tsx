@@ -8,7 +8,6 @@ import axios from "axios";
 import { getFromLocalStorage } from "@/app/utils/local-storage";
 import { decodedToken } from "@/app/utils/jwt";
 import { useEffect, useState } from "react";
-import InputTextArea from "@/components/inputField/inputTextAre";
 import InputDropdown from "@/components/inputField/inputDropdown";
 
 type TokenInfo = {
