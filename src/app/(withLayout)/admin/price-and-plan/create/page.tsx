@@ -40,7 +40,7 @@ const AdminCreatePriceAndPlanPage = () => {
     values.adminId = adminId;
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/price-and-plan",
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/price-and-plan`,
         values
       );
 

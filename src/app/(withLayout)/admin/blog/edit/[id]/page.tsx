@@ -25,7 +25,7 @@ const AdminCreateBlogEditPage = ({ params }: IDProps) => {
     queryKey: ["repoData"],
     queryFn: () =>
       axios
-        .get(`http://localhost:5000/api/v1/blog/${id}`)
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/blog/${id}`)
         .then((res) => res.data),
     refetchInterval: 10000,
   });
@@ -39,7 +39,7 @@ const AdminCreateBlogEditPage = ({ params }: IDProps) => {
   const onFinish = async (values: any) => {
     try {
       const response = await axios.patch(
-        `http://localhost:5000/api/v1/blog/${id}`,
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/blog/${id}`,
         values
       );
       message.success(`${data?.data?.title} information Updated Successfully.`);
@@ -101,7 +101,7 @@ const AdminCreateBlogEditPage = ({ params }: IDProps) => {
             </h2>
           </div>
 
-          <Form layout="vertical" onFinish={onFinish} >
+          <Form layout="vertical" onFinish={onFinish}>
             <Row>
               <Col
                 xs={{ span: 24, order: 1 }}

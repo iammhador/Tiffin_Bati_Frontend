@@ -33,7 +33,7 @@ const SeeAllUpcomingMenuAndOperation = () => {
     queryKey: ["repoData"],
     queryFn: () =>
       axios
-        .get("http://localhost:5000/api/v1/new-food")
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/new-food`)
         .then((res) => res.data),
   });
 
@@ -45,7 +45,7 @@ const SeeAllUpcomingMenuAndOperation = () => {
   const handleDelete = async (newFood: DataType) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/v1/new-food/${newFood?.id}`
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/new-food/${newFood?.id}`
       );
       if (response) {
         message.success("Up-coming menu deleted successfully", response.data);

@@ -31,7 +31,9 @@ const SeeBlogAndOperation = () => {
   } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
-      axios.get("http://localhost:5000/api/v1/blog").then((res) => res.data),
+      axios
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/blog`)
+        .then((res) => res.data),
   });
 
   if (isLoading) return <Loading />;
@@ -42,7 +44,7 @@ const SeeBlogAndOperation = () => {
   const handleDelete = async (record: DataType) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/v1/blog/${record?.id}`
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/blog/${record?.id}`
       );
       if (response) {
         message.success("Blog Deleted!");

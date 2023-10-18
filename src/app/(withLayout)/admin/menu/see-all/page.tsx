@@ -39,7 +39,9 @@ const SeeAllMenuAndOperation = () => {
   } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
-      axios.get("http://localhost:5000/api/v1/menu").then((res) => res.data),
+      axios
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/menu`)
+        .then((res) => res.data),
   });
 
   if (isLoading) return <Loading />;
@@ -50,7 +52,7 @@ const SeeAllMenuAndOperation = () => {
   const handleDelete = async (menu: DataType) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/v1/menu/${menu.key}`
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/menu/${menu.key}`
       );
       if (response) {
         message.success("Menu deleted successfully", response.data);

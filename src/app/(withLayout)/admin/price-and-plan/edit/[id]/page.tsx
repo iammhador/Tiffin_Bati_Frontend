@@ -30,7 +30,7 @@ const AdminCreatePriceAndPlanEditPage = ({ params }: IDProps) => {
     queryKey: ["repoData"],
     queryFn: () =>
       axios
-        .get(`http://localhost:5000/api/v1/price-and-plan/${id}`)
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/price-and-plan/${id}`)
         .then((res) => res.data),
     refetchInterval: 10000,
   });
@@ -44,7 +44,7 @@ const AdminCreatePriceAndPlanEditPage = ({ params }: IDProps) => {
   const onFinish = async (values: any) => {
     try {
       const response = await axios.patch(
-        `http://localhost:5000/api/v1/price-and-plan/${id}`,
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/price-and-plan/${id}`,
         values
       );
       message.success(

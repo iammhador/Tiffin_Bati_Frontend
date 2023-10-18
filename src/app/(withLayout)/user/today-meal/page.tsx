@@ -31,7 +31,7 @@ const SeeAllTodayMealAndOperation = () => {
     queryKey: ["repoData"],
     queryFn: () =>
       axios
-        .get("http://localhost:5000/api/v1/today-food")
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/today-food`)
         .then((res) => res.data),
   });
   refetch();

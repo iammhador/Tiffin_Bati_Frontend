@@ -25,7 +25,7 @@ const AdminCreateFAQEditPage = ({ params }: IDProps) => {
     queryKey: ["repoData"],
     queryFn: () =>
       axios
-        .get(`http://localhost:5000/api/v1/faq/${id}`)
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/faq/${id}`)
         .then((res) => res.data),
     refetchInterval: 10000,
   });
@@ -39,7 +39,7 @@ const AdminCreateFAQEditPage = ({ params }: IDProps) => {
   const onFinish = async (values: any) => {
     try {
       const response = await axios.patch(
-        `http://localhost:5000/api/v1/faq/${id}`,
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/faq/${id}`,
         values
       );
       message.success(`${data?.data?.title} information Updated Successfully.`);

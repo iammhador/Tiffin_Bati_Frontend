@@ -57,31 +57,35 @@ PARAGRAPH : #445069
 @ post feedback
 @ Manage profile => Edit profile.
 @ Feedback all functionality.
+@ Subscription option.
+@ Subscription history and status
+@ Subscription cancel option.
 
 <<== ON GOING  ==>>
         
 <<== HAVE TO COMPLETE ==>>
 @ Menu search and pagination.
-@ Subscription option.
-@ Subscription history and status
-@ Subscription cancel option.
-
+@ Breadcrumb
+@reset all form check
+@menu pagination and filter
 
 ----------------------------- October 18  -----------------------------------<<
 
 <<== COMPLETED ==>>
 
+# USER PAGE =>  @ Subscription option.
+                @ Subscription history and status.
+                @ Subscription cancel option.
+# ADMIN PAGE => @ Edit Subscription.
+                @ New Navbar.
 <<== ON GOING  ==>>
         
 
 <<== HAVE TO COMPLETE ==>>
 # PUBLIC ROUTE => @ Menu search and pagination.
 
-# USER PAGE =>  @ Subscription option.
-                @ Subscription history and status
-                @ Subscription cancel option.
 
-# ADMIN PAGE =>  @ Edit Subscription
+
 @reset all form check
         
 

@@ -9,9 +9,9 @@ import axios from "axios";
 import Loading from "../loading";
 import { Card, Col, Row } from "antd";
 import Image from "next/image";
-import HeaderPage from "@/components/ui/header";
 import FooterPage from "@/components/ui/footer";
 import Link from "next/link";
+import Navbar from "@/components/ui/navbar";
 
 const { Meta } = Card;
 
@@ -19,7 +19,9 @@ const MenuPage = () => {
   const { isLoading, error, data, isFetching } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
-      axios.get("http://localhost:5000/api/v1/menu").then((res) => res.data),
+      axios
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/menu`)
+        .then((res) => res.data),
     refetchInterval: 10000,
   });
 
@@ -29,7 +31,7 @@ const MenuPage = () => {
 
   return (
     <div>
-      <HeaderPage />
+      <Navbar />
       <div style={{ margin: "4% 4%" }}>
         <h2
           style={{

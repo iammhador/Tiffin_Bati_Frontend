@@ -17,7 +17,7 @@
 
 //     queryFn: () =>
 //       axios
-//         .get(`http://localhost:5000/api/v1/review-and-rating/${id}`)
+//         .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/review-and-rating/${id}`)
 //         .then((res) => res.data),
 //   });
 //   refetch();
@@ -96,7 +96,7 @@ const ReviewAndRatingPage = ({ id }: ReviewAndRatingPageProps) => {
 
     queryFn: () =>
       axios
-        .get(`http://localhost:5000/api/v1/review-and-rating/${id}`)
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/review-and-rating/${id}`)
         .then((res) => res.data),
   });
   refetch();

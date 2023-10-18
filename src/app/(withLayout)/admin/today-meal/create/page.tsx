@@ -49,7 +49,7 @@ const AdminCreateTodayMealPage = () => {
     formData.append("image", image as Blob);
     try {
       const response = await axios.post(
-        "https://api.imgbb.com/1/upload?key=2d792faf2ced232b9cfa03671f9fcfc0",
+        `${process.env.NEXT_PUBLIC_IMGBB_API}`,
         formData
       );
 
@@ -64,7 +64,7 @@ const AdminCreateTodayMealPage = () => {
     values.image = imageUrl;
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/today-food",
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/today-food`,
         values
       );
 

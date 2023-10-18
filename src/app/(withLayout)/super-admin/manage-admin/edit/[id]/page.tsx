@@ -35,7 +35,7 @@ const SuperAdminCreateManageAdminEditPage = ({ params }: IDProps) => {
     queryKey: ["repoData"],
     queryFn: () =>
       axios
-        .get(`http://localhost:5000/api/v1/admin/${id}`)
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/admin/${id}`)
         .then((res) => res.data),
     refetchInterval: 10000,
   });
@@ -54,7 +54,7 @@ const SuperAdminCreateManageAdminEditPage = ({ params }: IDProps) => {
     formData.append("image", image as Blob);
     try {
       const response = await axios.post(
-        "https://api.imgbb.com/1/upload?key=2d792faf2ced232b9cfa03671f9fcfc0",
+        `${process.env.NEXT_PUBLIC_IMGBB_API}`,
         formData
       );
 
@@ -69,7 +69,7 @@ const SuperAdminCreateManageAdminEditPage = ({ params }: IDProps) => {
 
     try {
       const response = await axios.patch(
-        `http://localhost:5000/api/v1/admin/${id}`,
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/admin/${id}`,
         values
       );
       message.success(

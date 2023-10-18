@@ -15,7 +15,7 @@ import axios from "axios";
 import type { UploadChangeParam } from "antd/es/upload";
 import { useRouter } from "next/navigation";
 import type { UploadFile, UploadProps } from "antd/es/upload/interface";
-import HeaderPage from "@/components/ui/header";
+import Navbar from "@/components/ui/navbar";
 
 const RegisterPage = () => {
   const [selectedDate, setSelectedDate] = useState("");
@@ -36,7 +36,7 @@ const RegisterPage = () => {
     formData.append("image", image as Blob);
     try {
       const response = await axios.post(
-        "https://api.imgbb.com/1/upload?key=2d792faf2ced232b9cfa03671f9fcfc0",
+        `${process.env.NEXT_PUBLIC_IMGBB_API}`,
         formData
       );
 
@@ -51,7 +51,7 @@ const RegisterPage = () => {
     values.profileImage = imageUrl;
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/users",
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/users`,
         values
       );
       response && router.push("/login");
@@ -63,7 +63,7 @@ const RegisterPage = () => {
 
   return (
     <div>
-      <HeaderPage />
+      <Navbar />
       <div style={{ margin: "0% 4%" }}>
         <Row>
           <Col

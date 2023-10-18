@@ -35,7 +35,7 @@ const UserFeedbackPage = () => {
     values.userId = userId;
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/feedback",
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/feedback`,
         values
       );
 

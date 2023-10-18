@@ -35,7 +35,7 @@ const AdminCreateFAQPage = () => {
     values.adminId = adminId;
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/faq",
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/faq`,
         values
       );
 

@@ -31,7 +31,7 @@ const ManageAdminPage = () => {
     formData.append("image", image as Blob);
     try {
       const response = await axios.post(
-        "https://api.imgbb.com/1/upload?key=2d792faf2ced232b9cfa03671f9fcfc0",
+        `${process.env.NEXT_PUBLIC_IMGBB_API}`,
         formData
       );
 
@@ -46,7 +46,7 @@ const ManageAdminPage = () => {
     values.profileImage = imageUrl ? imageUrl : null;
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/admin",
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/admin`,
         values
       );
 

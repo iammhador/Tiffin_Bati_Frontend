@@ -31,7 +31,9 @@ const SeeFAQAndOperation = () => {
   } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
-      axios.get("http://localhost:5000/api/v1/faq").then((res) => res.data),
+      axios
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/faq`)
+        .then((res) => res.data),
   });
 
   if (isLoading) return <Loading />;
@@ -42,7 +44,7 @@ const SeeFAQAndOperation = () => {
   const handleDelete = async (record: DataType) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/v1/faq/${record?.id}`
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/faq/${record?.id}`
       );
       if (response) {
         message.success("FAQ Deleted!");

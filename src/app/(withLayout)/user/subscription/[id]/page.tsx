@@ -52,7 +52,7 @@ const MakeSubscriptionPage = ({ params }: IDProps) => {
     queryKey: ["repoData"],
     queryFn: () =>
       axios
-        .get(`http://localhost:5000/api/v1/price-and-plan/${id}`)
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/price-and-plan/${id}`)
         .then((res) => res.data),
   });
 
@@ -70,7 +70,7 @@ const MakeSubscriptionPage = ({ params }: IDProps) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/subscription",
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/subscription`,
         values
       );
 

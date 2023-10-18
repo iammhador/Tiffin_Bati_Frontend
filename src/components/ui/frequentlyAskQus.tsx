@@ -16,7 +16,9 @@ const FrequentlyAskQusPage = () => {
   } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
-      axios.get("http://localhost:5000/api/v1/faq").then((res) => res.data),
+      axios
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/faq`)
+        .then((res) => res.data),
   });
   refetch();
 

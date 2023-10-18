@@ -31,7 +31,9 @@ const SeeAllUsersAndOperation = () => {
   } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
-      axios.get("http://localhost:5000/api/v1/admin").then((res) => res.data),
+      axios
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/admin`)
+        .then((res) => res.data),
   });
 
   if (isLoading) return <Loading />;
@@ -42,7 +44,7 @@ const SeeAllUsersAndOperation = () => {
   const handleDelete = async (user: DataType) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/v1/admin/${user.id}`
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/admin/${user.id}`
       );
       if (response) {
         message.success(`${adminData?.data?.username}`, response.data);

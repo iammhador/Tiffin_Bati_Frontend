@@ -42,7 +42,7 @@ const SuperAdminManagePage = () => {
     queryKey: ["repoData"],
     queryFn: () =>
       axios
-        .get(`http://localhost:5000/api/v1/users/${useId}`)
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/users/${useId}`)
         .then((res) => res.data),
     refetchInterval: 10000,
   });
@@ -66,7 +66,7 @@ const SuperAdminManagePage = () => {
     formData.append("image", image as Blob);
     try {
       const response = await axios.post(
-        "https://api.imgbb.com/1/upload?key=2d792faf2ced232b9cfa03671f9fcfc0",
+        `${process.env.NEXT_PUBLIC_IMGBB_API}`,
         formData
       );
 
@@ -81,7 +81,7 @@ const SuperAdminManagePage = () => {
     values.profileImage = imageUrl ? imageUrl : data?.data?.profileImage;
     try {
       const response = await axios.patch(
-        `http://localhost:5000/api/v1/users/${useId}`,
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/users/${useId}`,
         values
       );
       message.success("User Information Updated Successfully.");

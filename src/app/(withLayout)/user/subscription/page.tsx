@@ -38,7 +38,9 @@ const SubscriptionPage = () => {
     queryFn: () =>
       userId &&
       axios
-        .get(`http://localhost:5000/api/v1/subscription/user/${userId}`)
+        .get(
+          `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/subscription/user/${userId}`
+        )
         .then((res) => res.data),
     refetchInterval: 8000,
   });
@@ -52,7 +54,7 @@ const SubscriptionPage = () => {
   const cancelSubscription = async (values: any) => {
     try {
       const response = await axios.patch(
-        `http://localhost:5000/api/v1/subscription/${values?.data?.id}`,
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/subscription/${values?.data?.id}`,
         {
           status: "CANCEL",
         }

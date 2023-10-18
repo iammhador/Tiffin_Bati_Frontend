@@ -9,7 +9,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Card, Button, Rate, Form, message } from "antd";
 import Image from "next/image";
-import HeaderPage from "@/components/ui/header";
 import FooterPage from "@/components/ui/footer";
 import Loading from "@/app/loading";
 import InputTextArea from "@/components/inputField/inputTextAre";
@@ -17,6 +16,7 @@ import { getFromLocalStorage } from "@/app/utils/local-storage";
 import { decodedToken } from "@/app/utils/jwt";
 import { TokenInfo } from "@/app/constants/global";
 import ReviewAndRatingPage from "@/components/ui/reviewAndRating";
+import Navbar from "@/components/ui/navbar";
 
 const { Meta } = Card;
 
@@ -44,7 +44,7 @@ const MenuPage = ({ params }: IDProps) => {
     queryKey: ["repoData"],
     queryFn: () =>
       axios
-        .get(`http://localhost:5000/api/v1/menu/${id}`)
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/menu/${id}`)
         .then((res) => res.data),
     refetchInterval: 10000,
   });
@@ -61,9 +61,8 @@ const MenuPage = ({ params }: IDProps) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/review-and-rating",
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/review-and-rating`,
         values
-        
       );
       message.success(`${data?.data?.title} review has been updated.`);
     } catch (error) {
@@ -76,7 +75,7 @@ const MenuPage = ({ params }: IDProps) => {
 
   return (
     <div>
-      <HeaderPage />
+      <Navbar />
       <div
         style={{
           display: "flex",

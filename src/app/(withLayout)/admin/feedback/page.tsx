@@ -32,7 +32,7 @@ const SeeFeedbackAndOperation = () => {
     queryKey: ["repoData"],
     queryFn: () =>
       axios
-        .get("http://localhost:5000/api/v1/feedback")
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/feedback`)
         .then((res) => res.data),
   });
 
@@ -44,7 +44,7 @@ const SeeFeedbackAndOperation = () => {
   const handleDelete = async (record: DataType) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/v1/feedback/${record?.id}`
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/feedback/${record?.id}`
       );
       if (response) {
         message.success("Feedback Deleted!");

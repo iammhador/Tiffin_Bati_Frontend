@@ -15,7 +15,7 @@ import {
 import { decodedToken } from "../utils/jwt";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import HeaderPage from "@/components/ui/header";
+import Navbar from "@/components/ui/navbar";
 
 type TokenInfo = {
   userId: string;
@@ -32,7 +32,7 @@ const LoginPage = () => {
   const onFinish = async (values: any) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/auth/login",
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/auth/login`,
         values
       );
 
@@ -62,7 +62,7 @@ const LoginPage = () => {
 
   return (
     <div>
-      <HeaderPage />
+      <Navbar />
       <div style={{ margin: "0% 4%" }}>
         <Row justify="center" align="middle">
           <Col

@@ -6,20 +6,21 @@ import BannerPage from "@/components/ui/banner";
 import ContactUsPage from "@/components/ui/contactUs";
 import FooterPage from "@/components/ui/footer";
 import FrequentlyAskQusPage from "@/components/ui/frequentlyAskQus";
-import HeaderPage from "@/components/ui/header";
+import Navbar from "@/components/ui/navbar";
 import PricingPage from "@/components/ui/pricing";
 import TestimonialsPage from "@/components/ui/testimonial";
 
 const App = () => {
   return (
     <div>
-      <HeaderPage />
+      <Navbar />
+
       <BannerPage />
       <AboutUsPage />
       <AvailableService />
-      <PricingPage />
+      {/* <PricingPage /> */}
       <TestimonialsPage />
-      <FrequentlyAskQusPage />
+      {/* <FrequentlyAskQusPage /> */}
       <ContactUsPage />
       <FooterPage />
     </div>

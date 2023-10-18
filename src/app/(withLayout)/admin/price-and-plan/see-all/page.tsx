@@ -33,7 +33,7 @@ const SeePriceAndPlanAndOperation = () => {
     queryKey: ["repoData"],
     queryFn: () =>
       axios
-        .get("http://localhost:5000/api/v1/price-and-plan")
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/price-and-plan`)
         .then((res) => res.data),
   });
 
@@ -45,7 +45,7 @@ const SeePriceAndPlanAndOperation = () => {
   const handleDelete = async (newFood: DataType) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/v1/price-and-plan/${newFood?.id}`
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/price-and-plan/${newFood?.id}`
       );
       if (response) {
         message.success("Price And Plan Deleted successfully", response.data);

@@ -34,7 +34,7 @@ const SeeAllSubAndStatusUpdate = () => {
     queryKey: ["repoData"],
     queryFn: () =>
       axios
-        .get("http://localhost:5000/api/v1/subscription")
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/subscription`)
         .then((res) => res.data),
   });
   refetch();
@@ -46,7 +46,7 @@ const SeeAllSubAndStatusUpdate = () => {
   const handleUpdateStatus = async (values: DataType) => {
     try {
       const response = await axios.patch(
-        `http://localhost:5000/api/v1/subscription/${values?.id}`,
+        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/subscription/${values?.id}`,
         {
           status: "ACTIVATE",
         }

@@ -22,7 +22,7 @@ const PricingPage = () => {
     queryKey: ["repoData"],
     queryFn: () =>
       axios
-        .get("http://localhost:5000/api/v1/price-and-plan")
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/price-and-plan`)
         .then((res) => res.data),
   });
 
