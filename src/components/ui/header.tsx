@@ -39,24 +39,6 @@ const HeaderPage = () => {
   const menuItems = authToken
     ? [
         {
-          key: "5",
-          label: (
-            <Link href="menu">
-              <Button
-                type="text"
-                style={{
-                  fontSize: "16px",
-                  fontWeight: "500",
-                  color: "#545EE1",
-                  textTransform: "capitalize",
-                }}
-              >
-                Menu
-              </Button>
-            </Link>
-          ),
-        },
-        {
           key: "4",
           label: (
             <Link href={`${userRole}`}>
@@ -70,6 +52,24 @@ const HeaderPage = () => {
                 }}
               >
                 {userRole ? userRole : undefined}
+              </Button>
+            </Link>
+          ),
+        },
+        {
+          key: "5",
+          label: (
+            <Link href="menu">
+              <Button
+                type="text"
+                style={{
+                  fontSize: "16px",
+                  fontWeight: "500",
+                  color: "#545EE1",
+                  textTransform: "capitalize",
+                }}
+              >
+                Menu
               </Button>
             </Link>
           ),

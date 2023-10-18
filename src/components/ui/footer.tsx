@@ -20,7 +20,7 @@ const FooterPage = () => {
             href="#"
             style={{
               display: "flex",
-              justifyContent: "center",
+              justifyContent: "left",
               alignItems: "center",
             }}
           >

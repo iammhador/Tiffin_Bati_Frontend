@@ -1,61 +1,32 @@
-"use client";
-
-import { Collapse } from "antd";
-
-const items = [
-  {
-    key: "1",
-    label: "What service packages do you offer?",
-    children: (
-      <p style={{ paddingLeft: 24 }}>
-        Learn about our monthly and yearly meal service packages tailored to
-        suit your needs and budget.
-      </p>
-    ),
-  },
-  {
-    key: "2",
-    label: "What types of dishes do you provide?",
-    children: (
-      <p style={{ paddingLeft: 24 }}>
-        Explore our diverse menu, including vegetarian, non-vegetarian, and
-        special dietary options. We cater to various tastes and preferences.
-      </p>
-    ),
-  },
-  {
-    key: "3",
-    label: "How does the delivery process work?",
-    children: (
-      <p style={{ paddingLeft: 24 }}>
-        Understand our delivery process, schedules, and how we ensure your meals
-        are delivered fresh and on time.
-      </p>
-    ),
-  },
-  {
-    key: "4",
-    label: "What quality standards do you maintain?",
-    children: (
-      <p style={{ paddingLeft: 24 }}>
-        Learn about our commitment to using fresh, high-quality ingredients and
-        adhering to hygiene and food safety standards.
-      </p>
-    ),
-  },
-  {
-    key: "5",
-    label: "How can I reach your customer support?",
-    children: (
-      <p style={{ paddingLeft: 24 }}>
-        Connect with our customer support team for any inquiries, assistance, or
-        to address concerns.
-      </p>
-    ),
-  },
-];
+import { Collapse, message } from "antd";
+import {
+  useQuery,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import axios from "axios";
+import Loading from "@/app/loading";
 
 const FrequentlyAskQusPage = () => {
+  const {
+    isLoading,
+    error,
+    data: faqData,
+    refetch,
+  } = useQuery({
+    queryKey: ["repoData"],
+    queryFn: () =>
+      axios.get("http://localhost:5000/api/v1/faq").then((res) => res.data),
+  });
+  refetch();
+
+  if (isLoading) return <Loading />;
+  if (error) {
+    return message.error("An error has occurred: " + error);
+  }
+
+  const { Panel } = Collapse;
+
   return (
     <div style={{ margin: "10% 4%" }}>
       <h1
@@ -70,9 +41,23 @@ const FrequentlyAskQusPage = () => {
       >
         Frequently Asked Questions
       </h1>
-      <Collapse items={items} size="large" bordered={false} />
+      <Collapse accordion>
+        {faqData?.data?.map((item: any) => (
+          <Panel header={item.title} key={item.id}>
+            <p style={{ paddingLeft: 24 }}>{item.description}</p>
+          </Panel>
+        ))}
+      </Collapse>
     </div>
   );
 };
 
-export default FrequentlyAskQusPage;
+const queryClient = new QueryClient();
+
+const SeeAllTodayMealWithQueryClient = () => (
+  <QueryClientProvider client={queryClient}>
+    <FrequentlyAskQusPage />
+  </QueryClientProvider>
+);
+
+export default SeeAllTodayMealWithQueryClient;

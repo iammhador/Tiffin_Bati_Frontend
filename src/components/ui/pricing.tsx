@@ -1,9 +1,35 @@
 "use client";
 
-import { Card, Col, Row } from "antd";
+import { Button, Card, Col, Row, message } from "antd";
+
 import { CheckOutlined } from "@ant-design/icons";
+import {
+  useQuery,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import axios from "axios";
+import Loading from "@/app/loading";
+import Link from "next/link";
 
 const PricingPage = () => {
+  //@ Fetch All Price And Plan =>
+  const {
+    isLoading,
+    error,
+    data: priceData,
+  } = useQuery({
+    queryKey: ["repoData"],
+    queryFn: () =>
+      axios
+        .get("http://localhost:5000/api/v1/price-and-plan")
+        .then((res) => res.data),
+  });
+
+  if (isLoading) return <Loading />;
+  if (error) {
+    return message.error("An error has occurred: " + error);
+  }
   return (
     <div style={{ margin: "3% 4%" }}>
       <div
@@ -11,7 +37,7 @@ const PricingPage = () => {
           margin: "3rem 0",
         }}
       >
-        <h1
+        <h2
           style={{
             textAlign: "center",
             margin: "1rem 0",
@@ -21,164 +47,105 @@ const PricingPage = () => {
             textTransform: "uppercase",
           }}
         >
-          Subscription
-        </h1>
+          PRICE AND PLAN
+        </h2>
       </div>
 
-      <Row>
-        <Col
-          sm={18}
-          md={14}
-          style={{
-            maxWidth: "2xl",
-            padding: "12px 16px",
-            margin: "auto",
-            border: "1px solid #1890ff",
-            cursor: "pointer",
-            borderRadius: "10px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "20px",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <CheckOutlined style={{ fontSize: "24px", color: "#545EE1" }} />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                marginLeft: "5px",
-              }}
+      {priceData?.data?.map((price: any) => {
+        return (
+          <Card
+            key={price?.id}
+            style={{
+              maxWidth: "2xl",
+              margin: "2% 0",
+              borderRadius: "10px",
+              backgroundColor: "#F5F4F9",
+              padding: "20px",
+            }}
+          >
+            <Row
+              gutter={[16, 16]}
+              justify="space-between"
+              style={{ alignItems: "center" }}
             >
-              <p
-                style={{
-                  fontSize: "1.125rem",
-                  fontWeight: "500",
-                  color: "#434343",
-                  textTransform: "capitalize",
-                }}
-              >
-                Monthly
-              </p>
+              <Col xs={24} sm={8}>
+                <div>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <CheckOutlined
+                      style={{ fontSize: "1rem", color: "#545EE1" }}
+                    />
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        marginLeft: "3px",
+                      }}
+                    >
+                      <p
+                        style={{
+                          fontWeight: "500",
+                          textTransform: "capitalize",
+                          fontSize: "1rem",
+                          color: "#F76F01",
+                        }}
+                      >
+                        {price?.subscription}
+                      </p>
+                    </div>
+                  </div>
 
-              <div
-                style={{
-                  padding: "2px",
-                  fontSize: "0.875rem",
-                  color: "#F76F01",
-                  backgroundColor: "#F5F4F9",
-                  borderRadius: "full",
-                }}
-              >
-                Save 5%
-              </div>
-            </div>
-          </div>
+                  <div>
+                    <p
+                      style={{
+                        fontWeight: "500",
+                        textTransform: "capitalize",
+                        padding: "10px 0",
+                        fontSize: "1rem",
+                        color: " #313416",
+                      }}
+                    >
+                      {price?.content}
+                    </p>
+                  </div>
+                </div>
+              </Col>
 
-          <div>
-            <p
-              style={{
-                fontSize: "1.2rem",
-                fontWeight: "600",
-                color: "#545EE1",
-              }}
-            >
-              lunch & dinner
-            </p>
-          </div>
+              <Col xs={24} sm={8} style={{ textAlign: "center" }}>
+                <Link href={`/user/subscription/${price?.id}`}>
+                  <Button type="primary" style={{ margin: "10px 0" }}>
+                    Subscribe
+                  </Button>
+                </Link>
+              </Col>
 
-          <div>
-            <p
-              style={{
-                fontSize: "1.5rem",
-                fontWeight: "600",
-                color: "#F76F01",
-              }}
-            >
-              ৳5,699{" "}
-            </p>
-          </div>
-        </Col>
-
-        <Col
-          xs={18}
-          md={14}
-          style={{
-            maxWidth: "2xl",
-            padding: "12px 16px",
-            margin: "auto",
-            border: "1px solid #1890ff",
-            cursor: "pointer",
-            borderRadius: "10px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <CheckOutlined style={{ fontSize: "24px", color: "#545EE1" }} />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                marginLeft: "5px",
-              }}
-            >
-              <p
-                style={{
-                  fontSize: "1.125rem",
-                  fontWeight: "500",
-                  color: "#434343",
-                  textTransform: "capitalize",
-                }}
-              >
-                Yearly
-              </p>
-
-              <div
-                style={{
-                  padding: "2px",
-                  fontSize: "0.875rem",
-                  color: "#F76F01",
-                  backgroundColor: "#F5F4F9",
-                  borderRadius: "full",
-                }}
-              >
-                Save 15%
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <p
-              style={{
-                fontSize: "1.2rem",
-                fontWeight: "600",
-                color: "#545EE1",
-              }}
-            >
-              lunch & dinner
-            </p>
-          </div>
-
-          <div>
-            <p
-              style={{
-                fontSize: "1.5rem",
-                fontWeight: "600",
-                color: "#F76F01",
-              }}
-            >
-              ৳61,199{" "}
-            </p>
-          </div>
-        </Col>
-      </Row>
+              <Col xs={24} sm={8} style={{ textAlign: "right" }}>
+                <div>
+                  <p
+                    style={{
+                      fontSize: "1rem",
+                      fontWeight: "600",
+                      color: "#F76F01",
+                    }}
+                  >
+                    ৳{price?.price}
+                  </p>
+                </div>
+              </Col>
+            </Row>
+          </Card>
+        );
+      })}
     </div>
   );
 };
 
-export default PricingPage;
+const queryClient = new QueryClient();
+
+const SeeAllFAQWithQueryClient = () => (
+  <QueryClientProvider client={queryClient}>
+    <PricingPage />
+  </QueryClientProvider>
+);
+
+export default SeeAllFAQWithQueryClient;

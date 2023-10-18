@@ -1,8 +1,8 @@
 "use client";
 
+import "dayjs/locale/en";
 import dayjs from "dayjs";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { Space, Table, message, Modal } from "antd";
+import { Table, message } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import Loading from "@/app/loading";
 import {
@@ -14,48 +14,34 @@ import axios from "axios";
 
 interface DataType {
   id: string;
-  subject: string;
-  username: string;
+  title: string;
   createdAt: string;
 }
 
 type DataIndex = keyof DataType;
 
-const SeeFeedbackAndOperation = () => {
-  //@ Fetch All Blog =>
+const SeeAllTodayMealAndOperation = () => {
+  //@ Fetch All Today Meal =>
   const {
     isLoading,
     error,
-    data: feedbackData,
+    data: todayMealData,
     refetch,
   } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
       axios
-        .get("http://localhost:5000/api/v1/feedback")
+        .get("http://localhost:5000/api/v1/today-food")
         .then((res) => res.data),
   });
+  refetch();
 
   if (isLoading) return <Loading />;
   if (error) {
     return message.error("An error has occurred: " + error);
   }
 
-  const handleDelete = async (record: DataType) => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:5000/api/v1/feedback/${record?.id}`
-      );
-      if (response) {
-        message.success("Feedback Deleted!");
-      }
-      refetch();
-    } catch (error) {
-      message.error("Error feedback blog" + error);
-    }
-  };
-
-  const getFeedbackId = (record: any, index: number) => {
+  const getTodayFoodId = (record: any, index: number) => {
     if (record.id) {
       return record.id.toString();
     } else {
@@ -64,8 +50,8 @@ const SeeFeedbackAndOperation = () => {
   };
 
   const getUsername = (record: any, index: number) => {
-    if (record?.user?.username) {
-      return record?.user?.username.toString();
+    if (record.title) {
+      return record.title;
     } else {
       return "";
     }
@@ -83,33 +69,33 @@ const SeeFeedbackAndOperation = () => {
     }
   };
 
-  const dataSource = feedbackData.data.map((record: any, index: number) => {
+  const dataSource = todayMealData.data.map((record: any, index: number) => {
     return {
       ...record,
-      key: getFeedbackId(record, index),
-      username: getUsername(record, index),
+      key: getTodayFoodId(record, index),
+      title: getUsername(record, index),
       createdAt: getCreatedAt(record, index),
     };
   });
 
   const columns: ColumnsType<DataType> = [
     {
-      title: "Username",
-      dataIndex: "username",
-      key: "username",
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+      width: "35%",
+    },
+    {
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
       width: "15%",
     },
     {
-      title: "Subject",
-      dataIndex: "subject",
-      key: "subject",
-      width: "20%",
-    },
-    {
-      title: "Message",
-      dataIndex: "message",
-      key: "message",
-      width: "30%",
+      title: "Shift",
+      dataIndex: "shift",
+      key: "shift",
+      width: "15%",
     },
     {
       title: "CreatedAt",
@@ -126,29 +112,6 @@ const SeeFeedbackAndOperation = () => {
       },
       sortDirections: ["descend", "ascend"],
     },
-    {
-      title: "Action",
-      dataIndex: "",
-      key: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <a
-            onClick={() => {
-              Modal.confirm({
-                title: "Confirm",
-                icon: <ExclamationCircleOutlined />,
-                content: `Are you sure you want to delete " ${record.subject} " ?`,
-                okText: "Delete",
-                cancelText: "Cancel",
-                onOk: () => handleDelete(record),
-              });
-            }}
-          >
-            Delete
-          </a>
-        </Space>
-      ),
-    },
   ];
 
   return (
@@ -161,7 +124,7 @@ const SeeFeedbackAndOperation = () => {
           margin: "3% 0",
         }}
       >
-        BLOG LIST
+        TODAY MEAL LIST
       </h3>
       <Table columns={columns} dataSource={dataSource} pagination={false} />
     </div>
@@ -170,10 +133,10 @@ const SeeFeedbackAndOperation = () => {
 
 const queryClient = new QueryClient();
 
-const SeeAllFeedbackWithQueryClient = () => (
+const SeeAllTodayMealWithQueryClient = () => (
   <QueryClientProvider client={queryClient}>
-    <SeeFeedbackAndOperation />
+    <SeeAllTodayMealAndOperation />
   </QueryClientProvider>
 );
 
-export default SeeAllFeedbackWithQueryClient;
+export default SeeAllTodayMealWithQueryClient;
