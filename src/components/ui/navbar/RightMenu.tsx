@@ -18,6 +18,7 @@ interface RightMenuProps {
 const RightMenu: React.FC<RightMenuProps> = ({ mode }) => {
   const router = useRouter();
   const [userRole, setUserRole] = useState<string>("");
+  const [userName, setUserName] = useState<string>("");
   const handleLogOut = () => {
     removeFromLocalStorage("accessToken");
     message.success("User logged out!!");
@@ -29,33 +30,35 @@ const RightMenu: React.FC<RightMenuProps> = ({ mode }) => {
   useEffect(() => {
     if (authToken) {
       const tokenDecode = decodedToken(authToken as string) as TokenInfo;
-      console.log(tokenDecode);
-      const { role } = tokenDecode;
+      const { role, name } = tokenDecode;
       setUserRole(role);
+      setUserName(name);
     }
   }, [authToken]);
 
   return (
     <div>
-      <Menu mode={mode}>
-        <Menu.SubMenu
-          title={
-            <>
-              <Avatar icon={<UserOutlined />} />
-              <span className={styles.username}>John Doe</span>
-            </>
-          }
-        >
-          <Menu.Item key="about-us">
-            <Link href={`${userRole}`}>
-              <UserOutlined /> Profile
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="log-out" onClick={handleLogOut}>
-            <LogoutOutlined /> Logout
-          </Menu.Item>
-        </Menu.SubMenu>
-      </Menu>
+      {userRole && (
+        <Menu mode={mode}>
+          <Menu.SubMenu
+            title={
+              <>
+                <Avatar icon={<UserOutlined />} />
+                <span className={styles.username}>{userName}</span>
+              </>
+            }
+          >
+            <Menu.Item key="about-us">
+              <Link href={`${userRole}`}>
+                <UserOutlined /> Profile
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="log-out" onClick={handleLogOut}>
+              <LogoutOutlined /> Logout
+            </Menu.Item>
+          </Menu.SubMenu>
+        </Menu>
+      )}
     </div>
   );
 };

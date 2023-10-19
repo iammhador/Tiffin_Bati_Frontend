@@ -82,12 +82,10 @@ PARAGRAPH : #445069
         
 
 <<== HAVE TO COMPLETE ==>>
-# PUBLIC ROUTE => @ Menu search and pagination.
-
-
-
+@ Menu search and pagination.
+@ Breadcrumb
 @reset all form check
-        
+@menu pagination and filter
 
 ----------------------------- EXTRA CODE  -----------------------------------<<
 

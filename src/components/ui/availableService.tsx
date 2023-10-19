@@ -1,6 +1,6 @@
 "use client";
 
-import { Col, Row, Card } from "antd";
+import { Col, Row, Card, Button } from "antd";
 import Image from "next/image";
 import aluBhorrta from "../../app/assets/food/aluVorta.png";
 import daal from "../../app/assets/food/daal.png";
@@ -13,218 +13,32 @@ import mistiKumraVaji from "../../app/assets/food/misti-kumra-vaji.png";
 import biriyani from "../../app/assets/food/biriyani.png";
 import dimVuna from "../../app/assets/food/dim-vuna.png";
 import gajorerHalua from "../../app/assets/food/gajorer-halua.png";
+import Loading from "@/app/loading";
+import {
+  useQuery,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import axios from "axios";
+import Link from "next/link";
+import Meta from "antd/es/card/Meta";
+import { useState } from "react";
 
 const AvailableService = () => {
-  const serviceInfo: {
-    key: number;
-    title: string;
-    image: React.ReactNode | React.ReactElement;
-  }[] = [
-    {
-      key: 1,
-      title: "Alu Bhorrta",
-      image: (
-        <Image
-          src={aluBhorrta}
-          width={200}
-          height={200}
-          alt="Alu Bhorrta"
-          style={{
-            border: "3px solid #F5F4F9",
-            borderRadius: "5px",
-            padding: "15px",
-          }}
-        />
-      ),
-    },
-    {
-      key: 2,
-      title: "Daal",
-      image: (
-        <Image
-          src={daal}
-          width={200}
-          height={200}
-          alt="Daal"
-          style={{
-            border: "3px solid #F5F4F9",
-            borderRadius: "5px",
-            padding: "15px",
-          }}
-        />
-      ),
-    },
-    {
-      key: 3,
-      title: "Chicken",
-      image: (
-        <Image
-          src={murgiGosto}
-          width={200}
-          height={200}
-          alt="Chicken"
-          style={{
-            border: "3px solid #F5F4F9",
-            borderRadius: "5px",
-            padding: "15px",
-          }}
-        />
-      ),
-    },
-    {
-      key: 4,
-      title: "Lal Shak",
-      image: (
-        <Image
-          src={lalShak}
-          width={200}
-          height={200}
-          alt="lal Shak"
-          style={{
-            border: "3px solid #F5F4F9",
-            borderRadius: "5px",
-            padding: "15px",
-          }}
-        />
-      ),
-    },
-    {
-      key: 5,
-      title: "lakka Shutiki Bhuna",
-      image: (
-        <Image
-          src={lakkaShutikiBhuna}
-          width={200}
-          height={200}
-          alt="Lakka Shutiki Bhuna"
-          style={{
-            border: "3px solid #F5F4F9",
-            borderRadius: "5px",
-            padding: "15px",
-          }}
-        />
-      ),
-    },
-    {
-      key: 6,
-      title: "Tomato Chutne",
-      image: (
-        <Image
-          src={tomatoChutne}
-          width={200}
-          height={200}
-          alt="tomato Chutne"
-          style={{
-            border: "3px solid #F5F4F9",
-            borderRadius: "5px",
-            padding: "15px",
-          }}
-        />
-      ),
-    },
-    {
-      key: 7,
-      title: "Pangas Mach",
-      image: (
-        <Image
-          src={pangasMach}
-          width={200}
-          height={200}
-          alt="Pangas Mach"
-          style={{
-            border: "3px solid #F5F4F9",
-            borderRadius: "5px",
-            padding: "15px",
-          }}
-        />
-      ),
-    },
-    {
-      key: 8,
-      title: "Misti KumraVaji",
-      image: (
-        <Image
-          src={mistiKumraVaji}
-          width={200}
-          height={200}
-          alt="Misti KumraVaji"
-          style={{
-            border: "3px solid #F5F4F9",
-            borderRadius: "5px",
-            padding: "15px",
-          }}
-        />
-      ),
-    },
-    {
-      key: 9,
-      title: "Dim Vuna",
-      image: (
-        <Image
-          src={dimVuna}
-          width={200}
-          height={200}
-          alt="Misti KumraVaji"
-          style={{
-            border: "3px solid #F5F4F9",
-            borderRadius: "5px",
-            padding: "15px",
-          }}
-        />
-      ),
-    },
-    {
-      key: 10,
-      title: "Biriyani",
-      image: (
-        <Image
-          src={biriyani}
-          width={200}
-          height={200}
-          alt="biriyani"
-          style={{
-            border: "3px solid #F5F4F9",
-            borderRadius: "5px",
-            padding: "15px",
-          }}
-        />
-      ),
-    },
-    {
-      key: 11,
-      title: "Misti KumraVaji",
-      image: (
-        <Image
-          src={mistiKumraVaji}
-          width={200}
-          height={200}
-          alt="Misti KumraVaji"
-          style={{
-            border: "3px solid #F5F4F9",
-            borderRadius: "5px",
-            padding: "15px",
-          }}
-        />
-      ),
-    },
-    {
-      key: 12,
-      title: "Gajorer Halua",
-      image: (
-        <Image
-          src={gajorerHalua}
-          width={200}
-          height={200}
-          alt="Gajorer Halua"
-          style={{
-            border: "3px solid #F5F4F9",
-            borderRadius: "5px",
-            padding: "15px",
-          }}
-        />
-      ),
-    },
-  ];
+  const [showAll, setShowAll] = useState<boolean>(false);
+  const { isLoading, error, data, refetch } = useQuery({
+    queryKey: ["repoData"],
+    queryFn: () =>
+      axios
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/menu`)
+        .then((res) => res.data),
+    refetchInterval: 10000,
+  });
+  refetch();
+
+  if (isLoading) return <Loading />;
+
+  if (error) return "An error has occurred: " + error;
   return (
     <div style={{ margin: "10% 4%" }}>
       <h1
@@ -240,40 +54,61 @@ const AvailableService = () => {
         The meal we are provide
       </h1>
 
-      <Row>
-        {serviceInfo?.map((food) => {
-          return (
+      <Row gutter={[16, 16]}>
+        {data?.data?.data
+          .slice(0, showAll ? data?.data?.data.length : 8)
+          .map((item: any) => (
             <Col
-              key={food?.key}
-              sm={8}
-              md={4}
-              style={{
-                marginBottom: "5",
-              }}
+              xs={{ span: 24 }}
+              sm={{ span: 24 }}
+              md={{ span: 8 }}
+              lg={{ span: 6 }}
+              key={item?.id}
             >
-              <div
-                style={{
-                  marginBottom: "20px",
-                }}
-              >
-                {food?.image}
-                <p
-                  style={{
-                    marginTop: "3px",
-                    fontSize: "20px",
-                    fontWeight: "600",
-                    color: "#F76F01",
-                  }}
+              <Link href={`/menu/details/${item.id}`}>
+                <Card
+                  hoverable
+                  style={{ width: 240 }}
+                  cover={
+                    <Image
+                      src={item?.image}
+                      width={150}
+                      height={150}
+                      alt={item?.title}
+                    />
+                  }
                 >
-                  {food?.title}
-                </p>
-              </div>
+                  <Meta title={item?.title} description={item?.category} />
+                </Card>
+              </Link>
             </Col>
-          );
-        })}
+          ))}
       </Row>
+      {data?.data?.data?.length >= 5 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            margin: "2rem 0",
+          }}
+        >
+          <Link href="/menu">
+            <Button style={{ background: "#545EE1" }} type="primary">
+              See More
+            </Button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };
 
-export default AvailableService;
+const queryClient = new QueryClient();
+
+const MenuPageWithQueryClient = () => (
+  <QueryClientProvider client={queryClient}>
+    <AvailableService />
+  </QueryClientProvider>
+);
+
+export default MenuPageWithQueryClient;

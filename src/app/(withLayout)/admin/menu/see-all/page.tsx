@@ -1,7 +1,8 @@
 "use client";
+import dayjs from "dayjs";
 
 import { SearchOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import type { InputRef } from "antd";
 import { Button, Input, Space, Table, message, Modal } from "antd";
@@ -18,9 +19,10 @@ import Link from "next/link";
 
 interface DataType {
   key: string;
-  name: string;
-  age: number;
+  title: string;
+  category: number;
   address: string;
+  createdAt: string;
 }
 
 type DataIndex = keyof DataType;
@@ -29,6 +31,15 @@ const SeeAllMenuAndOperation = () => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+
+  const handlePaginationChange = (page: number, pageSize?: number) => {
+    setCurrentPage(page);
+    if (pageSize) {
+      setPageSize(pageSize);
+    }
+  };
 
   //@ Fetch All Menu =>
   const {
@@ -48,6 +59,13 @@ const SeeAllMenuAndOperation = () => {
   if (error) {
     return message.error("An error has occurred: " + error);
   }
+
+  const handleReset = (clearFilters: () => void) => {
+    clearFilters();
+    setSearchText("");
+    setSearchedColumn("");
+    refetch();
+  };
 
   const handleDelete = async (menu: DataType) => {
     try {
@@ -71,11 +89,6 @@ const SeeAllMenuAndOperation = () => {
     confirm();
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
-  };
-
-  const handleReset = (clearFilters: () => void) => {
-    clearFilters();
-    setSearchText("");
   };
 
   const getColumnSearchProps = (
@@ -120,6 +133,7 @@ const SeeAllMenuAndOperation = () => {
           >
             Reset
           </Button>
+
           <Button
             type="link"
             size="small"
@@ -177,11 +191,31 @@ const SeeAllMenuAndOperation = () => {
     }
   };
 
-  const getMenuName = (record: any, index: number) => {
+  const getMenuTitle = (record: any, index: number) => {
     if (record.title) {
       return record.title;
     } else {
-      return "this record";
+      return "";
+    }
+  };
+
+  const getMenuCategory = (record: any, index: number) => {
+    if (record.category) {
+      return record.category;
+    } else {
+      return "";
+    }
+  };
+
+  const getCreatedAt = (record: any, index: number) => {
+    if (record.createdAt) {
+      const date = dayjs(record.createdAt);
+      const monthName = date.format("MMMM");
+      return `${monthName} ${date.format("DD")}, ${date.format(
+        "YYYY"
+      )} ${date.format("HH:mm")}`;
+    } else {
+      return "";
     }
   };
 
@@ -189,7 +223,9 @@ const SeeAllMenuAndOperation = () => {
     return {
       ...record,
       key: getMenuKey(record, index),
-      name: getMenuName(record, index),
+      title: getMenuTitle(record, index),
+      category: getMenuCategory(record, index),
+      createdAt: getCreatedAt(record, index),
     };
   });
 
@@ -199,23 +235,31 @@ const SeeAllMenuAndOperation = () => {
       dataIndex: "title",
       key: "title",
       width: "30%",
-      ...getColumnSearchProps("name"),
+      ...getColumnSearchProps("title"),
     },
     {
       title: "Category",
       dataIndex: "category",
       key: "category",
       width: "20%",
-      ...getColumnSearchProps("age"),
+      ...getColumnSearchProps("category"),
     },
     {
       title: "CreatedAt",
       dataIndex: "createdAt",
       key: "createdAt",
-      ...getColumnSearchProps("address"),
-      sorter: (a, b) => a.address.length - b.address.length,
+      sorter: (a, b) => {
+        if (a.createdAt < b.createdAt) {
+          return -1;
+        }
+        if (a.createdAt > b.createdAt) {
+          return 1;
+        }
+        return 0;
+      },
       sortDirections: ["descend", "ascend"],
     },
+
     {
       title: "Action",
       dataIndex: "",
@@ -228,7 +272,7 @@ const SeeAllMenuAndOperation = () => {
               Modal.confirm({
                 title: "Confirm",
                 icon: <ExclamationCircleOutlined />,
-                content: `Are you sure you want to delete " ${record.name} " ?`,
+                content: `Are you sure you want to delete " ${record.title} " ?`,
                 okText: "Delete",
                 cancelText: "Cancel",
                 onOk: () => handleDelete(record),
@@ -254,7 +298,19 @@ const SeeAllMenuAndOperation = () => {
       >
         ALL MENU
       </h3>
-      <Table columns={columns} dataSource={dataSource} />
+      <Table
+        columns={columns}
+        dataSource={dataSource}
+        pagination={{
+          current: currentPage,
+          pageSize: pageSize,
+          total: menuData.data.meta.total,
+          showTotal: (total) => `Total ${total} items`,
+          pageSizeOptions: ["5", "10", "20", "50"],
+          showSizeChanger: true,
+          onChange: handlePaginationChange,
+        }}
+      />
     </div>
   );
 };

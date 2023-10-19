@@ -1,6 +1,6 @@
-# Bachelor Food Service Website
+# TIFFIN BATI
 
-Bachelor Food Service is a website dedicated to providing solutions for individuals struggling with cooking as bachelors. The platform is designed to offer an easy way for bachelors to access daily food options and plan their meals effortlessly. With an intuitive interface and a range of features, Bachelor Food Service aims to simplify the process of meal planning for its users.
+Tiffin Bati is a website dedicated to providing solutions for individuals struggling with cooking as bachelors. The platform is designed to offer an easy way for bachelors to access daily food options and plan their meals effortlessly. With an intuitive interface and a range of features, Bachelor Food Service aims to simplify the process of meal planning for its users.
 
 ## Features
 
@@ -20,6 +20,23 @@ Bachelor Food Service is a website dedicated to providing solutions for individu
 - JWT (JSON Web Tokens)
 - JWT-decode
 - React-Loader-Spinner
+
+## Default User Credentials
+
+### Super Admin
+
+- Username: super-admin
+- Password: 123456789
+
+### Admin
+
+- Username: admin
+- Password: 123456789
+
+### User
+
+- Username: user
+- Password: 123456789
 
 ## Environmental Variables
 
@@ -60,4 +77,4 @@ We would like to express our gratitude to all the contributors and supporters wh
 
 ## Contact
 
-For any inquiries or support, please contact us at [https://iammhador.netlify.app/](iammhador@gmail.com).
+For any inquiries or support, please contact us at our [website](https://iammhador.netlify.app/).

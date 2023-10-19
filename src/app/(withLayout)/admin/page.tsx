@@ -77,7 +77,6 @@ const AdminManagePage = () => {
   };
 
   const onFinish = async (values: any) => {
-    console.log(values);
     values.dateOfBirth = selectedDate ? selectedDate : data?.data?.dateOfBirth;
     values.profileImage = imageUrl ? imageUrl : data?.data?.profileImage;
     try {
@@ -156,7 +155,7 @@ const AdminManagePage = () => {
                   name="password"
                   message="Please input your password"
                   type="password"
-                  placeholder={data?.data?.password}
+                  placeholder="********"
                   defaultValue={data?.data?.password}
                 />
                 <InputDatePicker handleDateChange={handleDateChange} />

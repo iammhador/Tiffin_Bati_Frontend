@@ -53,87 +53,89 @@ const PricingPage = () => {
 
       {priceData?.data?.map((price: any) => {
         return (
-          <Card
-            key={price?.id}
-            style={{
-              maxWidth: "2xl",
-              margin: "2% 0",
-              borderRadius: "10px",
-              backgroundColor: "#F5F4F9",
-              padding: "20px",
-            }}
-          >
-            <Row
-              gutter={[16, 16]}
-              justify="space-between"
-              style={{ alignItems: "center" }}
+          price?.price && (
+            <Card
+              key={price?.id}
+              style={{
+                maxWidth: "2xl",
+                margin: "2% 0",
+                borderRadius: "10px",
+                backgroundColor: "#F5F4F9",
+                padding: "20px",
+              }}
             >
-              <Col xs={24} sm={8}>
-                <div>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <CheckOutlined
-                      style={{ fontSize: "1rem", color: "#545EE1" }}
-                    />
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        marginLeft: "3px",
-                      }}
-                    >
+              <Row
+                gutter={[16, 16]}
+                justify="space-between"
+                style={{ alignItems: "center" }}
+              >
+                <Col xs={24} sm={8}>
+                  <div>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <CheckOutlined
+                        style={{ fontSize: "1rem", color: "#545EE1" }}
+                      />
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          marginLeft: "3px",
+                        }}
+                      >
+                        <p
+                          style={{
+                            fontWeight: "500",
+                            textTransform: "capitalize",
+                            fontSize: "1rem",
+                            color: "#F76F01",
+                          }}
+                        >
+                          {price?.subscription}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div>
                       <p
                         style={{
                           fontWeight: "500",
                           textTransform: "capitalize",
+                          padding: "10px 0",
                           fontSize: "1rem",
-                          color: "#F76F01",
+                          color: " #313416",
                         }}
                       >
-                        {price?.subscription}
+                        {price?.content}
                       </p>
                     </div>
                   </div>
+                </Col>
 
+                <Col xs={24} sm={8} style={{ textAlign: "center" }}>
+                  <Link href={`/user/subscription/${price?.id}`}>
+                    <Button type="primary" style={{ margin: "10px 0" }}>
+                      Subscribe
+                    </Button>
+                  </Link>
+                </Col>
+
+                <Col xs={24} sm={8} style={{ textAlign: "right" }}>
                   <div>
                     <p
                       style={{
-                        fontWeight: "500",
-                        textTransform: "capitalize",
-                        padding: "10px 0",
                         fontSize: "1rem",
-                        color: " #313416",
+                        fontWeight: "600",
+                        color: "#F76F01",
                       }}
                     >
-                      {price?.content}
+                      ৳{price?.price}
                     </p>
                   </div>
-                </div>
-              </Col>
-
-              <Col xs={24} sm={8} style={{ textAlign: "center" }}>
-                <Link href={`/user/subscription/${price?.id}`}>
-                  <Button type="primary" style={{ margin: "10px 0" }}>
-                    Subscribe
-                  </Button>
-                </Link>
-              </Col>
-
-              <Col xs={24} sm={8} style={{ textAlign: "right" }}>
-                <div>
-                  <p
-                    style={{
-                      fontSize: "1rem",
-                      fontWeight: "600",
-                      color: "#F76F01",
-                    }}
-                  >
-                    ৳{price?.price}
-                  </p>
-                </div>
-              </Col>
-            </Row>
-          </Card>
+                </Col>
+              </Row>
+            </Card>
+          )
         );
       })}
     </div>

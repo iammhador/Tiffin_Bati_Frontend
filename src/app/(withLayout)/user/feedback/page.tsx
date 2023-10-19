@@ -2,7 +2,7 @@
 
 import { Button, Col, Form, Row, message } from "antd";
 import Image from "next/image";
-import feedbackImage from "../../../../assets/input/feedback.png";
+import feedbackImage from "../../../assets/input/feedback.png";
 import InputItem from "@/components/inputField/inputItem";
 import axios from "axios";
 import { getFromLocalStorage } from "@/app/utils/local-storage";

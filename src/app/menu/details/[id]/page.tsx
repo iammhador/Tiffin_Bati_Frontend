@@ -31,6 +31,7 @@ const MenuPage = ({ params }: IDProps) => {
   const [rating, setRating] = useState<number | undefined>(0);
   const [useId, setUserId] = useState<string>("");
   const authToken = getFromLocalStorage("accessToken");
+  const [form] = Form.useForm();
 
   useEffect(() => {
     if (authToken) {
@@ -64,7 +65,11 @@ const MenuPage = ({ params }: IDProps) => {
         `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/review-and-rating`,
         values
       );
-      message.success(`${data?.data?.title} review has been updated.`);
+
+      if (response) {
+        message.success(`${data?.data?.title} review has been updated.`);
+        form.resetFields();
+      }
     } catch (error) {
       message.error("Error occurred:" + error);
     }
@@ -121,7 +126,7 @@ const MenuPage = ({ params }: IDProps) => {
             onChange={handleRatingChange}
           />
 
-          <Form layout="vertical" onFinish={onFinish}>
+          <Form layout="vertical" onFinish={onFinish} form={form}>
             <InputTextArea
               label=""
               name="review"

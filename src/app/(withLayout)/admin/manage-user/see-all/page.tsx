@@ -36,8 +36,6 @@ const SeeAllUsersAndOperation = () => {
         .then((res) => res.data),
   });
 
-  console.log(userData);
-
   if (isLoading) return <Loading />;
   if (error) {
     return message.error("An error has occurred: " + error);

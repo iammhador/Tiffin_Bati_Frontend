@@ -14,21 +14,21 @@ const LeftMenu: React.FC<LeftMenuProps> = ({ mode }) => {
   return (
     <div>
       <Menu mode={mode}>
-        <Menu.Item key="explore">
+        <Menu.Item key="menu">
           <Link href="/menu">Menu</Link>
         </Menu.Item>
-        <Menu.Item key="features">
+        <Menu.Item key="up-coming-menu">
           <Link href="up-coming-menu">Up-Coming Menu</Link>
         </Menu.Item>
         {!authToken && (
-          <div>
-            <Menu.Item key="about">
+          <>
+            <Menu.Item key="register">
               <Link href="register">Register</Link>
             </Menu.Item>
-            <Menu.Item key="contact">
+            <Menu.Item key="login">
               <Link href="login">Login</Link>
             </Menu.Item>
-          </div>
+          </>
         )}
       </Menu>
     </div>
