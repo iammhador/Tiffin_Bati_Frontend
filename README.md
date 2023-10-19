@@ -81,4 +81,5 @@ For any inquiries or support, please contact us at our [website](https://iammhad
 
 ## Videos
 
-<source src="https://vimeo.com/876157558?share=copy#t=0" type="video/mp4">
+<iframe src="https://player.vimeo.com/video/876157558" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+
