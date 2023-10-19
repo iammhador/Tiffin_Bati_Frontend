@@ -79,12 +79,9 @@ We would like to express our gratitude to all the contributors and supporters wh
 
 For any inquiries or support, please contact us at our [website](https://iammhador.netlify.app/).
 
-## Screenshots
-
-![HOME PAGE](./screenshot//mobile_home_paage.png)
-
-<img src="/screenshot/desktop_home_page.png" alt="Tiffin Bati Home Page" width="400" height="300" />
-
 ## Videos
 
-[![OVERVIEW](https://www.youtube.com/watch?v=K8U4K1DA3Qk)](https://www.youtube.com/watch?v=K8U4K1DA3Qk)
+<video width="320" height="240" controls>
+  <source src="/video/2023-10-20_02-45-08.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
