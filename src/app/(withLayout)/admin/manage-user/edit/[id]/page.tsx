@@ -26,6 +26,7 @@ type IDProps = {
 const AdminCreateManageUserEditPage = ({ params }: IDProps) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const { id } = params;
+  const [form] = Form.useForm();
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["repoData"],
@@ -68,9 +69,11 @@ const AdminCreateManageUserEditPage = ({ params }: IDProps) => {
         `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/users/${id}`,
         values
       );
-      message.success(
-        `${data?.data?.username} information Updated Successfully.`
-      );
+
+      if (response) {
+        message.success("Blog Created!");
+        form.resetFields();
+      }
     } catch (error) {
       message.error("Error occurred:" + error);
     }
@@ -129,7 +132,7 @@ const AdminCreateManageUserEditPage = ({ params }: IDProps) => {
             </h2>
           </div>
 
-          <Form layout="vertical" onFinish={onFinish}>
+          <Form layout="vertical" onFinish={onFinish} form={form}>
             <Row>
               <Col
                 xs={{ span: 24, order: 1 }}

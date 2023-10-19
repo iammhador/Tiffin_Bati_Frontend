@@ -23,6 +23,7 @@ import axios from "axios";
 import Link from "next/link";
 import Meta from "antd/es/card/Meta";
 import { useState } from "react";
+import dynamic from "next/dynamic";
 
 const AvailableService = () => {
   const [showAll, setShowAll] = useState<boolean>(false);
@@ -54,21 +55,26 @@ const AvailableService = () => {
         The meal we are provide
       </h1>
 
-      <Row gutter={[16, 16]}>
+      <Row gutter={[16, 16]} justify="center">
         {data?.data?.data
           .slice(0, showAll ? data?.data?.data.length : 8)
           .map((item: any) => (
             <Col
-              xs={{ span: 24 }}
-              sm={{ span: 24 }}
+              xs={{ span: 20 }}
+              sm={{ span: 20 }}
               md={{ span: 8 }}
               lg={{ span: 6 }}
               key={item?.id}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                margin: "5px",
+              }}
             >
               <Link href={`/menu/details/${item.id}`}>
                 <Card
                   hoverable
-                  style={{ width: 240 }}
+                  style={{ width: 240, margin: "15px" }}
                   cover={
                     <Image
                       src={item?.image}
@@ -84,6 +90,7 @@ const AvailableService = () => {
             </Col>
           ))}
       </Row>
+
       {data?.data?.data?.length >= 5 && (
         <div
           style={{
@@ -111,4 +118,6 @@ const MenuPageWithQueryClient = () => (
   </QueryClientProvider>
 );
 
-export default MenuPageWithQueryClient;
+export default dynamic(() => Promise.resolve(MenuPageWithQueryClient), {
+  ssr: false,
+});

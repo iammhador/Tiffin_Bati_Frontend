@@ -30,7 +30,7 @@ const options = [
 const SuperAdminCreateManageAdminEditPage = ({ params }: IDProps) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const { id } = params;
-
+  const [form] = Form.useForm();
   const { isLoading, error, data } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
@@ -72,9 +72,12 @@ const SuperAdminCreateManageAdminEditPage = ({ params }: IDProps) => {
         `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/admin/${id}`,
         values
       );
-      message.success(
-        `${data?.data?.username} information Updated Successfully.`
-      );
+      if (response) {
+        message.success(
+          `${data?.data?.username} information Updated Successfully.`
+        );
+        form.resetFields();
+      }
     } catch (error) {
       message.error("Error occurred:" + error);
     }
@@ -133,7 +136,7 @@ const SuperAdminCreateManageAdminEditPage = ({ params }: IDProps) => {
             </h2>
           </div>
 
-          <Form layout="vertical" onFinish={onFinish}>
+          <Form layout="vertical" onFinish={onFinish} form={form}>
             <Row>
               <Col
                 xs={{ span: 24, order: 1 }}

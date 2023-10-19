@@ -27,7 +27,7 @@ const SuperAdminManagePage = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [useId, setUserId] = useState<string>("");
-
+  const [form] = Form.useForm();
   const authToken = getFromLocalStorage("accessToken");
 
   useEffect(() => {
@@ -84,7 +84,11 @@ const SuperAdminManagePage = () => {
         `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/users/${useId}`,
         values
       );
-      message.success("User Information Updated Successfully.");
+
+      if (response) {
+        message.success("User Information Updated Successfully.");
+        form.resetFields();
+      }
     } catch (error) {
       message.error("Error occurred:" + error);
     }
@@ -143,7 +147,7 @@ const SuperAdminManagePage = () => {
             </h2>
           </div>
 
-          <Form layout="vertical" onFinish={onFinish}>
+          <Form layout="vertical" onFinish={onFinish} form={form}>
             <Row>
               <Col
                 xs={{ span: 24, order: 1 }}

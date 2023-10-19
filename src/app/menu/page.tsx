@@ -65,7 +65,6 @@ const MenuPage = () => {
     pageSize: number | undefined
   ) => {
     const updatedPage = currentPage - 1;
-    console.log("Page:", updatedPage, "PageSize:", pageSize);
     setPage(updatedPage);
     if (typeof pageSize === "number") {
       setSize(pageSize);
@@ -141,9 +140,8 @@ const MenuPage = () => {
         <Pagination
           total={data?.data?.meta?.total}
           showTotal={(total) => `Total ${total} items`}
-          defaultCurrent={1}
+          current={page + 1}
           defaultPageSize={size}
-          current={page}
           onChange={onPaginationChange}
         />
       </div>

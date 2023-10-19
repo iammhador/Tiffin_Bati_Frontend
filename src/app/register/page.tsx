@@ -20,6 +20,7 @@ import Navbar from "@/components/ui/navbar";
 const RegisterPage = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [form] = Form.useForm();
 
   const router = useRouter();
 
@@ -54,8 +55,12 @@ const RegisterPage = () => {
         `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/users`,
         values
       );
-      response && router.push("/login");
-      message.success("User Registered Successfully.");
+
+      if (response) {
+        message.success("User Registered Successfully.");
+        form.resetFields();
+        router.push("/login");
+      }
     } catch (error) {
       console.error("Error occurred:", error);
     }
@@ -117,7 +122,7 @@ const RegisterPage = () => {
               </p>
             </div>
 
-            <Form layout="vertical" onFinish={onFinish}>
+            <Form layout="vertical" onFinish={onFinish} form={form}>
               <Row>
                 <Col
                   xs={{ span: 24, order: 1 }}

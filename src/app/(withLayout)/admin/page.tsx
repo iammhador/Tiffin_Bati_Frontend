@@ -22,11 +22,13 @@ import {
 } from "@tanstack/react-query";
 import InputDatePicker from "@/components/inputField/inputDatePicker";
 import { TokenInfo } from "@/app/constants/global";
+import dynamic from "next/dynamic";
 
 const AdminManagePage = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [useId, setUserId] = useState<string>("");
+  const [form] = Form.useForm();
 
   const authToken = getFromLocalStorage("accessToken");
 
@@ -84,7 +86,11 @@ const AdminManagePage = () => {
         `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/admin/${useId}`,
         values
       );
-      message.success("Admin Information Updated Successfully.");
+
+      if (response) {
+        message.success("Admin Information Updated Successfully.");
+        form.resetFields();
+      }
     } catch (error) {
       console.error("Error occurred:", error);
     }
@@ -134,7 +140,7 @@ const AdminManagePage = () => {
             </h2>
           </div>
 
-          <Form layout="vertical" onFinish={onFinish}>
+          <Form layout="vertical" onFinish={onFinish} form={form}>
             <Row>
               <Col
                 xs={{ span: 24, order: 1 }}
@@ -232,4 +238,6 @@ const AccountManagePageQueryClient = () => (
   </QueryClientProvider>
 );
 
-export default AccountManagePageQueryClient;
+export default dynamic(() => Promise.resolve(AccountManagePageQueryClient), {
+  ssr: false,
+});

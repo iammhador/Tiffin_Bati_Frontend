@@ -17,6 +17,7 @@ import type { UploadFile, UploadProps } from "antd/es/upload/interface";
 const CreateUserPage = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [form] = Form.useForm();
 
   const handleDateChange = (date: dayjs.ConfigType, dateString: string) => {
     const formattedDate = dayjs(dateString).format("YYYY-MM-DD");
@@ -49,7 +50,11 @@ const CreateUserPage = () => {
         `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/users`,
         values
       );
-      message.success("New User Created Successfully.");
+
+      if (response) {
+        message.success("New User Created Successfully.");
+        form.resetFields();
+      }
     } catch (error) {
       console.error("Error occurred:", error);
     }
@@ -99,7 +104,7 @@ const CreateUserPage = () => {
             </h2>
           </div>
 
-          <Form layout="vertical" onFinish={onFinish}>
+          <Form layout="vertical" onFinish={onFinish} form={form}>
             <Row>
               <Col
                 xs={{ span: 24, order: 1 }}

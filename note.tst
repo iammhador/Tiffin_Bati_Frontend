@@ -64,10 +64,9 @@ PARAGRAPH : #445069
 <<== ON GOING  ==>>
         
 <<== HAVE TO COMPLETE ==>>
-@ Menu search and pagination.
-@ Breadcrumb
+
+
 @reset all form check
-@menu pagination and filter
 
 ----------------------------- October 18  -----------------------------------<<
 
@@ -78,14 +77,16 @@ PARAGRAPH : #445069
                 @ Subscription cancel option.
 # ADMIN PAGE => @ Edit Subscription.
                 @ New Navbar.
+                @ Menu search and pagination.
+                @menu pagination and filter
 <<== ON GOING  ==>>
         
 
 <<== HAVE TO COMPLETE ==>>
-@ Menu search and pagination.
-@ Breadcrumb
+
+
 @reset all form check
-@menu pagination and filter
+
 
 ----------------------------- EXTRA CODE  -----------------------------------<<
 

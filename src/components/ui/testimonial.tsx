@@ -6,6 +6,7 @@ import anisulIslam from "../../app/assets/testimonials/anisul-islam.jpg";
 import jubaeTalukder from "../../app/assets/testimonials/jubae-talukder.png";
 
 import Image from "next/image";
+import styled from "styled-components";
 
 const TestimonialsPage = () => {
   const testimonialsInformation = [
@@ -96,7 +97,7 @@ const TestimonialsPage = () => {
       </Col>
       {testimonialsInformation.map((testimonial, i) => {
         return (
-          <Col key={i} xs={6} lg={6} sm={12} style={{ margin: "1rem" }}>
+          <Col key={i} xs={24} sm={12} lg={6} style={{ margin: "1rem" }}>
             <div style={{ boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)" }}>
               <div
                 style={{

@@ -26,7 +26,7 @@ type TokenInfo = {
 };
 
 const LoginPage = () => {
-  const [role, setRole] = useState<string>("");
+  const [form] = Form.useForm();
   const router = useRouter();
 
   const onFinish = async (values: any) => {
@@ -50,11 +50,14 @@ const LoginPage = () => {
       if (authToken) {
         const tokenInfo = decodedToken(authToken as string) as TokenInfo;
         const { role } = tokenInfo;
-        setRole(role);
+
         router.push(role);
       }
 
-      response && message.success("User Logged In Successfully.");
+      if (response) {
+        message.success("User Logged In Successfully.");
+        form.resetFields();
+      }
     } catch (error) {
       return message.error("An error has occurred: " + error);
     }
@@ -98,7 +101,7 @@ const LoginPage = () => {
               </p>
             </div>
 
-            <Form layout="vertical" onFinish={onFinish}>
+            <Form layout="vertical" onFinish={onFinish} form={form}>
               <Row>
                 <Col
                   xs={{ span: 24, order: 1 }}

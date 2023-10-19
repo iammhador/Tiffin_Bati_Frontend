@@ -11,6 +11,7 @@ import {
 import axios from "axios";
 import Loading from "@/app/loading";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
 const PricingPage = () => {
   //@ Fetch All Price And Plan =>
@@ -150,4 +151,6 @@ const SeeAllFAQWithQueryClient = () => (
   </QueryClientProvider>
 );
 
-export default SeeAllFAQWithQueryClient;
+export default dynamic(() => Promise.resolve(SeeAllFAQWithQueryClient), {
+  ssr: false,
+});

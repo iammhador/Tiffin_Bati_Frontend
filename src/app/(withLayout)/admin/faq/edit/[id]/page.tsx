@@ -20,7 +20,7 @@ type IDProps = {
 };
 const AdminCreateFAQEditPage = ({ params }: IDProps) => {
   const { id } = params;
-
+  const [form] = Form.useForm();
   const { isLoading, error, data } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
@@ -42,7 +42,13 @@ const AdminCreateFAQEditPage = ({ params }: IDProps) => {
         `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/faq/${id}`,
         values
       );
-      message.success(`${data?.data?.title} information Updated Successfully.`);
+
+      if (response) {
+        message.success(
+          `${data?.data?.title} information Updated Successfully.`
+        );
+        form.resetFields();
+      }
     } catch (error) {
       message.error("Error occurred:" + error);
     }
@@ -101,7 +107,7 @@ const AdminCreateFAQEditPage = ({ params }: IDProps) => {
             </h2>
           </div>
 
-          <Form layout="vertical" onFinish={onFinish}>
+          <Form layout="vertical" onFinish={onFinish} form={form}>
             <Row>
               <Col
                 xs={{ span: 24, order: 1 }}

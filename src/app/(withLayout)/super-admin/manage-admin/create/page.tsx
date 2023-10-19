@@ -28,6 +28,7 @@ const ManageAdminPage = () => {
   ) => {
     const image = info.file.originFileObj;
     const formData = new FormData();
+
     formData.append("image", image as Blob);
     try {
       const response = await axios.post(

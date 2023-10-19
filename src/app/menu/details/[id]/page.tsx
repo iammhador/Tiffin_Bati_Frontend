@@ -118,34 +118,36 @@ const MenuPage = ({ params }: IDProps) => {
           <Meta title={data?.data?.title} description={data?.data?.category} />
         </Card>
 
-        <div style={{ width: "80%", margin: "2% auto" }}>
-          <Rate
-            style={{ margin: "1% auto" }}
-            allowHalf
-            value={rating}
-            onChange={handleRatingChange}
-          />
-
-          <Form layout="vertical" onFinish={onFinish} form={form}>
-            <InputTextArea
-              label=""
-              name="review"
-              message="Please give your valuable comments"
-              type="text"
-              placeholder="Write your comments...."
+        {useId && (
+          <div style={{ width: "80%", margin: "2% auto" }}>
+            <Rate
+              style={{ margin: "1% auto" }}
+              allowHalf
+              value={rating}
+              onChange={handleRatingChange}
             />
 
-            <Button
-              style={{
-                background: "#545EE1",
-                color: "#F5F4F9",
-              }}
-              htmlType="submit"
-            >
-              Submit
-            </Button>
-          </Form>
-        </div>
+            <Form layout="vertical" onFinish={onFinish} form={form}>
+              <InputTextArea
+                label=""
+                name="review"
+                message="Please give your valuable comments"
+                type="text"
+                placeholder="Write your comments...."
+              />
+
+              <Button
+                style={{
+                  background: "#545EE1",
+                  color: "#F5F4F9",
+                }}
+                htmlType="submit"
+              >
+                Submit
+              </Button>
+            </Form>
+          </div>
+        )}
 
         <ReviewAndRatingPage id={id} />
       </div>

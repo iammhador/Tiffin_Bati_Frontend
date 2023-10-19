@@ -78,3 +78,13 @@ We would like to express our gratitude to all the contributors and supporters wh
 ## Contact
 
 For any inquiries or support, please contact us at our [website](https://iammhador.netlify.app/).
+
+## Screenshots
+
+![HOME PAGE](./screenshot//mobile_home_paage.png)
+
+<img src="/screenshot/desktop_home_page.png" alt="Tiffin Bati Home Page" width="400" height="300" />
+
+## Videos
+
+[![OVERVIEW](https://www.youtube.com/watch?v=K8U4K1DA3Qk)](https://www.youtube.com/watch?v=K8U4K1DA3Qk)

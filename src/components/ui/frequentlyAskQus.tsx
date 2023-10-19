@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-query";
 import axios from "axios";
 import Loading from "@/app/loading";
+import dynamic from "next/dynamic";
 
 const FrequentlyAskQusPage = () => {
   const {
@@ -62,4 +63,6 @@ const SeeAllTodayMealWithQueryClient = () => (
   </QueryClientProvider>
 );
 
-export default SeeAllTodayMealWithQueryClient;
+export default dynamic(() => Promise.resolve(SeeAllTodayMealWithQueryClient), {
+  ssr: false,
+});

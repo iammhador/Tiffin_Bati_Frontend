@@ -20,6 +20,7 @@ type IDProps = {
 };
 const AdminCreateBlogEditPage = ({ params }: IDProps) => {
   const { id } = params;
+  const [form] = Form.useForm();
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["repoData"],
@@ -42,7 +43,13 @@ const AdminCreateBlogEditPage = ({ params }: IDProps) => {
         `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/blog/${id}`,
         values
       );
-      message.success(`${data?.data?.title} information Updated Successfully.`);
+
+      if (response) {
+        message.success(
+          `${data?.data?.title} information Updated Successfully.`
+        );
+        form.resetFields();
+      }
     } catch (error) {
       message.error("Error occurred:" + error);
     }
@@ -101,7 +108,7 @@ const AdminCreateBlogEditPage = ({ params }: IDProps) => {
             </h2>
           </div>
 
-          <Form layout="vertical" onFinish={onFinish}>
+          <Form layout="vertical" onFinish={onFinish} form={form}>
             <Row>
               <Col
                 xs={{ span: 24, order: 1 }}

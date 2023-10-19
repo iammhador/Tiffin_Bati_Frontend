@@ -28,7 +28,7 @@ const AdminCreatedMenuEditPage = ({ params }: IDProps) => {
   const { id } = params;
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [useId, setUserId] = useState<string>("");
-
+  const [form] = Form.useForm();
   const authToken = getFromLocalStorage("accessToken");
 
   useEffect(() => {
@@ -81,7 +81,11 @@ const AdminCreatedMenuEditPage = ({ params }: IDProps) => {
         `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/menu/${id}`,
         values
       );
-      message.success("Menu Updated Successfully.");
+
+      if (response) {
+        message.success("Menu Updated Successfully.");
+        form.resetFields();
+      }
     } catch (error) {
       message.error("Error occurred:" + error);
     }
@@ -140,7 +144,7 @@ const AdminCreatedMenuEditPage = ({ params }: IDProps) => {
             </h2>
           </div>
 
-          <Form layout="vertical" onFinish={onFinish}>
+          <Form layout="vertical" onFinish={onFinish} form={form}>
             <Row>
               <Col
                 xs={{ span: 24, order: 1 }}
