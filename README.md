@@ -81,7 +81,4 @@ For any inquiries or support, please contact us at our [website](https://iammhad
 
 ## Videos
 
-<video width="320" height="240" controls>
-  <source src="/video/2023-10-20_02-45-08.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+<source src="https://vimeo.com/876157558?share=copy#t=0" type="video/mp4">
