@@ -81,8 +81,6 @@ For any inquiries or support, please contact us at our [website](https://iammhad
 
 ## Videos
 
-[![Tiffin Bati Overall Explanation Video](https://player.vimeo.com/video/876157558)](https://player.vimeo.com/video/876157558)
+[![Tiffin Bati - Project Presentation](https://player.vimeo.com/video/876157558)](https://player.vimeo.com/video/876157558)
 
-
-<iframe src="https://player.vimeo.com/video/876157558" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 
