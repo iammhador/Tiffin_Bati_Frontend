@@ -81,4 +81,6 @@ For any inquiries or support, please contact us at our [website](https://iammhad
 
 ## Videos
 
-<source src="https://vimeo.com/876157558?share=copy#t=0" type="video/mp4">
+[![Tiffin Bati - Project Presentation](https://player.vimeo.com/video/876157558)](https://player.vimeo.com/video/876157558)
+
+
