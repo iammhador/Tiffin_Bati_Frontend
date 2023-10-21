@@ -45,41 +45,73 @@ const MakeSubscriptionPage = ({ params }: IDProps) => {
 
   //@ Fetch All Price And Plan =>
   const {
-    isLoading,
-    error,
+    isLoading: priceAndPlanLoading,
+    error: priceAndPlanError,
     data: priceAndPlanData,
   } = useQuery({
-    queryKey: ["repoData"],
+    queryKey: ["priceAndPlan", id],
     queryFn: () =>
       axios
         .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/price-and-plan/${id}`)
         .then((res) => res.data),
   });
 
-  if (isLoading) return <Loading />;
-  if (error) {
-    return message.error("An error has occurred: " + error);
+  const {
+    isLoading: subDataLoading,
+    error: subDataError,
+    data: subData,
+  } = useQuery({
+    queryKey: ["subData", userId],
+    queryFn: () =>
+      axios
+        .get(
+          `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/subscription/user/${userId}`
+        )
+        .then((res) => res.data),
+  });
+
+  if (priceAndPlanLoading || subDataLoading) return <Loading />;
+  if (priceAndPlanError || subDataError) {
+    return message.error(
+      "An error has occurred: " + (priceAndPlanError || subDataError)
+    );
   }
 
   const onFinish = async (values: any) => {
-    const subscriptionPrice = JSON.parse(values.subscription);
-    values.subscription = subscriptionPrice.subscription;
-    values.price = subscriptionPrice.price;
-    values.status = "REQUESTED";
-    values.userId = userId;
-
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/subscription`,
-        values
-      );
+      if (
+        subData?.data?.status === "CANCEL" &&
+        subData?.data?.status === !"ACTIVATE" &&
+        subData?.data?.status === !"REQUESTED"
+      ) {
+        const response = await axios.patch(
+          `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/subscription/${subData?.data?.id}`,
+          { status: "REQUESTED" }
+        );
+        console.log(response);
+        if (response) {
+          message.success("Subscription Complete!!");
+          form.resetFields();
+        }
+      } else {
+        const subscriptionPrice = JSON.parse(values.subscription);
+        values.subscription = subscriptionPrice.subscription;
+        values.price = subscriptionPrice.price;
+        values.status = "REQUESTED";
+        values.userId = userId;
 
-      if (response) {
-        message.success("Subscription Complete!!");
-        form.resetFields();
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/subscription`,
+          values
+        );
+
+        if (response) {
+          message.success("Subscription Complete!!");
+          form.resetFields();
+        }
       }
     } catch (error) {
-      return message.error("An error has occurred: " + error);
+      console.log(error);
     }
   };
 
