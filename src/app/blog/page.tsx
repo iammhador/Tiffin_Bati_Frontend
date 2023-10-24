@@ -57,7 +57,7 @@ const BlogPage = () => {
   return (
     <div>
       <Navbar />
-      <div style={{ padding: "50px", maxWidth: "800px", margin: "auto" }}>
+      <div style={{ padding: "20px", maxWidth: "800px", margin: "auto" }}>
         {blogData?.data?.map((blog: IBlog) => (
           <Card
             key={blog?.id}
@@ -77,7 +77,7 @@ const BlogPage = () => {
                 {blog.description}
               </Paragraph>
               <Divider style={{ margin: "12px 0", borderColor: "#f0f2f5" }} />
-              <Space>
+              <Space direction="horizontal" wrap>
                 <Button type="text" onClick={() => handleLike(blog.id)}>
                   <LikeOutlined />
                   <span style={{ marginLeft: "8px" }}>

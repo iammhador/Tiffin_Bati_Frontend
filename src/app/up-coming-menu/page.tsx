@@ -44,21 +44,22 @@ const UpComingMenuPage = () => {
             marginBottom: "2%",
           }}
         >
-          ALL MENU
+          ALL UPCOMING MENU
         </h2>
 
         <Row gutter={[16, 16]}>
           {data?.data?.map((item: any) => (
             <Col
               xs={{ span: 24 }}
-              sm={{ span: 24 }}
+              sm={{ span: 12 }}
               md={{ span: 8 }}
               lg={{ span: 6 }}
               key={item?.id}
+              style={{ marginBottom: "20px" }}
             >
               <Card
                 hoverable
-                style={{ width: 240, marginBottom: "20px" }}
+                style={{ width: "100%" }}
                 cover={
                   <Image
                     src={item?.image}

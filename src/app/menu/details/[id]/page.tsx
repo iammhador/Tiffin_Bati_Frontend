@@ -95,6 +95,7 @@ const MenuPage = ({ params }: IDProps) => {
             fontWeight: "600",
             color: "#545EE1",
             marginBottom: "2%",
+            maxWidth: "80vw",
           }}
         >
           {data?.data?.title}
@@ -102,7 +103,7 @@ const MenuPage = ({ params }: IDProps) => {
 
         <Card
           hoverable
-          style={{ width: "80vw", margin: "2% auto" }}
+          style={{ width: "80vw", margin: "2% auto", maxWidth: "400px" }}
           cover={
             <div style={{ maxWidth: "100%" }}>
               <Image
@@ -119,7 +120,7 @@ const MenuPage = ({ params }: IDProps) => {
         </Card>
 
         {useId && (
-          <div style={{ width: "80%", margin: "2% auto" }}>
+          <div style={{ width: "80%", margin: "2% auto", maxWidth: "400px" }}>
             <Rate
               style={{ margin: "1% auto" }}
               allowHalf
