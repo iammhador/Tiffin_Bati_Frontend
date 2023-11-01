@@ -10,6 +10,8 @@ Tiffin Bati is a website dedicated to providing solutions for individuals strugg
 - **Admin Panel:** Admins have the authority to manage the platform's content, including menus, FAQs, prices, plans, blogs, and user subscriptions. They can also manage user feedback and activate user subscriptions.
 - **Super Admin Panel:** Super admins have additional privileges, such as managing admin accounts, including creating, deleting, and updating their information. They can also demote admins to users if necessary.
 
+Project Initialize [ideas](https://docs.google.com/document/d/1mHPZUTEAg2CfZGRZXwDyo629xrQaSDoU46iNUkPVu3s/edit?usp=sharing)
+
 ## Technologies Used
 
 - Next.js
@@ -82,5 +84,3 @@ For any inquiries or support, please contact us at our [website](https://iammhad
 ## Videos
 
 [![Tiffin Bati - Project Presentation](https://player.vimeo.com/video/876157558)](https://player.vimeo.com/video/876157558)
-
-
