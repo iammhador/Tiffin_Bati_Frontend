@@ -2,7 +2,6 @@
 
 import { Layout } from "antd";
 // import BreadCrumb from "../forms/breadCrumb";
-import FooterPage from "./footer";
 import Navbar from "./navbar";
 const { Content } = Layout;
 
@@ -23,7 +22,6 @@ const Contents = ({ children }: { children: React.ReactNode }) => {
         ]}
       /> */}
       {children}
-      <FooterPage />
     </Content>
   );
 };

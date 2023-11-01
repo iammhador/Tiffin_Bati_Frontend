@@ -57,20 +57,34 @@ const UpComingMenuPage = () => {
               key={item?.id}
               style={{ marginBottom: "20px" }}
             >
-              <Card
-                hoverable
-                style={{ width: "100%" }}
-                cover={
+              <div
+                style={{
+                  width: "100%",
+                  borderRadius: "10px",
+                  backgroundColor: "#FFFFFF",
+                  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+                  transition: "box-shadow 0.3s",
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "center" }}>
                   <Image
                     src={item?.image}
+                    alt={item?.title}
                     width={150}
                     height={150}
-                    alt={item?.title}
                   />
-                }
-              >
-                <Meta title={item?.title} description={item?.category} />
-              </Card>
+                </div>
+                <div style={{ textAlign: "center", padding: "8px" }}>
+                  <h3
+                    style={{
+                      color: "#545EE1",
+                    }}
+                  >
+                    {item?.title}
+                  </h3>
+                  <p>{item?.category}</p>
+                </div>
+              </div>
             </Col>
           ))}
         </Row>

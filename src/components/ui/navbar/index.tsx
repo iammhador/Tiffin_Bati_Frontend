@@ -40,11 +40,11 @@ const Navbar = () => {
             </div>
 
             <Drawer
+              visible={visible}
               title={"Brand Here"}
               placement="right"
               closable={true}
               onClose={showDrawer}
-              visible={visible}
               style={{ zIndex: 99999 }}
             >
               <LeftMenu mode={"inline"} />

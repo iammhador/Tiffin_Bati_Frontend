@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loading from "../loading";
 import { getFromLocalStorage } from "../utils/local-storage";
+import FooterPage from "@/components/ui/footer";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();

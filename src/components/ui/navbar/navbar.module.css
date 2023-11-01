@@ -49,11 +49,11 @@
   padding-bottom: 0px;
 }
 
-.navbarMenu .leftMenu {
+.leftMenu {
   float: left;
 }
 
-.navbarMenu .rightMenu {
+.rightMenu {
   float: right;
 }
 
@@ -113,5 +113,3 @@
     display: inline-block;
   }
 }
-
-/* Navbar End */

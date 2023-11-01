@@ -52,7 +52,7 @@ const AvailableService = () => {
           textTransform: "uppercase",
         }}
       >
-        The meal we are provide
+        The meal we provide
       </h1>
 
       <Row gutter={[16, 16]} justify="center">
@@ -72,20 +72,42 @@ const AvailableService = () => {
               }}
             >
               <Link href={`/menu/details/${item.id}`}>
-                <Card
-                  hoverable
-                  style={{ width: 240, margin: "15px" }}
-                  cover={
-                    <Image
-                      src={item?.image}
-                      width={150}
-                      height={150}
-                      alt={item?.title}
-                    />
-                  }
+                <Row
+                  style={{
+                    width: 240,
+                    margin: "15px",
+                    borderRadius: "10px",
+                    backgroundColor: "#FFFFFF",
+                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+                  }}
                 >
-                  <Meta title={item?.title} description={item?.category} />
-                </Card>
+                  <Col span={24}>
+                    <Link href={`/menu/details/${item.id}`}>
+                      <div
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
+                        <Image
+                          src={item?.image}
+                          alt={item?.title}
+                          width={150}
+                          height={150}
+                        />
+                      </div>
+                    </Link>
+                  </Col>
+                  <Col span={24}>
+                    <div style={{ textAlign: "center", padding: "8px" }}>
+                      <h3
+                        style={{
+                          color: "#545EE1",
+                        }}
+                      >
+                        {item?.title}
+                      </h3>
+                      <p>{item?.category}</p>
+                    </div>
+                  </Col>
+                </Row>
               </Link>
             </Col>
           ))}
@@ -100,7 +122,7 @@ const AvailableService = () => {
           }}
         >
           <Link href="/menu">
-            <Button style={{ background: "#545EE1" }} type="primary">
+            <Button style={{ background: "#545EE1", color: "#F5F4F9" }}>
               See More
             </Button>
           </Link>

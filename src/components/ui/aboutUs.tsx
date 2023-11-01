@@ -99,16 +99,23 @@ function AboutUsPage() {
             doorstep.
           </p>
         </div>
-
         <Row gutter={[16, 16]} className="mt-8 xl:mt-12 xl:gap-12">
           {serviceInfo?.map((service) => {
             return (
               <Col key={service?.key} xs={24} md={12} xl={8}>
-                <Card>
+                <div
+                  style={{
+                    padding: "16px",
+                    border: "1px solid #f0f0f0",
+                    borderRadius: "8px",
+                    transition: "box-shadow 0.3s",
+                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
                   {service?.serviceImage}
                   <h1>{service?.title}</h1>
                   <p>{service?.description}</p>
-                </Card>
+                </div>
               </Col>
             );
           })}

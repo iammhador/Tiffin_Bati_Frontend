@@ -66,6 +66,9 @@ const Sidebar = () => {
         defaultSelectedKeys={["1"]}
         mode="inline"
         items={SidebarItems(userRole)}
+        style={{
+          height: "100%",
+        }}
       />
     </Sider>
   );

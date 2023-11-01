@@ -96,12 +96,21 @@ const MenuPage = () => {
         </h2>
         <div style={{ textAlign: "center", margin: "20px 0 40px" }}>
           <Search
-            placeholder="input menu search"
+            placeholder="Input menu search"
             value={searchTerm}
             onChange={(e) => handleSearch(e.target.value)}
             style={{ width: 200, marginRight: "10px" }}
           />
-          <Button danger onClick={resetFilters}>
+          <Button
+            danger
+            onClick={resetFilters}
+            style={{
+              marginLeft: "10px",
+              backgroundColor: "#FF4D4F",
+              color: "#FFFFFF",
+              border: "none",
+            }}
+          >
             Reset
           </Button>
         </div>
@@ -117,20 +126,36 @@ const MenuPage = () => {
               style={{ marginBottom: "20px" }}
             >
               <Link href={`/menu/details/${item.id}`}>
-                <Card
-                  hoverable
-                  style={{ width: "100%" }}
-                  cover={
-                    <Image
-                      src={item?.image}
-                      width={150}
-                      height={150}
-                      alt={item?.title}
-                    />
-                  }
+                <div
+                  style={{
+                    width: "100%",
+                    borderRadius: "10px",
+                    backgroundColor: "#FFFFFF",
+                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+                    transition: "box-shadow 0.3s",
+                  }}
                 >
-                  <Meta title={item?.title} description={item?.category} />
-                </Card>
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <Link href={`/menu/details/${item.id}`}>
+                      <Image
+                        src={item?.image}
+                        alt={item?.title}
+                        width={150}
+                        height={150}
+                      />
+                    </Link>
+                  </div>
+                  <div style={{ textAlign: "center", padding: "8px" }}>
+                    <h3
+                      style={{
+                        color: "#545EE1",
+                      }}
+                    >
+                      {item?.title}
+                    </h3>
+                    <p>{item?.category}</p>
+                  </div>
+                </div>
               </Link>
             </Col>
           ))}

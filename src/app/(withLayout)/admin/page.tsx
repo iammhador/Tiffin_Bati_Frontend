@@ -97,8 +97,8 @@ const AdminManagePage = () => {
   };
 
   return (
-    <div style={{ margin: "0% 4%", height: "100vh" }}>
-      <Row>
+    <div style={{ margin: "4% ", height: "100vh" }}>
+      <Row align="middle" justify="center">
         <Col
           xs={{ span: 24, order: 2 }}
           sm={{ span: 12, order: 2 }}
