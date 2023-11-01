@@ -30,7 +30,7 @@ function AboutUsPage() {
       key: 2,
       title: "Affordability",
       description:
-        "We understand the financial constraints students and bachelors often  face, and we have designed our meal plans to be budget-friendly.",
+        "We offer affordable meal plans for students and bachelors, considering their financial constraints.",
       serviceImage: (
         <Image src={affordability} width={50} height={50} alt="affordability" />
       ),

@@ -98,10 +98,17 @@ const TestimonialsPage = () => {
       {testimonialsInformation.map((testimonial, i) => {
         return (
           <Col key={i} xs={24} sm={12} lg={6} style={{ margin: "1rem" }}>
-            <div style={{ boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)" }}>
+            <div
+              style={{
+                border: "1px solid #f0f0f0",
+                borderRadius: "8px",
+                transition: "box-shadow 0.3s",
+                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+              }}
+            >
               <div
                 style={{
-                  background: "#F5F4F9",
+                  backgroundColor: "#FFFFFF",
                   borderTopLeftRadius: "12px",
                   borderTopRightRadius: "12px",
                 }}

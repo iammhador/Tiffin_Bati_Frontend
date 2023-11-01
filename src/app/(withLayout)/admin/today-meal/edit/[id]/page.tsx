@@ -9,7 +9,8 @@ import InputUpload from "@/components/inputField/inputUpload";
 import axios from "axios";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { UploadFile, UploadProps } from "antd/es/upload/interface";
-
+import { HomeOutlined } from "@ant-design/icons";
+import { Breadcrumb } from "antd";
 import Loading from "@/app/loading";
 import {
   useQuery,
@@ -87,6 +88,31 @@ const AdminCreatedTodayFoodEditPage = ({ params }: IDProps) => {
 
   return (
     <div style={{ margin: "0% 4%" }}>
+      <Breadcrumb
+        style={{ margin: "2% 0" }}
+        items={[
+          {
+            href: "http://localhost:3000",
+            title: <HomeOutlined />,
+          },
+          {
+            href: "http://localhost:3000/admin",
+            title: (
+              <>
+                <span>Profile</span>
+              </>
+            ),
+          },
+          {
+            href: "http://localhost:3000/admin/today-meal/see-all",
+            title: (
+              <>
+                <span>Today Meal</span>
+              </>
+            ),
+          },
+        ]}
+      />
       <Row>
         <Col
           xs={{ span: 24, order: 2 }}

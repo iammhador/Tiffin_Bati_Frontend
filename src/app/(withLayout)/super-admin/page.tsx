@@ -21,6 +21,8 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import InputDatePicker from "@/components/inputField/inputDatePicker";
+import { HomeOutlined } from "@ant-design/icons";
+import { Breadcrumb } from "antd";
 
 type TokenInfo = {
   userId: string;
@@ -102,6 +104,15 @@ const SuperAdminManagePage = () => {
 
   return (
     <div style={{ margin: "0% 4%", height: "100vh" }}>
+      <Breadcrumb
+        style={{ margin: "2% 0" }}
+        items={[
+          {
+            href: "http://localhost:3000",
+            title: <HomeOutlined />,
+          },
+        ]}
+      />
       <Row>
         <Col
           xs={{ span: 24, order: 2 }}

@@ -9,19 +9,14 @@ import InputUpload from "@/components/inputField/inputUpload";
 import axios from "axios";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { UploadFile, UploadProps } from "antd/es/upload/interface";
-
+import { HomeOutlined } from "@ant-design/icons";
+import { Breadcrumb } from "antd";
 import Loading from "@/app/loading";
 import {
   useQuery,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import InputDropdown from "@/components/inputField/inputDropdown";
-
-const options = [
-  { label: "Lunch", value: "LUNCH" },
-  { label: "Dinner", value: "DINNER" },
-];
 
 type IDProps = {
   params: {
@@ -88,6 +83,31 @@ const AdminCreatedUpcomingFoodEditPage = ({ params }: IDProps) => {
 
   return (
     <div style={{ margin: "0% 4%" }}>
+      <Breadcrumb
+        style={{ margin: "2% 0" }}
+        items={[
+          {
+            href: "http://localhost:3000",
+            title: <HomeOutlined />,
+          },
+          {
+            href: "http://localhost:3000/admin",
+            title: (
+              <>
+                <span>Profile</span>
+              </>
+            ),
+          },
+          {
+            href: "http://localhost:3000/admin/upcoming-menu/see-all",
+            title: (
+              <>
+                <span>Upcoming Menu</span>
+              </>
+            ),
+          },
+        ]}
+      />
       <Row>
         <Col
           xs={{ span: 24, order: 2 }}

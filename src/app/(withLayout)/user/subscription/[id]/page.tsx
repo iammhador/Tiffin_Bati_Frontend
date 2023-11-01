@@ -14,6 +14,7 @@ import {
 } from "@tanstack/react-query";
 import axios from "axios";
 import Loading from "@/app/loading";
+import { useRouter } from "next/navigation";
 
 type TokenInfo = {
   userId: string;
@@ -30,6 +31,7 @@ type IDProps = {
 };
 
 const MakeSubscriptionPage = ({ params }: IDProps) => {
+  const router = useRouter();
   const { id } = params;
   const [userId, setUserId] = useState<string>("");
   const [form] = Form.useForm();
@@ -38,10 +40,14 @@ const MakeSubscriptionPage = ({ params }: IDProps) => {
   useEffect(() => {
     if (authToken) {
       const tokenInfo = decodedToken(authToken as string) as TokenInfo;
-      const { userId } = tokenInfo;
+      const { userId, role } = tokenInfo;
       setUserId(userId);
+
+      if (role === "admin" || role === "super-admin") {
+        router.push("/");
+      }
     }
-  }, [authToken]);
+  }, [authToken, router]);
 
   //@ Fetch All Price And Plan =>
   const {
@@ -84,65 +90,6 @@ const MakeSubscriptionPage = ({ params }: IDProps) => {
       // return message.error("An error has occurred: " + priceAndPlanError);
     }
   };
-
-  // const {
-  //   isLoading: subDataLoading,
-  //   error: subDataError,
-  //   data: subData,
-  // } = useQuery({
-  //   queryKey: ["subData", userId],
-  //   queryFn: () =>
-  //     axios
-  //       .get(
-  //         `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/subscription/user/${userId}`
-  //       )
-  //       .then((res) => res.data),
-  // });
-
-  // if (priceAndPlanLoading || subDataLoading) return <Loading />;
-  // if (priceAndPlanError || subDataError) {
-  //   return message.error(
-  //     "An error has occurred: " + (priceAndPlanError || subDataError)
-  //   );
-  // }
-
-  // const onFinish = async (values: any) => {
-  //   try {
-  //     if (
-  //       subData?.data?.status === "CANCEL" &&
-  //       subData?.data?.status === !"ACTIVATE" &&
-  //       subData?.data?.status === !"REQUESTED"
-  //     ) {
-  //       const response = await axios.patch(
-  //         `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/subscription/${subData?.data?.id}`,
-  //         { status: "REQUESTED" }
-  //       );
-  //       console.log(response);
-  //       if (response) {
-  //         message.success("Subscription Complete!!");
-  //         form.resetFields();
-  //       }
-  //     } else {
-  //       const subscriptionPrice = JSON.parse(values.subscription);
-  //       values.subscription = subscriptionPrice.subscription;
-  //       values.price = subscriptionPrice.price;
-  //       values.status = "REQUESTED";
-  //       values.userId = userId;
-
-  //       const response = await axios.post(
-  //         `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/subscription`,
-  //         values
-  //       );
-
-  //       if (response) {
-  //         message.success("Subscription Complete!!");
-  //         form.resetFields();
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   return (
     <div>

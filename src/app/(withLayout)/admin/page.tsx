@@ -23,6 +23,8 @@ import {
 import InputDatePicker from "@/components/inputField/inputDatePicker";
 import { TokenInfo } from "@/app/constants/global";
 import dynamic from "next/dynamic";
+import { HomeOutlined } from "@ant-design/icons";
+import { Breadcrumb } from "antd";
 
 const AdminManagePage = () => {
   const [selectedDate, setSelectedDate] = useState("");
@@ -98,6 +100,15 @@ const AdminManagePage = () => {
 
   return (
     <div style={{ margin: "4% ", height: "100vh" }}>
+      <Breadcrumb
+        style={{ margin: "2% 0" }}
+        items={[
+          {
+            href: "http://localhost:3000",
+            title: <HomeOutlined />,
+          },
+        ]}
+      />
       <Row align="middle" justify="center">
         <Col
           xs={{ span: 24, order: 2 }}

@@ -113,3 +113,38 @@
     display: inline-block;
   }
 }
+
+@media (max-width: 991px) {
+  .menuButton {
+    display: block;
+    margin-right: 10px;
+  }
+
+  .leftMenu,
+  .rightMenu {
+    display: none;
+  }
+
+  .logo a {
+    margin-left: -10px;
+  }
+
+  .ant-drawer-title > .brandFont {
+    margin-bottom: 0;
+  }
+
+  .username {
+    display: inline-block;
+  }
+}
+
+@media (min-width: 992px) {
+  .menuButton {
+    display: none;
+  }
+
+  .leftMenu,
+  .rightMenu {
+    display: block;
+  }
+}

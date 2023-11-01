@@ -12,6 +12,8 @@ import {
 } from "@tanstack/react-query";
 import axios from "axios";
 import Link from "next/link";
+import { HomeOutlined } from "@ant-design/icons";
+import { Breadcrumb } from "antd";
 
 interface DataType {
   id: string;
@@ -156,6 +158,23 @@ const SeeAllUsersAndOperation = () => {
 
   return (
     <div style={{ margin: "0 4% 5%" }}>
+      <Breadcrumb
+        style={{ margin: "2% 0" }}
+        items={[
+          {
+            href: "http://localhost:3000",
+            title: <HomeOutlined />,
+          },
+          {
+            href: "http://localhost:3000/admin",
+            title: (
+              <>
+                <span>Profile</span>
+              </>
+            ),
+          },
+        ]}
+      />
       <h3
         style={{
           textAlign: "center",

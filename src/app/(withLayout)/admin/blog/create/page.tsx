@@ -9,6 +9,8 @@ import { getFromLocalStorage } from "@/app/utils/local-storage";
 import { decodedToken } from "@/app/utils/jwt";
 import { useEffect, useState } from "react";
 import InputTextArea from "@/components/inputField/inputTextAre";
+import { HomeOutlined } from "@ant-design/icons";
+import { Breadcrumb } from "antd";
 
 type TokenInfo = {
   userId: string;
@@ -51,6 +53,23 @@ const AdminCreateBlogPage = () => {
   return (
     <div>
       <div style={{ margin: "0% 4%" }}>
+        <Breadcrumb
+          style={{ margin: "2% 0" }}
+          items={[
+            {
+              href: "http://localhost:3000",
+              title: <HomeOutlined />,
+            },
+            {
+              href: "http://localhost:3000/admin",
+              title: (
+                <>
+                  <span>Profile</span>
+                </>
+              ),
+            },
+          ]}
+        />
         <Row justify="center" align="middle">
           <Col
             style={{

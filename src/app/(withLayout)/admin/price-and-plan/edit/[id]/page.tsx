@@ -12,7 +12,8 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import InputDropdown from "@/components/inputField/inputDropdown";
-
+import { HomeOutlined } from "@ant-design/icons";
+import { Breadcrumb } from "antd";
 const options = [
   { label: "Monthly", value: "Monthly" },
   { label: "Yearly", value: "Yearly" },
@@ -61,6 +62,31 @@ const AdminCreatePriceAndPlanEditPage = ({ params }: IDProps) => {
 
   return (
     <div style={{ margin: "0% 4%" }}>
+      <Breadcrumb
+        style={{ margin: "2% 0" }}
+        items={[
+          {
+            href: "http://localhost:3000",
+            title: <HomeOutlined />,
+          },
+          {
+            href: "http://localhost:3000/admin",
+            title: (
+              <>
+                <span>Profile</span>
+              </>
+            ),
+          },
+          {
+            href: "http://localhost:3000/admin/price-and-plan/see-all",
+            title: (
+              <>
+                <span>Price & Plan</span>
+              </>
+            ),
+          },
+        ]}
+      />
       <Row>
         <Col
           xs={{ span: 24, order: 2 }}

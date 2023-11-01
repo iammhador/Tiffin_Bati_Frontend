@@ -22,6 +22,8 @@ import {
 } from "@tanstack/react-query";
 import InputDatePicker from "@/components/inputField/inputDatePicker";
 import { TokenInfo } from "@/app/constants/global";
+import { HomeOutlined } from "@ant-design/icons";
+import { Breadcrumb } from "antd";
 
 const SuperAdminManagePage = () => {
   const [selectedDate, setSelectedDate] = useState("");
@@ -96,6 +98,15 @@ const SuperAdminManagePage = () => {
 
   return (
     <div style={{ margin: "0% 4%", height: "100vh" }}>
+      <Breadcrumb
+        style={{ margin: "2% 0" }}
+        items={[
+          {
+            href: "http://localhost:3000",
+            title: <HomeOutlined />,
+          },
+        ]}
+      />
       <Row>
         <Col
           xs={{ span: 24, order: 2 }}
