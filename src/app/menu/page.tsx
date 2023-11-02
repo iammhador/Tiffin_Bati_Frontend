@@ -36,7 +36,7 @@ const MenuPage = () => {
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
-    delay: 500,
+    delay: 400,
   });
 
   if (!!debouncedTerm) {

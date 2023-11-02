@@ -93,13 +93,14 @@ type ReviewAndRatingPageProps = {
 const ReviewAndRatingPage = ({ id }: ReviewAndRatingPageProps) => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["reviewData"],
-
     queryFn: () =>
       axios
         .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/review-and-rating/${id}`)
         .then((res) => res.data),
+    refetchInterval: 7000,
   });
   refetch();
+
   if (isLoading) return <Loading />;
   if (error) return message.error("An error has occurred: " + error);
 

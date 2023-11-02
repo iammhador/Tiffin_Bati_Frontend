@@ -7,18 +7,15 @@ import {
 } from "@tanstack/react-query";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Card, Button, Rate, Form, message } from "antd";
+import {  Button, Rate, Form, message, Input } from "antd";
 import Image from "next/image";
 import FooterPage from "@/components/ui/footer";
 import Loading from "@/app/loading";
-import InputTextArea from "@/components/inputField/inputTextAre";
 import { getFromLocalStorage } from "@/app/utils/local-storage";
 import { decodedToken } from "@/app/utils/jwt";
 import { TokenInfo } from "@/app/constants/global";
 import ReviewAndRatingPage from "@/components/ui/reviewAndRating";
 import Navbar from "@/components/ui/navbar";
-
-const { Meta } = Card;
 
 type IDProps = {
   params: {
@@ -41,14 +38,15 @@ const MenuPage = ({ params }: IDProps) => {
     }
   }, [authToken]);
 
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
       axios
         .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/menu/${id}`)
         .then((res) => res.data),
-    refetchInterval: 10000,
   });
+
+  refetch();
 
   const handleRatingChange = (value: number) => {
     setRating(value);
@@ -101,46 +99,57 @@ const MenuPage = ({ params }: IDProps) => {
           {data?.data?.title}
         </h2>
 
-        <Card
-          hoverable
-          style={{ width: "80vw", margin: "2% auto", maxWidth: "400px" }}
-          cover={
-            <div style={{ maxWidth: "100%" }}>
-              <Image
-                src={data?.data?.image}
-                layout="responsive"
-                width={250}
-                height={250}
-                alt={data?.data?.title}
-              />
-            </div>
-          }
+        <div
+          style={{
+            width: "80vw",
+            margin: "1% auto",
+            maxWidth: "400px",
+            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+            padding: "3%",
+          }}
         >
-          <Meta title={data?.data?.title} description={data?.data?.category} />
-        </Card>
+          <div style={{ maxWidth: "100%" }}>
+            <Image
+              src={data?.data?.image}
+              layout="responsive"
+              width={250}
+              height={250}
+              alt={data?.data?.title}
+            />
+          </div>
+        </div>
 
         {useId && (
           <div style={{ width: "80%", margin: "2% auto", maxWidth: "400px" }}>
             <Rate
-              style={{ margin: "1% auto" }}
+              style={{ margin: "1% auto", display: "block" }}
               allowHalf
               value={rating}
               onChange={handleRatingChange}
             />
 
             <Form layout="vertical" onFinish={onFinish} form={form}>
-              <InputTextArea
+              <Form.Item
                 label=""
                 name="review"
-                message="Please give your valuable comments"
-                type="text"
-                placeholder="Write your comments...."
-              />
+                rules={[
+                  {
+                    required: true,
+                    message: "Please give your valuable comments",
+                  },
+                ]}
+              >
+                <Input.TextArea
+                  placeholder="Write your comments...."
+                  autoSize={{ minRows: 3, maxRows: 5 }}
+                />
+              </Form.Item>
 
               <Button
                 style={{
                   background: "#545EE1",
                   color: "#F5F4F9",
+                  border: "none",
                 }}
                 htmlType="submit"
               >

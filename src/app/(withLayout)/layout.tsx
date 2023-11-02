@@ -2,13 +2,11 @@
 
 import Contents from "@/components/ui/contents";
 import Sidebar from "@/components/ui/sidebar";
-// import { isLoggedIn } from "@/service/auth.service";
 import { Layout } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loading from "../loading";
 import { getFromLocalStorage } from "../utils/local-storage";
-import FooterPage from "@/components/ui/footer";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
