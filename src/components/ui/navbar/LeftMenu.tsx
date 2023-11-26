@@ -1,6 +1,5 @@
 import React from "react";
 import { Menu } from "antd";
-
 import { getFromLocalStorage } from "@/app/utils/local-storage";
 import Link from "next/link";
 import dynamic from "next/dynamic";

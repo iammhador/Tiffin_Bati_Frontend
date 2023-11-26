@@ -15,8 +15,9 @@ const NotFoundPage = () => {
       <h3 style={{ fontWeight: "600", fontSize: "30px" }}>
         404! PAGE NOT FOUND!!
         <br />
-        <Link href="/">
+        <Link href="/" >
           <p
+            
             style={{ textAlign: "center", margin: "0 auto", color: "#545EE1" }}
           >
             GO TO HOME

@@ -55,7 +55,7 @@ const ManageAdminPage = () => {
 
       message.success("New Admin Created Successfully.");
     } catch (error) {
-      console.error("Error occurred:", error);
+      return message.error((error as any)?.response?.data?.message);
     }
   };
 

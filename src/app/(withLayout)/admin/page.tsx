@@ -94,7 +94,7 @@ const AdminManagePage = () => {
         form.resetFields();
       }
     } catch (error) {
-      console.error("Error occurred:", error);
+      return message.error((error as any)?.response?.data?.message);
     }
   };
 

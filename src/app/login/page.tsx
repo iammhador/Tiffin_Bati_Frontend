@@ -38,11 +38,8 @@ const LoginPage = () => {
 
       if (response.data.data.accessToken) {
         removeFromLocalStorage("accessToken");
-
-        setToLocalStorage(
-          "accessToken",
-          response?.data?.data?.accessToken as string
-        );
+        const accessToken = response.data.data.accessToken;
+        setToLocalStorage("accessToken", accessToken as string);
       }
 
       const authToken = getFromLocalStorage("accessToken");
@@ -59,7 +56,7 @@ const LoginPage = () => {
         form.resetFields();
       }
     } catch (error) {
-      return message.error("An error has occurred: " + error);
+      return message.error((error as any)?.response?.data?.message);
     }
   };
 

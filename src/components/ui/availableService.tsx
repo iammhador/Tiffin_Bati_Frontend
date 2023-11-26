@@ -60,8 +60,8 @@ const AvailableService = () => {
           .slice(0, showAll ? data?.data?.data.length : 8)
           .map((item: any) => (
             <Col
-              xs={{ span: 20 }}
-              sm={{ span: 20 }}
+               xs={{ span: 24 }}
+              sm={{ span: 12 }}
               md={{ span: 8 }}
               lg={{ span: 6 }}
               key={item?.id}
