@@ -15,6 +15,9 @@ import {
 import axios from "axios";
 import Loading from "@/app/loading";
 import { useRouter } from "next/navigation";
+import CheckoutForm from "@/components/CheckoutForm";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 type TokenInfo = {
   userId: string;
@@ -29,6 +32,8 @@ type IDProps = {
     id: string;
   };
 };
+
+const stripePromise = loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_KEY}`);
 
 const MakeSubscriptionPage = ({ params }: IDProps) => {
   const router = useRouter();
@@ -149,7 +154,11 @@ const MakeSubscriptionPage = ({ params }: IDProps) => {
                 </Col>
               </Row>
 
-              <Button
+              <Elements stripe={stripePromise}>
+                <CheckoutForm />
+              </Elements>
+
+              {/* <Button
                 style={{
                   background: "#F76F01",
                   color: "#F5F4F9",
@@ -157,7 +166,7 @@ const MakeSubscriptionPage = ({ params }: IDProps) => {
                 htmlType="submit"
               >
                 Subscribe
-              </Button>
+              </Button> */}
             </Form>
           </Col>
           <Col
