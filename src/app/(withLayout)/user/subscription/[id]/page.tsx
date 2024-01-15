@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Col, Form, Row, message } from "antd";
+import { Col, Form, Row, message } from "antd";
 import Image from "next/image";
 import subscribeImage from "../../../../assets/input/subscription.png";
 import { getFromLocalStorage } from "@/app/utils/local-storage";
@@ -15,7 +15,7 @@ import {
 import axios from "axios";
 import Loading from "@/app/loading";
 import { useRouter } from "next/navigation";
-import CheckoutForm from "@/components/CheckoutForm";
+import CheckoutForm from "@/components/payments/CheckoutForm";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
@@ -91,8 +91,7 @@ const MakeSubscriptionPage = ({ params }: IDProps) => {
         form.resetFields();
       }
     } catch (error) {
-      console.log("An error has occurred: " + priceAndPlanError);
-      // return message.error("An error has occurred: " + priceAndPlanError);
+      message.error("An error has occurred: " + priceAndPlanError);
     }
   };
 
@@ -153,21 +152,11 @@ const MakeSubscriptionPage = ({ params }: IDProps) => {
                   />
                 </Col>
               </Row>
-
-              <Elements stripe={stripePromise}>
-                <CheckoutForm />
-              </Elements>
-
-              {/* <Button
-                style={{
-                  background: "#F76F01",
-                  color: "#F5F4F9",
-                }}
-                htmlType="submit"
-              >
-                Subscribe
-              </Button> */}
             </Form>
+
+            <Elements stripe={stripePromise}>
+              <CheckoutForm price={priceAndPlanData?.data?.price} />
+            </Elements>
           </Col>
           <Col
             xs={{ span: 24, order: 2 }}
