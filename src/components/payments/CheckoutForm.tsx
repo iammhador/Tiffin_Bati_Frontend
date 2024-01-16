@@ -10,16 +10,22 @@ const CheckoutForm = async (price: any) => {
   const stripe = useStripe();
   const elements = useElements();
   const [userName, setUserName] = useState<string>("");
-  const [clientSecret, setClientSecret] = useState("");
+  const [userId, setUserId] = useState<string>("");
+  const [clientSecret, setClientSecret] = useState<string>("");
+  // const [processing, setProcessing] = useState<boolean>(false);
   const authToken = getFromLocalStorage("accessToken");
 
+  //@ Collect username from token =>
   useEffect(() => {
     if (authToken) {
       const tokenInfo = decodedToken(authToken as string) as TokenInfo;
-      const { name } = tokenInfo;
+      const { name, userId } = tokenInfo;
       setUserName(name);
+      setUserId(userId);
     }
   }, [authToken]);
+
+  //@ Payment intent =>
   useEffect(() => {
     axios
       .post(
@@ -27,14 +33,12 @@ const CheckoutForm = async (price: any) => {
         { price }
       )
       .then((res) => {
-        console.log(res?.data);
-        setClientSecret(res?.data?.clientSecret);
+        setClientSecret(res?.data?.data);
+      })
+      .catch((error) => {
+        console.error("Error creating payment intent:", error);
       });
   }, [price]);
-
-  const appearance = {
-    theme: "stripe",
-  };
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -49,15 +53,15 @@ const CheckoutForm = async (price: any) => {
       return;
     }
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    // setProcessing(true);
+
+    const { error } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });
 
     if (error) {
       message.error(error.message);
-    } else {
-      console.log("[PaymentMethod]", paymentMethod);
     }
 
     const { paymentIntent, error: confirmError } =
@@ -70,12 +74,28 @@ const CheckoutForm = async (price: any) => {
         },
       });
 
+    console.log(paymentIntent);
+
+    if (paymentIntent?.status === "succeeded") {
+      const payment = {
+        transactionId: paymentIntent.id,
+        price: paymentIntent.amount / 100,
+        userName: userName,
+        userId: userId,
+      };
+
+      axios
+        .post(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/payment`, { payment })
+        .then((res) => {
+          message.success("Payment successful");
+          console.log(res);
+        });
+    }
+
     if (confirmError) {
       console.log(confirmError);
       message.error(confirmError.message);
     }
-
-    console.log(paymentIntent);
   };
 
   return (

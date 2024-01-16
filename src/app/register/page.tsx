@@ -62,7 +62,8 @@ const RegisterPage = () => {
         router.push("/login");
       }
     } catch (error) {
-      return message.error((error as any)?.response?.data?.message);
+      console.log(error);
+      // message.error(error?.message);
     }
   };
 

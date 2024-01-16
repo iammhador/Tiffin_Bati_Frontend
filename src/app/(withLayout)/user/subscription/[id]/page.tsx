@@ -6,7 +6,6 @@ import subscribeImage from "../../../../assets/input/subscription.png";
 import { getFromLocalStorage } from "@/app/utils/local-storage";
 import { decodedToken } from "@/app/utils/jwt";
 import { useEffect, useState } from "react";
-import InputDropdown from "@/components/inputField/inputDropdown";
 import {
   useQuery,
   QueryClient,
@@ -15,9 +14,10 @@ import {
 import axios from "axios";
 import Loading from "@/app/loading";
 import { useRouter } from "next/navigation";
-import CheckoutForm from "@/components/payments/CheckoutForm";
+import CheckoutForm from "@/components/payments/checkoutForm";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import "../../../../../components/payments/payment.modules.css";
 
 type TokenInfo = {
   userId: string;
@@ -122,37 +122,27 @@ const MakeSubscriptionPage = ({ params }: IDProps) => {
                   color: "#545EE1",
                 }}
               >
-                CHOOSE YOUR PACKAGE
+                Subscription
               </h2>
             </div>
-            <Form layout="vertical" onFinish={onFinish} form={form}>
-              <Row>
-                <Col
-                  xs={{ span: 24, order: 1 }}
-                  sm={{ span: 24, order: 1 }}
-                  md={{ span: 24, order: 1 }}
-                  lg={{ span: 24, order: 1 }}
-                >
-                  <InputDropdown
-                    label="Subscription"
-                    name="subscription"
-                    required={true}
-                    placeholder={`${priceAndPlanData?.data?.subscription} - ${priceAndPlanData?.data?.price}`}
-                    defaultValue={`${priceAndPlanData?.data?.subscription} - ${priceAndPlanData?.data?.price}`}
-                    inputOptions={[
-                      {
-                        label: `${priceAndPlanData?.data?.subscription} - ${priceAndPlanData?.data?.price}`,
-                        value: JSON.stringify({
-                          subscription: priceAndPlanData?.data?.subscription,
-                          price: priceAndPlanData?.data?.price,
-                        }),
-                      },
-                    ]}
-                    message="Please choose a subscription"
-                  />
-                </Col>
-              </Row>
-            </Form>
+
+            <p
+              style={{
+                maxWidth: "100%",
+                width: "500px",
+                fontSize: "14px",
+                background: "#FFFFFF",
+                color: "#313416",
+                textAlign: "center",
+                padding: "10px 14px",
+                borderRadius: "4px",
+                letterSpacing: "0.025em",
+                boxShadow:
+                  "rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px",
+              }}
+            >
+              {`${priceAndPlanData?.data?.subscription} - ${priceAndPlanData?.data?.price}`}
+            </p>
 
             <Elements stripe={stripePromise}>
               <CheckoutForm price={priceAndPlanData?.data?.price} />
