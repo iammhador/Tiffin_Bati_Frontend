@@ -46,6 +46,8 @@ const AdminCreatePriceAndPlanPage = () => {
         values
       );
 
+      console.log(response);
+
       if (response) {
         message.success("Price And Plan Added!!");
         form.resetFields();

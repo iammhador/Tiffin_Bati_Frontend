@@ -37,9 +37,7 @@ const SubscriptionPage = () => {
     queryFn: () =>
       userId &&
       axios
-        .get(
-          `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/subscription/user/${userId}`
-        )
+        .get(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/subscription/${userId}`)
         .then((res) => res.data),
     refetchInterval: 8000,
   });

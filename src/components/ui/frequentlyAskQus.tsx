@@ -23,6 +23,8 @@ const FrequentlyAskQusPage = () => {
   });
   refetch();
 
+  console.log(faqData);
+
   if (isLoading) return <Loading />;
   if (error) {
     return message.error("An error has occurred: " + error);

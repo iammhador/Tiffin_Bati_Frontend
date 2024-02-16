@@ -1,7 +1,7 @@
 "use client";
 
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Form, Row, message } from "antd";
 import Image from "next/image";
 import registerImage from "../../app/assets/register.png";
@@ -49,23 +49,56 @@ const RegisterPage = () => {
 
   const onFinish = async (values: any) => {
     values.dateOfBirth = selectedDate;
-    values.profileImage = imageUrl;
+    values.profileImage = imageUrl ? imageUrl : null;
+
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/users`,
         values
       );
 
+      console.log(`Response: `, response);
       if (response) {
         message.success("User Registered Successfully.");
         form.resetFields();
         router.push("/login");
       }
     } catch (error) {
-      console.log(error);
-      // message.error(error?.message);
+      message.error(
+        "Something went wrong. Please check everything and try again."
+      );
     }
   };
+
+  //@ Have to check why image is not updated in the database
+  // const onFinish = async (values: any) => {
+  //   // console.log(values);
+  //   values.dateOfBirth = selectedDate;
+  //   values.profileImage = (await values.profileImage)
+  //     ? values.profileImage
+  //     : null;
+
+  //   // console.log(await values.profileImage);
+  //   // console.log(values);
+
+  //   try {
+  //     const response = await axios.post(
+  //       `${process.env.NEXT_PUBLIC_TIFFIN_BATI}/users`,
+  //       values
+  //     );
+
+  //     console.log(`Response: `, response);
+  //     if (response) {
+  //       message.success("User Registered Successfully.");
+  //       form.resetFields();
+  //       router.push("/login");
+  //     }
+  //   } catch (error) {
+  //     message.error(
+  //       "Something went wrong. Please check everything and try again."
+  //     );
+  //   }
+  // };
 
   return (
     <div>

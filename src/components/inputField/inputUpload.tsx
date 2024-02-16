@@ -4,6 +4,7 @@ import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { message, Upload, Form } from "antd";
 
 import type { RcFile } from "antd/es/upload/interface";
+import Image from "next/image";
 
 type InputUpload = {
   label: string;
@@ -57,7 +58,20 @@ const InputUpload = ({
           beforeUpload={beforeUpload}
           onChange={handleChange}
         >
-          {imageUrl ? <p>uploaded</p> : <p>your photo</p>}
+          {imageUrl ? (
+            <Image
+              src={imageUrl}
+              defaultValue={imageUrl}
+              alt="profile image"
+              width="107"
+              height="107"
+              style={{
+                borderRadius: "16px",
+              }}
+            />
+          ) : (
+            <p>Your Photo</p>
+          )}
         </Upload>
       </Form.Item>
     </div>

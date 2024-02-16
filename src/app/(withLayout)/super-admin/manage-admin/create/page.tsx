@@ -53,6 +53,8 @@ const ManageAdminPage = () => {
         values
       );
 
+      console.log(response);
+
       message.success("New Admin Created Successfully.");
     } catch (error) {
       return message.error((error as any)?.response?.data?.message);

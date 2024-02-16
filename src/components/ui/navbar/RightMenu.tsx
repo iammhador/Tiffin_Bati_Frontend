@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useState, useEffect } from "react";
 import { Menu, Avatar, message, Button } from "antd";
 import { UserOutlined, CodeOutlined, LogoutOutlined } from "@ant-design/icons";
@@ -10,7 +11,8 @@ import { useRouter } from "next/navigation";
 import { decodedToken } from "@/app/utils/jwt";
 import { TokenInfo } from "@/app/constants/global";
 import Link from "next/link";
-
+import AvatarImage from "../../../../src/app/assets/avatar.png";
+import Image from "next/image";
 interface RightMenuProps {
   mode: "horizontal" | "inline" | "vertical" | undefined;
 }
@@ -43,7 +45,10 @@ const RightMenu: React.FC<RightMenuProps> = ({ mode }) => {
           <Menu.SubMenu
             title={
               <>
-                <Avatar icon={<UserOutlined />} />
+                <Avatar
+                  icon={<Image src={AvatarImage} alt="User Avatar" />}
+                  className={styles.avatar}
+                />
                 <span className={styles.username}>{userName}</span>
               </>
             }

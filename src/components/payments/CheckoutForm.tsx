@@ -12,7 +12,6 @@ const CheckoutForm = async (price: any) => {
   const [userName, setUserName] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
   const [clientSecret, setClientSecret] = useState<string>("");
-  // const [processing, setProcessing] = useState<boolean>(false);
   const authToken = getFromLocalStorage("accessToken");
 
   //@ Collect username from token =>
@@ -36,7 +35,7 @@ const CheckoutForm = async (price: any) => {
         setClientSecret(res?.data?.data);
       })
       .catch((error) => {
-        console.error("Error creating payment intent:", error);
+        // console.error("Error creating payment intent:", error);
       });
   }, [price]);
 
@@ -52,8 +51,6 @@ const CheckoutForm = async (price: any) => {
     if (card == null) {
       return;
     }
-
-    // setProcessing(true);
 
     const { error } = await stripe.createPaymentMethod({
       type: "card",
@@ -74,7 +71,7 @@ const CheckoutForm = async (price: any) => {
         },
       });
 
-    console.log(paymentIntent);
+    // console.log(paymentIntent);
 
     if (paymentIntent?.status === "succeeded") {
       const payment = {
@@ -87,13 +84,16 @@ const CheckoutForm = async (price: any) => {
       axios
         .post(`${process.env.NEXT_PUBLIC_TIFFIN_BATI}/payment`, { payment })
         .then((res) => {
-          message.success("Payment successful");
-          console.log(res);
+          if (res.status === 200) {
+            // console.log(`res`, res);
+            message.success("Congratulation! Your payment is successful.");
+            elements.getElement(CardElement)?.clear();
+          }
         });
     }
 
     if (confirmError) {
-      console.log(confirmError);
+      // console.log(confirmError);
       message.error(confirmError.message);
     }
   };
